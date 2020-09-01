@@ -1,0 +1,13 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "version": "1.11.0",
+    "libraryName": "search-page-wp-spfx",
+    "libraryId": "fb7561c6-25ea-4402-8da8-31e2a2f8bf70",
+    "environment": "onprem19",
+    "packageManager": "npm",
+    "solutionName": "searchPageWP-spfx",
+    "framework": "none",
+    "isCreatingSolution": true,
+    "componentType": "webpart"
+  }
+}

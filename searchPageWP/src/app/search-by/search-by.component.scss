@@ -1,0 +1,40 @@
+.container{
+  width: 100%;
+  margin-bottom: 2rem;
+  form{
+    .form-group{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      .form-item{
+        flex-basis: 610px;
+        flex-grow: 0;
+        flex-shrink: 1;
+        position: relative;
+        .btn__sort{
+          position: absolute;
+          top: 3px;
+          right: 4px;
+          border-radius: 50%;
+          cursor: pointer;
+          width: 35px;
+          height: 85%;
+          background: #e7e6e6;
+          box-shadow: none;
+          border: 0;
+        }
+
+        input{
+          width: 100%;
+          border-radius: 20px;
+          padding: 11px;
+          border: 1px solid #ccc;
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+         &:focus{
+           border: 1px solid #949494;
+         }
+        }
+      }
+    }
+  }
+}

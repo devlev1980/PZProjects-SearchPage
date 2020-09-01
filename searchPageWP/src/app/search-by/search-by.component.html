@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="searchForm">
+        <div class="form-group">
+          <div class="form-item by__employee">
+            <input type="text" (input)="onSearchByEmployee($event)" formControlName="byEmployee">
+            <button class="btn__sort" type="button" #sortBtn >
+              <i class="fa fa-sort-alpha-asc" aria-hidden="true" *ngIf="AscIcon"></i>
+              <i class="fa fa-sort-alpha-desc" aria-hidden="true" *ngIf="DescIcon"></i>
+            </button>
+
+
+          </div>
+          <div class="form-item by__department">
+            <input type="text" (input)="onSearchByDepartment($event)" formControlName="byDepartment">
+          </div>
+          <div class="form-item by__location">
+            <input type="text" (input)="onSearchByLocation($event)" formControlName="byLocation">
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>

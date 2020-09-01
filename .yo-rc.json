@@ -1,0 +1,26 @@
+{
+  "@pnp/generator-spfx": {
+    "framework": "none",
+    "pnpFramework": "angularelements",
+    "pnp-libraries": [
+      "jquery@3",
+      "msgraph",
+      "@pnp/pnpjs",
+      "@pnp/spfx-property-controls",
+      "spfx-uifabric-themes",
+      "lodash"
+    ],
+    "pnp-ci": "no-devops",
+    "pnp-vetting": [
+      "webpack-analyzer"
+    ],
+    "spfxenv": "onprem19"
+  },
+  "@microsoft/generator-sharepoint": {
+    "solutionName": "searchPageWP-spfx",
+    "environment": "onprem19",
+    "framework": "none",
+    "isCreatingSolution": true,
+    "whichFolder": "subdir"
+  }
+}
