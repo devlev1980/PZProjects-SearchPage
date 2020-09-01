@@ -14,8 +14,8 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   @ViewChild('sortBtn') sortBtn: ElementRef;
   click$: Observable<Event>;
   count: number = 0;
-   AscIcon: boolean = true;
-   DescIcon: boolean = false;
+  AscIcon: boolean = true;
+  DescIcon: boolean ;
 
   constructor(private fb: FormBuilder,
               private searchService: SearchService,
@@ -29,7 +29,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       byDepartment: [''],
       byLocation: ['']
     });
-
   }
 
   get byEmployee() {
@@ -63,18 +62,19 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.click$ = fromEvent(this.sortBtn.nativeElement, 'click');
     this.click$.subscribe(click => {
+
       this.count++;
+
       if (this.count % 2 === 0) {
+        this.sortService.setOrder('asc');
         this.AscIcon = true;
         this.DescIcon = false;
-        this.sortService.setOrder('asc');
       } else {
+        this.sortService.setOrder('desc');
         this.AscIcon = false;
         this.DescIcon = true;
-        this.sortService.setOrder('desc');
       }
     });
-    this.count = 0;
 
   }
 

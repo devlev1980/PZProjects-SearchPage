@@ -11,7 +11,7 @@ import {SortService} from '../services/sort.service';
   styleUrls: ['./employees-list.component.scss']
 })
 export class EmployeesListComponent implements OnInit {
-  @Input() employeeList: IEmployee[] = [];
+  @Input() employeeList: IEmployee[];
   searchTerm: ISearchTerm = {type: '', value: ''};
   byEmployeeTerm: string;
   byDepartmentTerm: string;
@@ -53,7 +53,6 @@ export class EmployeesListComponent implements OnInit {
         this.employeeList = this.employeeList.sort().reverse();
       }
     });
-    this.cdr.detectChanges();
 
   }
 

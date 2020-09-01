@@ -7,7 +7,7 @@ import {IEmployee} from '../models/employee';
 export class SearchByEmployeePipe implements PipeTransform {
 
   transform(employees: IEmployee[], searchTerm: any): any {
-    if (!employees || !searchTerm) {
+    if (!employees || !searchTerm ) {
       return employees;
     }
     return employees.filter((user) => {

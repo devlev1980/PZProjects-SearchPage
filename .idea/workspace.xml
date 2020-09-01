@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="" />
+    <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +22,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1grrqt84iW8pJdTgzIHLV5BHp51" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,18 +53,33 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598883745757</updated>
-      <workItem from="1598883747226" duration="22184000" />
+      <workItem from="1598883747226" duration="25635000" />
     </task>
+    <task id="LOCAL‎00001" summary="add project">
+      <created>1598966054486</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1598966054486</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add project" />
+    <option name="LAST_COMMIT_MESSAGE" value="add project" />
   </component>
   <component name="WindowStateProjectService">
     <state x="689" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598960924240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598960924240" />
+    <state x="574" y="94" key="CommitChangelistDialog2" timestamp="1598966052486">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1598966052486" />
     <state width="1814" height="271" key="GridCell.Tab.0.bottom" timestamp="1598957538549">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -69,6 +96,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1814" height="271" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1598957538549" />
+    <state x="551" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598966057719">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="551" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598966057719" />
+    <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598965993197">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598965993197" />
     <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate" timestamp="1598962908266">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

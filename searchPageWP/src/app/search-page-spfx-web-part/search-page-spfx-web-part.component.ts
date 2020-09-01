@@ -6,7 +6,6 @@ import {IEmployee} from '../models/employee';
   selector: 'app-search-page-spfx-web-part',
   templateUrl: './search-page-spfx-web-part.component.html',
   styleUrls: ['./search-page-spfx-web-part.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
 })
 export class SearchPageSpfxWebPartComponent implements OnInit {
   @Input() description: string;
