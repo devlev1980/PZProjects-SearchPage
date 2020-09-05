@@ -1,0 +1,79 @@
+<div class="cards__container">
+  <div class="card" *ngFor="let employee of employeeList |
+  paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems }| searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByAZ: byAZ" >
+    <!--      <img src="..." class="card-img-top" alt="...">-->
+    <div class="card__body">
+      <h3 class="card__title">{{employee.first_name}} {{employee.last_name}}</h3>
+      <div class="card__phones">
+        <div>
+          <img src="assets/icons/phone.png" class="work__phone" alt="work phone">
+          <span class="card__phones-work">{{employee.work_phone}}</span>
+        </div>
+        <div>
+          <img src="assets/icons/mobile.png" alt="cell phone" class="cell__phone">
+          <span class="card__phones-cell">{{employee.cell_phone}}</span>
+        </div>
+      </div>
+      <div class="card__employee-info">
+        <div class="card__imgWrapper">
+          <img src="https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png" alt="">
+        </div>
+        <div class="card__infoWrapper">
+          <div class="email">
+            <img src="assets/icons/mobile.png" alt="">
+            <span>{{employee.email}}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="job">
+            <img src="assets/icons/manager.png" alt="">
+            <span>{{employee.job}}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="department">
+            <img src="assets/icons/department_normal.png" alt="">
+            <span>{{employee.department}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" yPosition="below" class="employee__menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>location_on</mat-icon>
+            <span>{{employee.location.address}}</span>
+          </button>
+          <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
+            <span>Check voice mail</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Disable alerts</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+<pagination-controls (pageBoundsCorrection)="pageChanged($event)"
+                     (pageChange)="currentPage = $event"
+                     autoHide="false"
+                     directionLinks="true"
+                     id="custom"
+                     maxSize="9"
+                     nextLabel="Next"
+                     previousLabel="Previous"
+                     responsive="true"
+                     screenReaderCurrentLabel="You're on page"
+                     screenReaderPageLabel="page"
+                     screenReaderPaginationLabel="Pagination">
+</pagination-controls>
+
+
+
+

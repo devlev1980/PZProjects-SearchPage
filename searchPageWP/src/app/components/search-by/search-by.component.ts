@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {SearchService} from '../services/search.service';
-import {SortService} from '../services/sort.service';
+import {SearchService} from '../../services/search.service';
+import {SortService} from '../../services/sort.service';
 import {fromEvent, Observable} from 'rxjs';
 
 @Component({

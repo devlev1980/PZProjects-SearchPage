@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MockService} from '../services/mock.service';
-import {IEmployee} from '../models/employee';
-import {ISearchTerm, SearchService} from '../services/search.service';
+import {MockService} from '../../services/mock.service';
+import {IEmployee} from '../../models/employee';
+import {ISearchTerm, SearchService} from '../../services/search.service';
 import {MatMenuTrigger, MenuPositionX, MenuPositionY} from '@angular/material/menu';
-import {SortService} from '../services/sort.service';
+import {SortService} from '../../services/sort.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -18,6 +18,8 @@ export class EmployeesListComponent implements OnInit {
   byLocation: string;
   byAZ: string;
   @ViewChild('menu') menu: MatMenuTrigger;
+   totalItems: number;
+   currentPage: number = 1;
 
   constructor(private employeeService: MockService,
               private searchService: SearchService,
@@ -26,7 +28,7 @@ export class EmployeesListComponent implements OnInit {
   }
 
   ngOnInit() {
-
+  this.totalItems = this.employeeList.length;
 
     this.searchService.getSearch().subscribe((searchTerm) => {
       switch (searchTerm.type) {
@@ -56,4 +58,7 @@ export class EmployeesListComponent implements OnInit {
 
   }
 
+  pageChanged($event: number) {
+
+  }
 }

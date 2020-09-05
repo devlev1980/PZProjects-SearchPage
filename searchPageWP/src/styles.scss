@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "~bootstrap/dist/css/bootstrap.css";
 *,*::after,*::before{
   margin: 0;
   padding: 0;
@@ -12,5 +13,11 @@ body{
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.cdk-overlay-pane{
+  position: absolute !important;
+  left: -139px;
+  top: -40px;
+}
 
 

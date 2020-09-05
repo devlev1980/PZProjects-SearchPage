@@ -1,0 +1,104 @@
+.cards__container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(455px , 1fr));
+  grid-gap: 30px;
+}
+
+.card{
+  display: flex;
+  max-width: 455px;
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+
+  .card__body{
+    width: 100%;
+    padding: 20px;
+    .card__title{
+      margin-bottom: 0.5rem;
+    }
+    .card__phones {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      div{
+        display: flex;
+        align-items: center;
+        img{
+          margin-right: 3px;
+        }
+        span{
+          color: #00bca9;
+        }
+      }
+      .card__phones-work {
+        margin-right: 7px;
+      }
+    }
+  }
+  .menu{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .card__imgWrapper {
+    width: 93px;
+    height: 93px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .card__employee-info {
+    display: flex;
+    align-items: center;
+  }
+  .card__infoWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    justify-content: space-evenly;
+    margin-left: 4rem;
+    div{
+      display: flex;
+      align-items: center;
+      img{
+        margin-right: 5px;
+      }
+    }
+    .divider{
+      height: 1px;
+      display: block;
+      background:#b3b9c5;
+    }
+  }
+}
+pagination-controls#custom {
+  display: flex;
+  justify-content: center;
+  margin-top: 10rem;
+  width: 100%;
+}
+::ng-deep.ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  background: #00bca9 !important;
+  color: #fefefe;
+  cursor: default;
+}
+::ng-deep.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: #e6e6e6;
+  text-decoration: none;
+}
+
+
+@media (max-width: 939px) {
+    .cards__container{
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+}
+

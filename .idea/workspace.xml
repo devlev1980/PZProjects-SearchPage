@@ -2,13 +2,43 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/department_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/department_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/departments.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/location_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/location_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/manager.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/manager_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/mobile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/mobile_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/phone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/sarch.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/sizes.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/sorting a-z copy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/sorting a-z.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/tag_search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/workday_hover.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/icons/workday_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/img/colors.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/searchPageWP/src/assets/img/fonts.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/a-z/a-z.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/employees-list/employees-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +56,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1grrqt84iW8pJdTgzIHLV5BHp51" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,6 +67,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -42,8 +75,15 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="D:\PZProject\Search_page\searchPageWP\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/searchPageWP/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/searchPageWP/src/assets/icons" />
+      <recent name="$PROJECT_DIR$/searchPageWP/src/assets/img" />
+      <recent name="$PROJECT_DIR$/searchPageWP/src/app/components" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -54,6 +94,8 @@
       <option name="presentableId" value="Default" />
       <updated>1598883745757</updated>
       <workItem from="1598883747226" duration="25635000" />
+      <workItem from="1599320612000" duration="2966000" />
+      <workItem from="1599323660266" duration="4242000" />
     </task>
     <task id="LOCAL‎00001" summary="add project">
       <created>1598966054486</created>

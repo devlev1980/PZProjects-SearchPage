@@ -29,6 +29,7 @@
     "bootstrap": "^4.5.2",
     "concat": "^1.0.3",
     "core-js": "^2.5.4",
+    "ngx-pagination": "^5.0.0",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },

@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
-import {SearchService} from '../services/search.service';
+import {SearchService} from '../../services/search.service';
 
 @Component({
   selector: 'app-a-z',

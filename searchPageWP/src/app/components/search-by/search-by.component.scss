@@ -1,16 +1,18 @@
-.container{
+.search__container{
   width: 100%;
   margin-bottom: 2rem;
   form{
     .form-group{
       display: flex;
-      width: 100%;
+      max-width: 92%;
       justify-content: space-between;
       .form-item{
-        flex-basis: 610px;
+        flex-basis: 455px;
         flex-grow: 0;
         flex-shrink: 1;
         position: relative;
+
+
         .btn__sort{
           position: absolute;
           top: 3px;
@@ -22,6 +24,11 @@
           background: #e7e6e6;
           box-shadow: none;
           border: 0;
+
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
 
         input{
@@ -30,11 +37,30 @@
           padding: 11px;
           border: 1px solid #ccc;
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+
+          &.byDepartment::placeholder{
+            position: relative;
+            left: 40px;
+          }
+          &.byLocation::placeholder{
+            position: relative;
+            left: 20px;
+          }
          &:focus{
            border: 1px solid #949494;
          }
         }
       }
+      .by__department,.by__location{
+
+        img{
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
     }
   }
 }
+
