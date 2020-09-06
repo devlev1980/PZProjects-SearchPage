@@ -15,6 +15,7 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   employeeList: IEmployee[] = [];
   AZ_characters: Array<string> = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   departments: string[] = [];
+  locations: string[] = [];
 
   constructor(private employeeService: MockService,
               private cdr: ChangeDetectorRef,
@@ -29,9 +30,15 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       this.departments  = [];
       this.profiles.forEach(item => {
         this.departments.push(item.Department);
+        if(item.OfficeNumber !== null){
+          this.locations.push(item.OfficeNumber);
+        }
       });
      this.departments = Array.from(new Set(this.departments));
+      this.locations = Array.from(new Set(this.locations));
+
       console.log('Departments', this.departments);
+      console.log('Locations', this.locations);
     });
   }
 

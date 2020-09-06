@@ -10,21 +10,30 @@
 <!--              <i class="fa fa-sort-alpha-desc" aria-hidden="true" *ngIf="DescIcon"></i>-->
             </button>
           </div>
-          <div class="form-item by__department">
-            <input type="text" class="byDepartment" (input)="onSearchByDepartment($event)" formControlName="byDepartment" placeholder="Department">
+          <div class="form-item by__department" #autocompleteDepartmentsRef>
+            <input type="text" class="byDepartment" (click)="showAutocompleteByDepartment = true" (input)="onSearchByDepartment($event)" formControlName="byDepartment" placeholder="Department">
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/departments.png?csf=1&e=X9mzPJ" alt="by department">
-
-            <div class="autocomplete__departments">
+<!-- ================       Autocomplete     =============================-->
+            <div class="autocomplete__departments" *ngIf="showAutocompleteByDepartment"  >
               <ul>
-                <li *ngFor="let department of departments">
+                <li *ngFor="let department of departments" (click)="onSelectDepartment(department)">
                   <span>{{department}}</span>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="form-item by__location">
-            <input type="text" class="byLocation" (input)="onSearchByLocation($event)" formControlName="byLocation" placeholder="Location">
+          <!-- ===========================================================-->
+          <div class="form-item by__location" #autocompleteLocationsRef>
+            <input type="text" class="byLocation" (click)="showAutocompleteByLocation = true" (input)="onSearchByLocation($event)" formControlName="byLocation" placeholder="Location">
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/location_normal.png?csf=1&e=3i9pEC" alt="by location">
+
+            <div class="autocomplete__locations" *ngIf="showAutocompleteByLocation" #autocompleteLocations>
+              <ul>
+                <li *ngFor="let office of locations" (click)="onSelectLocation(office)">
+                  <span>{{office}}</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </form>

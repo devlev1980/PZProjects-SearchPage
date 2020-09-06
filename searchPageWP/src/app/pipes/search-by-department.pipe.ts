@@ -7,12 +7,12 @@ import {IProfile} from '../models/profile.model';
 })
 export class SearchByDepartmentPipe implements PipeTransform {
 
-  transform(employees: IProfile[], searchTerm: any): any {
-    if (!employees || !searchTerm) {
-      return employees;
+  transform(profiles: IProfile[], searchTerm: any): any {
+    if (!profiles || !searchTerm) {
+      return profiles;
     }
-    return employees.filter((user) => {
-      return  user.Department.includes(searchTerm);
+    return profiles.filter((profile) => {
+      return  profile.Department.includes(searchTerm);
     });
   }
 

@@ -7,13 +7,13 @@ import {IProfile} from '../models/profile.model';
 })
 export class SearchByEmployeePipe implements PipeTransform {
 
-  transform(employees: IProfile[], searchTerm: any): any {
-    if (!employees || !searchTerm ) {
-      return employees;
+  transform(profiles: IProfile[], searchTerm: any): any {
+    if (!profiles || !searchTerm ) {
+      return profiles;
     }
-    return employees.filter((user) => {
-      return user.FirstName.includes(searchTerm) ||
-        user.LastName.includes(searchTerm) ;
+    return profiles.filter((profile) => {
+      return profile.FirstName.includes(searchTerm) ||
+        profile.LastName.includes(searchTerm) ;
     });
   }
 

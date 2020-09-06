@@ -1,4 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SearchService} from '../../services/search.service';
 import {SortService} from '../../services/sort.service';
@@ -10,18 +19,41 @@ import {fromEvent, Observable} from 'rxjs';
   styleUrls: ['./search-by.component.scss']
 })
 export class SearchByComponent implements OnInit, AfterViewInit {
-  @Input()departments: string[] = [];
+  @Input() departments: string[] = [];
+  @Input() locations: string[] = [];
   searchForm: FormGroup;
   @ViewChild('sortBtn') sortBtn: ElementRef;
   click$: Observable<Event>;
   count: number = 0;
   AscIcon: boolean = true;
-  DescIcon: boolean ;
+  DescIcon: boolean;
+  showAutocompleteByDepartment: boolean = false;
+  showAutocompleteByLocation: boolean = false;
+  @ViewChild('autocompleteDepartmentsRef') autocompleteDepartmentsRef: ElementRef;
+  @ViewChild('autocompleteLocationsRef') autocompleteLocationsRef: ElementRef;
 
   constructor(private fb: FormBuilder,
               private searchService: SearchService,
               private sortService: SortService,
               private cdr: ChangeDetectorRef) {
+  }
+
+  // @HostListener('document:click', ['$event'])
+  // handleOutsideClickForDepartments(event) {
+  //   console.log('good');
+  //   if (!this.autocompleteDepartmentsRef.nativeElement.contains(event.target)) {
+  //
+  //     this.showAutocompleteByDepartment = false;
+  //   }
+  // }
+  @HostListener('document:click', ['$event'])
+  handleOutsideClickForLocations(event) {
+    if (!this.autocompleteLocationsRef.nativeElement.contains(event.target)) {
+      this.showAutocompleteByLocation = false;
+    }
+    if (!this.autocompleteDepartmentsRef.nativeElement.contains(event.target)) {
+      this.showAutocompleteByDepartment = false;
+    }
   }
 
   ngOnInit() {
@@ -31,6 +63,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       byLocation: ['']
     });
   }
+
   ngAfterViewInit() {
     this.click$ = fromEvent(this.sortBtn.nativeElement, 'click');
     this.click$.subscribe(click => {
@@ -67,11 +100,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
   onSearchByDepartment(event: Event) {
-    this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
+    // this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
   }
 
   onSearchByLocation(event: Event) {
-    this.searchService.setSearch({type: 'byLocation', value: this.byDepartment.value || ''});
+    // this.searchService.setSearch({type: 'byLocation', value: this.byDepartment.value || ''});
   }
 
   onSortEmployees(order: string) {
@@ -79,6 +112,15 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
 
+  onSelectDepartment(department: string) {
+    this.byDepartment.patchValue(department);
+    this.showAutocompleteByDepartment = false;
+    this.searchService.setSearch({type: 'byDepartment', value: department || ''});
+  }
 
-
+  onSelectLocation(office: string) {
+    this.showAutocompleteByLocation = false;
+    this.byLocation.patchValue(office);
+    this.searchService.setSearch({type: 'byLocation', value: office || ''});
+  }
 }

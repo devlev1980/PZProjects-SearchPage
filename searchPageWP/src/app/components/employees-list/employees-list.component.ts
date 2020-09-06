@@ -13,7 +13,7 @@ import {IProfile} from '../../models/profile.model';
 })
 export class EmployeesListComponent implements OnInit {
   // @Input() employeeList: IEmployee[];
-  @Input() profiles: IProfile[];
+  @Input() profiles: IProfile[] = [];
   searchTerm: ISearchTerm = {type: '', value: ''};
   byEmployeeTerm: string;
   byDepartmentTerm: string;
