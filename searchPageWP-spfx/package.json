@@ -10,13 +10,14 @@
     "build": "gulp bundle",
     "clean": "gulp clean",
     "test": "gulp test",
+    "serve": "gulp serve",
     "preversion": "node ./tools/pre-version.js",
     "postversion": "gulp dist"
   },
   "dependencies": {
     "@microsoft/sp-core-library": "~1.4.0",
-    "@microsoft/sp-lodash-subset": "~1.4.0",
     "@microsoft/sp-office-ui-fabric-core": "~1.4.0",
+    "@microsoft/sp-lodash-subset": "~1.4.0",
     "@microsoft/sp-webpart-base": "~1.4.0",
     "@pnp/pnpjs": "^2.0.6",
     "@pnp/spfx-property-controls": "1.19.0",

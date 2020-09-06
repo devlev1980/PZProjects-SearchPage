@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SearchService} from '../../services/search.service';
 import {SortService} from '../../services/sort.service';
@@ -10,6 +10,7 @@ import {fromEvent, Observable} from 'rxjs';
   styleUrls: ['./search-by.component.scss']
 })
 export class SearchByComponent implements OnInit, AfterViewInit {
+  @Input()departments: string[] = [];
   searchForm: FormGroup;
   @ViewChild('sortBtn') sortBtn: ElementRef;
   click$: Observable<Event>;
@@ -29,6 +30,24 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       byDepartment: [''],
       byLocation: ['']
     });
+  }
+  ngAfterViewInit() {
+    this.click$ = fromEvent(this.sortBtn.nativeElement, 'click');
+    this.click$.subscribe(click => {
+
+      this.count++;
+
+      if (this.count % 2 === 0) {
+        this.sortService.setOrder('asc');
+        this.AscIcon = true;
+        this.DescIcon = false;
+      } else {
+        this.sortService.setOrder('desc');
+        this.AscIcon = false;
+        this.DescIcon = true;
+      }
+    });
+
   }
 
   get byEmployee() {
@@ -59,24 +78,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.sortService.setOrder(order);
   }
 
-  ngAfterViewInit() {
-    this.click$ = fromEvent(this.sortBtn.nativeElement, 'click');
-    this.click$.subscribe(click => {
 
-      this.count++;
-
-      if (this.count % 2 === 0) {
-        this.sortService.setOrder('asc');
-        this.AscIcon = true;
-        this.DescIcon = false;
-      } else {
-        this.sortService.setOrder('desc');
-        this.AscIcon = false;
-        this.DescIcon = true;
-      }
-    });
-
-  }
 
 
 }

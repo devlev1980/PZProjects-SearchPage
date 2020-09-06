@@ -1,3 +1,4 @@
+@import "src/styles";
 .search__container{
   width: 100%;
   margin-bottom: 2rem;
@@ -14,41 +15,73 @@
 
 
         .btn__sort{
-          position: absolute;
-          top: 3px;
-          right: 4px;
-          border-radius: 50%;
           cursor: pointer;
-          width: 35px;
-          height: 85%;
-          background: #e7e6e6;
+          position: absolute;
+          top: 24px;
+          right: 54px;
           box-shadow: none;
           border: 0;
-
           img{
-            width: 100%;
-            height: 100%;
+
+
+            //width: 100%;
+            //height: 100%;
           }
         }
 
         input{
           width: 100%;
           border-radius: 20px;
-          padding: 11px;
+          padding: 11px 50px;
           border: 1px solid #ccc;
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 
+          &.byEmployee::placeholder{
+            position: relative;
+            left: 0;
+          }
+
           &.byDepartment::placeholder{
             position: relative;
-            left: 40px;
+            left: 0;
           }
           &.byLocation::placeholder{
             position: relative;
-            left: 20px;
+            left: 0;
           }
          &:focus{
            border: 1px solid #949494;
          }
+        }
+      }
+      .by__employee{
+        img{
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+      .by__department{
+        position: relative;
+
+        .autocomplete__departments{
+          position: absolute;
+          top: 100%;
+          left: 13px;
+          width: calc(100% - 20px);
+          background: $primaryBg;
+          color: #fff;
+          z-index: 1;
+          height: 167px;
+          overflow-y: auto;
+          ul>li{
+            width: 100%;
+            padding: 5px 8px;
+            border-bottom:1px solid white;
+            cursor: pointer;
+          }
+
         }
       }
       .by__department,.by__location{

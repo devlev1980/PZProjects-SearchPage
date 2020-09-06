@@ -5,19 +5,32 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  outline: none;
+  outline: none !important;
 }
 body{
   font-family: 'Roboto', sans-serif;
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .cdk-overlay-pane{
   position: absolute !important;
   left: -139px;
   top: -40px;
 }
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+$inputBg: #72819B;
+$white: #fff;
+$primaryBg: #102344;
+$borderColor: #1C3B61;
+$footerBg: #0b1b37;
+$textColor: #b0b0b0;
+
 
 

@@ -2,20 +2,29 @@
       <form [formGroup]="searchForm">
         <div class="form-group">
           <div class="form-item by__employee">
-            <input type="text" (input)="onSearchByEmployee($event)" formControlName="byEmployee" placeholder="Type employee's name">
+            <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/sarch.png?csf=1&e=gcshpb" alt="search" class="byEmployee">
+            <input type="text" class="byEmployee" (input)="onSearchByEmployee($event)" formControlName="byEmployee" placeholder="Type employee's name">
             <button class="btn__sort" type="button" #sortBtn >
-              <img src="assets/icons/sorting%20a-z.png" alt="">
+              <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/sorting%20a-z.png?csf=1&e=gNo5Bh" alt="sort">
 <!--              <i class="fa fa-sort-alpha-asc" aria-hidden="true" *ngIf="AscIcon"></i>-->
 <!--              <i class="fa fa-sort-alpha-desc" aria-hidden="true" *ngIf="DescIcon"></i>-->
             </button>
           </div>
           <div class="form-item by__department">
             <input type="text" class="byDepartment" (input)="onSearchByDepartment($event)" formControlName="byDepartment" placeholder="Department">
-            <img src="assets/icons/departments.png" alt="by department">
+            <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/departments.png?csf=1&e=X9mzPJ" alt="by department">
+
+            <div class="autocomplete__departments">
+              <ul>
+                <li *ngFor="let department of departments">
+                  <span>{{department}}</span>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="form-item by__location">
             <input type="text" class="byLocation" (input)="onSearchByLocation($event)" formControlName="byLocation" placeholder="Location">
-            <img src="assets/icons/location_normal.png" alt="by location">
+            <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/location_normal.png?csf=1&e=3i9pEC" alt="by location">
           </div>
         </div>
       </form>

@@ -16,6 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { AZComponent } from './components/a-z/a-z.component';
 import { SearchByAZPipe } from './pipes/search-by-az.pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule
 
   ],
   providers: [],
