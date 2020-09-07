@@ -1,3 +1,4 @@
+@import "src/styles";
 .cards__container{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(455px , 1fr));
@@ -8,8 +9,9 @@
   display: flex;
   max-width: 455px;
   width: 100%;
-  flex-grow: 1;
-  flex-shrink: 1;
+  //flex-basis: 455px;
+  //flex-grow: 0;
+  //flex-shrink: 1;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   position: relative;
   .card__body{
@@ -17,6 +19,7 @@
     padding: 20px;
     .card__title{
       margin-bottom: 0.5rem;
+      color: #35435c;
     }
     .card__phones {
       margin-bottom: 1rem;
@@ -64,6 +67,7 @@
   .card__employee-info {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
   .card__infoWrapper {
     display: flex;
@@ -82,8 +86,18 @@
       img{
         margin-right: 5px;
       }
+      span{
+        color: #8f97a7;
+
+      }
     }
 
+  }
+}
+.spinner__container{
+  text-align: center;
+  .spinner-border{
+    color: #00bca9;
   }
 }
 pagination-controls#custom {
@@ -102,6 +116,22 @@ pagination-controls#custom {
   background: #e6e6e6;
   text-decoration: none;
 }
+::ng-deep .sub__menu{
+  .mat-menu-item{
+    a{
+      margin-left: 7px;
+    }
+    &:hover{
+      background: $primaryBg;
+      color: white;
+
+    }
+  }
+}
+::ng-deep .mat-menu-content:not(:empty) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
 
 
 @media (max-width: 939px) {
@@ -110,5 +140,16 @@ pagination-controls#custom {
       grid-template-columns: 1fr;
       place-items: center;
     }
+
+}
+@media (max-width: 768px) {
+  .card__infoWrapper{
+    margin-left: 0 !important;
+  }
+  .card{
+    max-width: 686px ;
+    width: 100%;
+    min-width: 0;
+  }
 }
 

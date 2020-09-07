@@ -1,36 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import "~bootstrap/dist/css/bootstrap.css";
-*,*::after,*::before{
+
+
+
+*, *::after, *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   outline: none !important;
 }
-body{
+
+body {
   font-family: 'Roboto', sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+html, body {
+  height: 100%;
+}
 
-.cdk-overlay-pane{
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+.cdk-overlay-pane {
   position: absolute !important;
   left: -139px;
   top: -40px;
 }
-ul{
+
+ul {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+button.mat-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    color: #8f97a7;
+  }
+
+  span {
+    color: #8f97a7;
+    margin-left: 3px;
+  }
+
+
 }
 
 $inputBg: #72819B;
 $white: #fff;
 $primaryBg: #102344;
 $borderColor: #1C3B61;
-$footerBg: #0b1b37;
 $textColor: #b0b0b0;
+
+
+
 
 
 

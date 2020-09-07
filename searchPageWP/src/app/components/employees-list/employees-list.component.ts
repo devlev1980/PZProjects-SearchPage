@@ -12,7 +12,7 @@ import {IProfile} from '../../models/profile.model';
   styleUrls: ['./employees-list.component.scss']
 })
 export class EmployeesListComponent implements OnInit {
-  // @Input() employeeList: IEmployee[];
+  @Input() employeeList: IEmployee[];
   @Input() profiles: IProfile[] = [];
   searchTerm: ISearchTerm = {type: '', value: ''};
   byEmployeeTerm: string;
@@ -20,10 +20,10 @@ export class EmployeesListComponent implements OnInit {
   byLocation: string;
   byAZ: string;
   @ViewChild('menu') menu: MatMenuTrigger;
-   totalItems: number;
-   currentPage: number = 1;
-   workPhoneImgSrc: string = '';
-   mobilePhoneImgSrc: string = '';
+  totalItems: number;
+  currentPage: number = 1;
+  workPhoneImgSrc: string = '';
+  mobilePhoneImgSrc: string = '';
 
   constructor(private employeeService: MockService,
               private searchService: SearchService,
@@ -32,9 +32,9 @@ export class EmployeesListComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.totalItems = this.profiles.length;
-  this.workPhoneImgSrc = 'https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/phone.png?csf=1&e=F1o6Vj';
-  this.mobilePhoneImgSrc = 'https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile.png?csf=1&e=alqtkk';
+    this.totalItems = this.profiles.length;
+    this.workPhoneImgSrc = 'https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/phone.png?csf=1&e=F1o6Vj';
+    this.mobilePhoneImgSrc = 'https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile.png?csf=1&e=alqtkk';
     this.searchService.getSearch().subscribe((searchTerm) => {
       switch (searchTerm.type) {
         case 'byEmployee':
@@ -45,6 +45,7 @@ export class EmployeesListComponent implements OnInit {
           break;
         case 'byLocation':
           this.byLocation = searchTerm.value;
+          console.log('by Location', this.byLocation);
           break;
         case 'byAZ':
           this.byAZ = searchTerm.value;

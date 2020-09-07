@@ -100,11 +100,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
   onSearchByDepartment(event: Event) {
-    // this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
+     this.searchService.setSearch({type: 'byDepartment', value:  ''});
   }
 
   onSearchByLocation(event: Event) {
-    // this.searchService.setSearch({type: 'byLocation', value: this.byDepartment.value || ''});
+     this.searchService.setSearch({type: 'byLocation', value: ''});
   }
 
   onSortEmployees(order: string) {

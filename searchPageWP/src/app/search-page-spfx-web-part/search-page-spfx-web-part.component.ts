@@ -27,52 +27,16 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
     this.sharepointService.getProfiles().subscribe(profiles => {
       console.log('Profiles in component', profiles);
       this.profiles = profiles;
-      this.departments  = [];
+      this.departments = [];
       this.profiles.forEach(item => {
         this.departments.push(item.Department);
-        if(item.OfficeNumber !== null){
-          this.locations.push(item.OfficeNumber);
+        if (item.Office !== null) {
+          this.locations.push(item.Office);
         }
       });
-     this.departments = Array.from(new Set(this.departments));
+      this.departments = Array.from(new Set(this.departments));
       this.locations = Array.from(new Set(this.locations));
-
-      console.log('Departments', this.departments);
-      console.log('Locations', this.locations);
     });
-  }
-
-  getFields(profiles) {
-
-    // for (const profile of profiles) {
-    //   const profileObject: IProfile = {
-    //     EmployeeID: '',
-    //     FirstName: '',
-    //     LastName: '',
-    //     PictureUrl: '',
-    //     Cell: '',
-    //     WorkEmail: '',
-    //     FullName: '',
-    //     ManagerDisplayName: '',
-    //     Department: '',
-    //     Building: '',
-    //     OfficeNumber: ''
-    //   };
-    //   for (const j of profile) {
-    //     if (
-    //       (j.Key === 'FirstName' && j.Value !== '') ||
-    //       (j.Key === 'WorkEmail' && j.Value !== null) ||
-    //       (j.Key === 'Cell' && j.Value !== '' && j.Value !== null) ||
-    //       (j.Key === 'PictureUrl' && j.Value !== null) ||
-    //       (j.Key === 'FullName' && j.Value !== '') ||
-    //       (j.Key === 'LastName' && j.Value !== null)) {
-    //       profileObject.FullName = '';
-    //       profileObject[j.Key] = j.Value;
-    //       this.profiles.push(profileObject);
-    //     }
-    //   }
-    // }
-    // console.log('--- profiles', this.profiles);
   }
 
 }

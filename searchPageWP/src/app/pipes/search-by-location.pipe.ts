@@ -1,21 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {IEmployee} from '../models/employee';
 import {IProfile} from '../models/profile.model';
 
 @Pipe({
-  name: 'searchByDepartment'
+  name: 'searchByLocation'
 })
-export class SearchByDepartmentPipe implements PipeTransform {
+export class SearchByLocationPipe implements PipeTransform {
 
   transform(profiles: IProfile[], searchTerm: any): any {
     if (!profiles || !searchTerm) {
-      console.log('good');
       return profiles;
     }
     return profiles.filter((profile) => {
-      return  profile.Department.includes(searchTerm);
+      return  profile.Office.includes(searchTerm);
     });
   }
-
 
 }

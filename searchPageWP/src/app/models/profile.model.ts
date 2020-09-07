@@ -8,7 +8,7 @@ export interface IProfile {
   PictureUrl: string;
   FullName: string;
   ManagerDisplayName: string;
+  Office: string;
   OfficeNumber: string;
   Department: string;
-  Building: string;
 }

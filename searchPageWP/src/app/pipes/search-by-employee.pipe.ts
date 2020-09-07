@@ -13,6 +13,7 @@ export class SearchByEmployeePipe implements PipeTransform {
     }
     return profiles.filter((profile) => {
       return profile.FirstName.includes(searchTerm) ||
+        profile.FullName.includes(searchTerm) ||
         profile.LastName.includes(searchTerm) ;
     });
   }

@@ -1,6 +1,6 @@
-<div class="cards__container">
+<div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
   <div class="card" *ngFor="let profile of profiles |
-  paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems }| searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByAZ: byAZ" >
+  paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems }| searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByAZ: byAZ | searchByLocation: byLocation" >
     <!--      <img src="..." class="card-img-top" alt="...">-->
 
     <div class="card__body" >
@@ -45,20 +45,20 @@
         <button mat-icon-button [matMenuTriggerFor]="menu" yPosition="below" class="employee__menu" aria-label="Example icon-button with a menu">
           <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/more_vert-black-18dp.svg?csf=1&e=LDjLqn" alt="menu">
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menu="matMenu" class="sub__menu">
           <button mat-menu-item>
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/location_on-black-18dp.svg?csf=1&e=eK1fbn" alt="location">
-            <span>{{profile.Building}}</span>
-            <span>{{profile.OfficeNumber}}</span>
+            <span> {{profile.Office}}</span>
+            <span>Room {{profile.OfficeNumber}}</span>
 
           </button>
-          <button mat-menu-item disabled>
-            <mat-icon>voicemail</mat-icon>
-            <span>{{profile.OfficeNumber}}</span>
+          <button mat-menu-item >
+            <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/manager.png?csf=1&e=RIuXe5" alt="">
+<!--            <span>{{profile?.ManagerDisplayName}}</span>-->
           </button>
           <button mat-menu-item>
-            <mat-icon>notifications_off</mat-icon>
-            <span>Disable alerts</span>
+            <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/workday_normal.png?csf=1&e=DprvlI" alt="">
+            <a href="#">View in workday</a>
           </button>
         </mat-menu>
       </div>
@@ -68,6 +68,13 @@
 
 
 </div>
+
+<ng-template #noProfiles>
+  <div class="spinner__container">
+    <div class="spinner-border" role="status"></div>
+  </div>
+
+</ng-template>
 <pagination-controls (pageBoundsCorrection)="pageChanged($event)"
                      (pageChange)="currentPage = $event"
                      autoHide="false"

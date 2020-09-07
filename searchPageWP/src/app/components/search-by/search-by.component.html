@@ -11,7 +11,7 @@
             </button>
           </div>
           <div class="form-item by__department" #autocompleteDepartmentsRef>
-            <input type="text" class="byDepartment" (click)="showAutocompleteByDepartment = true" (input)="onSearchByDepartment($event)" formControlName="byDepartment" placeholder="Department">
+            <input type="text"  class="byDepartment" (click)="showAutocompleteByDepartment = true" (input)="onSearchByDepartment($event)" formControlName="byDepartment" placeholder="Department">
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/departments.png?csf=1&e=X9mzPJ" alt="by department">
 <!-- ================       Autocomplete     =============================-->
             <div class="autocomplete__departments" *ngIf="showAutocompleteByDepartment"  >
@@ -24,7 +24,7 @@
           </div>
           <!-- ===========================================================-->
           <div class="form-item by__location" #autocompleteLocationsRef>
-            <input type="text" class="byLocation" (click)="showAutocompleteByLocation = true" (input)="onSearchByLocation($event)" formControlName="byLocation" placeholder="Location">
+            <input type="text"  class="byLocation" (click)="showAutocompleteByLocation = true" (input)="onSearchByLocation($event)" formControlName="byLocation" placeholder="Location">
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/location_normal.png?csf=1&e=3i9pEC" alt="by location">
 
             <div class="autocomplete__locations" *ngIf="showAutocompleteByLocation" #autocompleteLocations>

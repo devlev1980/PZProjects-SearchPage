@@ -56,12 +56,16 @@ export class SharepointService {
       FullName: '',
       ManagerDisplayName: '',
       Department: '',
-      Building: '',
-      OfficeNumber: ''
+      OfficeNumber: '',
+      Office: ''
     };
     for (const property of profile) {
       profileObject.FullName = '';
       profileObject[property.Key] = property.Value;
+      if (profileObject[property.Key] === 'manager.DisplayName') {
+        console.log('yes')
+        profileObject[property.Key] = 'ManagerDisplayName';
+      }
     }
     return profileObject;
   }
