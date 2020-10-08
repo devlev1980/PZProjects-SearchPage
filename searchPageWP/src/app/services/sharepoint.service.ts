@@ -1,22 +1,35 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {map, tap} from 'rxjs/operators';
+import {map, shareReplay} from 'rxjs/operators';
 import {IProfile} from '../models/profile.model';
-
+import {Observable} from 'rxjs';
+const CACHE_SIZE = 1;
 @Injectable({
   providedIn: 'root'
 })
+
 export class SharepointService {
   profiles: any[] = [];
+  private cache$: Observable<any>;
 
   constructor(private http: HttpClient) {
   }
 
-  getProfiles() {
+  getPofilesCached() {
+    if (!this.cache$) {
+      this.cache$ = this.getProfiles().pipe(
+        shareReplay(CACHE_SIZE));
+    }
+    return this.cache$;
+  }
+
+  private getProfiles() {
     const appweburl = `_api/search/query`;
+    // tslint:disable-next-line:max-line-length
     // const properties = 'Office,Id,FirstName,LastName,MobilePhone,WorkPhone,AccountName,Department,JobTitle,PictureURL,WorkEmail,WorkId,EmployeeID'
-    const properties = 'EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,manager.DisplayName,OfficeNumber,Department,Office';
+    // tslint:disable-next-line:max-line-length
+    const properties = 'EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,manager.DisplayName,OfficeNumber,Department,Office,JobTitle';
     const httpURL = `${environment.apiUrl}${appweburl}`;
     const httpParams = new HttpParams()
       .set('queryText', `'*'`)
@@ -57,13 +70,13 @@ export class SharepointService {
       ManagerDisplayName: '',
       Department: '',
       OfficeNumber: '',
-      Office: ''
+      Office: '',
+      JobTitle: ''
     };
     for (const property of profile) {
       profileObject.FullName = '';
       profileObject[property.Key] = property.Value;
       if (profileObject[property.Key] === 'manager.DisplayName') {
-        console.log('yes')
         profileObject[property.Key] = 'ManagerDisplayName';
       }
     }

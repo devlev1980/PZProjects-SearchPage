@@ -17,6 +17,10 @@ import { AZComponent } from './components/a-z/a-z.component';
 import { SearchByAZPipe } from './pipes/search-by-az.pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {HttpClientModule} from '@angular/common/http';
+import { SearchByLocationPipe } from './pipes/search-by-location.pipe';
+import { HoverDirective } from './directives/hover.directive';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {HighlightPipe} from './pipes/highlight.pipe';
 
 @NgModule({
   declarations: [
@@ -27,19 +31,23 @@ import {HttpClientModule} from '@angular/common/http';
     SearchByEmployeePipe,
     SearchByDepartmentPipe,
     AZComponent,
-    SearchByAZPipe
+    SearchByAZPipe,
+    SearchByLocationPipe,
+    HoverDirective,
+    HighlightPipe
   ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    NgxPaginationModule,
-    HttpClientModule
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        NgxPaginationModule,
+        HttpClientModule,
+        ScrollingModule
 
-  ],
+    ],
   providers: [],
   entryComponents: [SearchPageSpfxWebPartComponent]
 })

@@ -1,5 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import {IEmployee} from '../models/employee';
+import {Pipe, PipeTransform} from '@angular/core';
 import {IProfile} from '../models/profile.model';
 
 @Pipe({

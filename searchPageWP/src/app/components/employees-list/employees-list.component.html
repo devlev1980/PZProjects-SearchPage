@@ -1,23 +1,24 @@
 <div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
   <div class="card" *ngFor="let profile of profiles |
-  paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems }| searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByAZ: byAZ | searchByLocation: byLocation" >
-    <!--      <img src="..." class="card-img-top" alt="...">-->
-
+  paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems } | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation "  >
     <div class="card__body" >
       <h3 class="card__title" >{{profile.FirstName}} {{profile.LastName}}</h3>
       <div class="card__phones">
         <div>
-          <img src="{{workPhoneImgSrc}}" class="work__phone" alt="work phone" (mouseover)="onHover()" (mouseout)="onLeave()">
-          <span class="card__phones-work">{{profile.WorkPhone}}</span>
+          <img src="{{workPhoneImgSrc}}" class="work__phone" alt="work phone" >
+          <span class="card__phones-work" *ngIf="profile.WorkPhone;else notAvailable">{{profile.WorkPhone}}</span>
+          <ng-template #notAvailable>
+            <span class="card__phones-work">N/A</span>
+          </ng-template>
         </div>
-        <div>
-          <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile.png?csf=1&e=alqtkk" (mouseover)="onHover()" (mouseout)="onLeave()"  alt="cell phone" class="cell__phone">
-          <span class="card__phones-cell">{{profile.MobilePhone}}</span>
+        <div (mouseover)="onHoverOnMobileIcon()" (mouseout)="onLeaveOnMobileIcon()">
+          <img [hidden]="isShowMobileIcon" src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile.png?csf=1&e=alqtkk" (mouseover)="onHoverOnMobileIcon()" (mouseout)="onLeaveOnMobileIcon()" alt="cell phone" class="cell__phone">
+          <img [hidden]="!isShowMobileIcon"src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile_hover.png?csf=1&e=XF0WLA" alt="">
+          <span class="card__phones-cell" *ngIf="profile.MobilePhone; else notAvailable">{{profile.MobilePhone}}</span>
         </div>
       </div>
       <div class="card__employee-info">
         <div class="card__imgWrapper">
-<!--          <img src="https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png" alt="">-->
           <img src="{{profile.PictureUrl}}" alt="avatar" *ngIf="profile.PictureUrl;else noPicture" >
           <ng-template #noPicture>
             <div class="initials">
@@ -26,17 +27,24 @@
             </div>
           </ng-template>
         </div>
-        <div class="card__infoWrapper">
-          <div class="email">
+        <div class="card__infoWrapper" >
+          <div class="email" >
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile.png?csf=1&e=dgqJRa" alt="">
-            <span>{{profile.WorkEmail}}</span>
+            <span *ngIf="profile.WorkEmail;else workEmailNorAvailable" >{{profile.WorkEmail}}</span>
+            <ng-template #workEmailNorAvailable>
+              <span>Email N/A</span>
+            </ng-template>
           </div>
           <div class="job">
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/manager.png?csf=1&e=NhwQB4" alt="">
-            <span>{{profile.job}}</span>
+            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>
+            <ng-template #noJobTitle>
+              <span>Job N/A</span>
+            </ng-template>
           </div>
-          <div class="department">
-            <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_normal.png?csf=1&e=73phmb" alt="">
+          <div class="department" (mouseover)="onHoverOnDepartmentIcon()" (mouseout)="onLeaveOnDepartmentIcon()">
+            <img [hidden]="isShowDepartmentIcon"  src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_normal.png?csf=1&e=73phmb" alt="">
+            <img [hidden]="!isShowDepartmentIcon" src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_hover.png?csf=1&e=ZzKqbU" alt="">
             <span>{{profile.Department}}</span>
           </div>
         </div>
@@ -48,13 +56,17 @@
         <mat-menu #menu="matMenu" class="sub__menu">
           <button mat-menu-item>
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/location_on-black-18dp.svg?csf=1&e=eK1fbn" alt="location">
-            <span> {{profile.Office}}</span>
-            <span>Room {{profile.OfficeNumber}}</span>
-
+            <span *ngIf="profile.Office;else buildingNotAvailable"> {{profile.Office}}</span>
+            <ng-template #buildingNotAvailable>
+              <span>Office N/A</span>
+            </ng-template>
+            <div *ngIf="profile.OfficeNumber;else officeNumberNotAvailable">Room {{profile.OfficeNumber}}</div>
+            <ng-template #officeNumberNotAvailable>
+              <div>Room N/A</div>
+            </ng-template>
           </button>
           <button mat-menu-item >
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/manager.png?csf=1&e=RIuXe5" alt="">
-<!--            <span>{{profile?.ManagerDisplayName}}</span>-->
           </button>
           <button mat-menu-item>
             <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/workday_normal.png?csf=1&e=DprvlI" alt="">
@@ -63,19 +75,16 @@
         </mat-menu>
       </div>
     </div>
-
   </div>
-
-
 </div>
 
 <ng-template #noProfiles>
   <div class="spinner__container">
     <div class="spinner-border" role="status"></div>
   </div>
-
 </ng-template>
-<pagination-controls (pageBoundsCorrection)="pageChanged($event)"
+
+<pagination-controls *ngIf="profiles.length> 0" (pageBoundsCorrection)="pageChanged($event)"
                      (pageChange)="currentPage = $event"
                      autoHide="false"
                      directionLinks="true"

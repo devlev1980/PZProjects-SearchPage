@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {MockService} from '../services/mock.service';
 import {IEmployee} from '../models/employee';
 import {SharepointService} from '../services/sharepoint.service';
@@ -8,6 +8,7 @@ import {IProfile} from '../models/profile.model';
   selector: 'app-search-page-spfx-web-part',
   templateUrl: './search-page-spfx-web-part.component.html',
   styleUrls: ['./search-page-spfx-web-part.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchPageSpfxWebPartComponent implements OnInit {
   @Input() description: string;
@@ -24,7 +25,7 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
 
   ngOnInit() {
     // this.employeeService.getEmployeeList().subscribe((data) => this.employeeList = data);
-    this.sharepointService.getProfiles().subscribe(profiles => {
+    this.sharepointService.getPofilesCached().subscribe(profiles => {
       console.log('Profiles in component', profiles);
       this.profiles = profiles;
       this.departments = [];
@@ -36,6 +37,7 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       });
       this.departments = Array.from(new Set(this.departments));
       this.locations = Array.from(new Set(this.locations));
+      this.cdr.detectChanges();
     });
   }
 

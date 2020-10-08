@@ -1,15 +1,16 @@
-import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MockService} from '../../services/mock.service';
 import {IEmployee} from '../../models/employee';
 import {ISearchTerm, SearchService} from '../../services/search.service';
-import {MatMenuTrigger, MenuPositionX, MenuPositionY} from '@angular/material/menu';
+import {MatMenuTrigger} from '@angular/material/menu';
 import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
 
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',
-  styleUrls: ['./employees-list.component.scss']
+  styleUrls: ['./employees-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeesListComponent implements OnInit {
   @Input() employeeList: IEmployee[];
@@ -24,6 +25,9 @@ export class EmployeesListComponent implements OnInit {
   currentPage: number = 1;
   workPhoneImgSrc: string = '';
   mobilePhoneImgSrc: string = '';
+  hoverBgColor: string = '#000';
+  isShowMobileIcon: boolean = false;
+  isShowDepartmentIcon: boolean = false;
 
   constructor(private employeeService: MockService,
               private searchService: SearchService,
@@ -39,27 +43,41 @@ export class EmployeesListComponent implements OnInit {
       switch (searchTerm.type) {
         case 'byEmployee':
           this.byEmployeeTerm = searchTerm.value;
+          this.cdr.detectChanges();
           break;
         case 'byDepartment':
           this.byDepartmentTerm = searchTerm.value;
+          this.cdr.detectChanges();
           break;
         case 'byLocation':
           this.byLocation = searchTerm.value;
-          console.log('by Location', this.byLocation);
+          this.cdr.detectChanges();
           break;
         case 'byAZ':
           this.byAZ = searchTerm.value;
+          this.cdr.detectChanges();
           break;
       }
     });
 
     this.sortService.getOrder().subscribe(order => {
-      if (order === 'asc') {
-        this.profiles = this.profiles.sort();
+      switch (order) {
+        case 'asc':
+          this.profiles = this.profiles.sort();
+          break;
+        case 'desc':
+          this.profiles = this.profiles.sort().reverse();
+          break;
+        default:
+          this.profiles = this.profiles.sort();
 
-      } else if (order === 'desc') {
-        this.profiles = this.profiles.sort().reverse();
       }
+      // if (order === 'asc') {
+      //   this.profiles = this.profiles.sort();
+      //
+      // } else if (order === 'desc') {
+      //   this.profiles = this.profiles.sort().reverse();
+      // }
     });
 
   }
@@ -68,14 +86,19 @@ export class EmployeesListComponent implements OnInit {
 
   }
 
-  onHover() {
-    this.mobilePhoneImgSrc = 'https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile_hover.png?csf=1&e=pETNfJ'
-    // this.workPhoneImgSrc = '';
+  onHoverOnMobileIcon() {
+  this.isShowMobileIcon = true;
   }
 
-  onLeave() {
-    // this.workPhoneImgSrc = '';
-    this.mobilePhoneImgSrc = 'https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/mobile.png?csf=1&e=alqtkk';
+  onLeaveOnMobileIcon() {
+    this.isShowMobileIcon = false;
+  }
 
+  onHoverOnDepartmentIcon() {
+    this.isShowDepartmentIcon = true;
+  }
+
+  onLeaveOnDepartmentIcon() {
+    this.isShowDepartmentIcon = false;
   }
 }

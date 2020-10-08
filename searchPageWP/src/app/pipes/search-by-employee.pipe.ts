@@ -1,5 +1,4 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {IEmployee} from '../models/employee';
 import {IProfile} from '../models/profile.model';
 
 @Pipe({
@@ -7,15 +6,17 @@ import {IProfile} from '../models/profile.model';
 })
 export class SearchByEmployeePipe implements PipeTransform {
 
-  transform(profiles: IProfile[], searchTerm: any): any {
-    if (!profiles || !searchTerm ) {
+  transform(profiles: IProfile[], searchTerm: string): any {
+    if (!profiles || !searchTerm) {
       return profiles;
     }
-    return profiles.filter((profile) => {
-      return profile.FirstName.includes(searchTerm) ||
-        profile.FullName.includes(searchTerm) ||
-        profile.LastName.includes(searchTerm) ;
+
+    return profiles.filter((user) => {
+      return user.FirstName.toLowerCase().startsWith(searchTerm.toLowerCase()) || user.LastName.toLowerCase().includes(searchTerm.toLowerCase()) || user.FullName.toLowerCase().includes(searchTerm.toLowerCase());
     });
   }
+
+
+
 
 }
