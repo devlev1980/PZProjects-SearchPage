@@ -35,8 +35,8 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
           this.locations.push(item.Office);
         }
       });
-      this.departments = Array.from(new Set(this.departments));
-      this.locations = Array.from(new Set(this.locations));
+      this.departments = Array.from(new Set(this.departments)).sort();
+      this.locations = Array.from(new Set(this.locations)).sort();
       this.cdr.detectChanges();
     });
   }

@@ -19,3 +19,7 @@ export class SortService {
     return this.order.asObservable();
   }
 }
+
+interface IOrder {
+
+}

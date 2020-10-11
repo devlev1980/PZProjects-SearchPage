@@ -1,6 +1,11 @@
 <div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
-  <div class="card" *ngFor="let profile of profiles |
-  paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems } | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation "  >
+  <!--paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems  } | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation |searchByEmployee: byEmployeeTerm "  >-->
+
+  <div class="card" *ngFor="let profile of profiles
+  | searchByDepartment: byDepartmentTerm |
+  searchByLocation: byLocation |
+  searchByEmployee: byEmployeeTerm |
+   paginate: {id: 'custom', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems }"    >
     <div class="card__body" >
       <h3 class="card__title" >{{profile.FirstName}} {{profile.LastName}}</h3>
       <div class="card__phones">

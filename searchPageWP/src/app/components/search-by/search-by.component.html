@@ -6,7 +6,7 @@
 <!--            <input type="text" class="byEmployee" (input)="onSearchByEmployee()" formControlName="byEmployee" placeholder="Type employee's name">-->
             <input type="text" class="byEmployee" (input)="onSearchByEmployee()" placeholder="Type employee's name" formControlName="byEmployee">
             <button class="btn__sort" type="button" #sortBtn (click)="onSort()">
-              <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/sorting%20a-z.png?csf=1&e=gNo5Bh" alt="sort">
+              <img [src]="imgSrc" alt="sort">
             </button>
 <!--            ================================= Autocomplete -->
 
@@ -27,7 +27,7 @@
                         <span class="user__info-name"  [innerHTML]="profile?.FirstName | highlight: selectedUser"></span>
                         <span class="user__info-lastname" [innerHTML]="profile?.LastName | highlight: selectedUser"></span>
                         <div  *ngIf="profile?.WorkPhone">
-                          <label for="work_phone">Office Ext: </label>
+                          <label for="work_phone">Ext: </label>
                           <a class="user__info-email" id="work_phone" href="tel:{{profile?.WorkPhone}}"
                              [innerHTML]="profile?.WorkPhone"></a>
                         </div>

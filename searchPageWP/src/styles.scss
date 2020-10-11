@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import "~bootstrap/dist/css/bootstrap.css";
-
-
+// Color's Variables
+$inputBg: #72819B;
+$white: #fff;
+$primaryBg: #102344;
+$borderColor: #1C3B61;
+$textColor: #b0b0b0;
+$footerBg: #0b1b37;
 
 *, *::after, *::before {
   margin: 0;
@@ -69,12 +74,32 @@ button.mat-menu-item {
 
 }
 
-$inputBg: #72819B;
-$white: #fff;
-$primaryBg: #102344;
-$borderColor: #1C3B61;
-$textColor: #b0b0b0;
-$footerBg: #0b1b37;
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #cccccc;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: $inputBg;
+  border-radius: 10px;
+}
+
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+
+  background: #555;
+}
+
+
 
 
 

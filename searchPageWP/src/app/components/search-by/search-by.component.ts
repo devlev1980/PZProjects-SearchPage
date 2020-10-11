@@ -15,6 +15,7 @@ import {SearchService} from '../../services/search.service';
 import {SortService} from '../../services/sort.service';
 import {Subscription} from 'rxjs';
 import {IProfile} from '../../models/profile.model';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-search-by',
@@ -29,7 +30,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   @ViewChild('sortBtn') sortBtn: ElementRef;
   click$: Subscription;
   count: number = 1;
-  AscIcon: boolean = true;
+  imgSrc: string = '';
   DescIcon: boolean;
   showAutocompleteByDepartment: boolean = false;
   showAutocompleteByLocation: boolean = false;
@@ -39,6 +40,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   @ViewChild('autocompleteEmployeeRef') autocompleteEmployeeRef: ElementRef;
   isShow: boolean = true;
   selectedUser: string = '';
+  private isAscendingSort: boolean = false;
 
   constructor(private fb: FormBuilder,
               private searchService: SearchService,
@@ -61,7 +63,15 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   ngOnInit() {
+    this.imgSrc = environment.azIcon;
+    this.initializeSearchForm();
+  }
+  /**
+   * Initialize searchForm
+   */
+  initializeSearchForm() {
     this.searchForm = this.fb.group({
       byEmployee: [''],
       byDepartment: [''],
@@ -86,14 +96,15 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     return this.searchForm.get('byLocation');
   }
 
+  /**
+   * select profile
+   * pass the selected profile value to the service setSearch
+   */
   onSearchByEmployee() {
-    console.log('On search employee');
     // this.showAutocompleteByEmployee = false;
     // console.log(this.byEmployee.value);
     this.selectedUser = this.byEmployee.value;
     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
-    this.cdr.detectChanges();
-
 
 
     // if (this.byEmployee.value === '') {
@@ -101,46 +112,66 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     // }
 
 
-
     // this.selectedUser = this.byEmployee.get() + ' ' + profile.LastName;
     // this.showUsers = false;
+    this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue(this.selectedUser);
-    this.searchService.setSearch({type: 'byDepartment', value: this.byEmployee.value || ''});
-     // TODO: add service for highlight
-  }
+    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+    // TODO: add service for highlight
+    this.cdr.detectChanges();
 
-  onSearchByDepartment(event: Event) {
+  }
+  /**
+   * Select department
+   * pass the selected profile value to the service setSearch
+   */
+  onSearchByDepartment() {
     this.showAutocompleteByDepartment = true;
     this.searchService.setSearch({type: 'byDepartment', value: ''});
   }
-
-  onSearchByLocation(event: Event) {
+  /**
+   * Select location
+   * pass the selected location value to the service setSearch
+   */
+  onSearchByLocation() {
     this.searchService.setSearch({type: 'byLocation', value: ''});
   }
 
-  onSortEmployees(order: string) {
-    this.sortService.setOrder(order);
-  }
-
-
+  /**
+   * Click on selected location
+   * pass the selected department value to the service setSearch
+   * @param department: string
+   */
   onSelectDepartment(department: string) {
     this.byDepartment.patchValue(department);
     this.showAutocompleteByDepartment = false;
     this.searchService.setSearch({type: 'byDepartment', value: department || ''});
   }
 
+  /**
+   * Click on selected location
+   * pass the value to the service setSearch
+   * @param office:string
+   */
   onSelectLocation(office: string) {
     this.showAutocompleteByLocation = false;
     this.byLocation.patchValue(office);
     this.searchService.setSearch({type: 'byLocation', value: office || ''});
   }
 
+  /**
+   * Click on Sort icon in input
+   */
   onSort() {
     this.count++;
     if (this.count % 2 === 0) {
       this.sortService.setOrder('asc');
+      this.imgSrc = environment.zaIcon;
+      this.cdr.detectChanges();
     } else {
       this.sortService.setOrder('desc');
+      this.imgSrc = environment.azIcon;
+      this.cdr.detectChanges();
     }
   }
 
