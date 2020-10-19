@@ -1,5 +1,13 @@
 <div class="components__wrapper">
-  <app-search-by [departments]="departments" [locations]="locations" [profiles]="profiles"></app-search-by>
-<!--  <app-a-z [azCharacters]="AZ_characters"></app-a-z>-->
-  <app-employees-list [profiles]="profiles" ></app-employees-list>
+  <app-search-by [departments]="departments"
+                 [locations]="locations"
+                 [profiles]="profiles"
+                 [profileFromSearch]="profileFromSearch">
+
+  </app-search-by>
+  <app-a-z [azCharacters]="AZ_characters"></app-a-z>
+  <app-employees-list [profiles]="profiles"
+                      [profileFromAutocompleteSearch]="profileFromSearch">
+
+  </app-employees-list>
 </div>

@@ -26,7 +26,6 @@
     "@angular/router": "~7.0.0",
     "@webcomponents/custom-elements": "^1.2.0",
     "@webcomponents/webcomponentsjs": "^2.1.2",
-    "bootstrap": "^4.5.2",
     "concat": "^1.0.3",
     "core-js": "^2.5.4",
     "ngx-pagination": "^5.0.0",

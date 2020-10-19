@@ -48,6 +48,18 @@ ul {
   padding: 0;
   list-style: none;
 }
+.mat-menu-panel{
+  min-width: 112px;
+  max-width: 180px;
+  position: absolute;
+  right: auto !important;
+  transform: translateX(39px);
+  top: 0;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100vh - 48px);
+  border-radius: 4px;
+  outline: 0;
+}
 
 button.mat-menu-item {
   width: 100%;

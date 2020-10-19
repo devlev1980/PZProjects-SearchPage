@@ -40,7 +40,10 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   @ViewChild('autocompleteEmployeeRef') autocompleteEmployeeRef: ElementRef;
   isShow: boolean = true;
   selectedUser: string = '';
-  private isAscendingSort: boolean = false;
+  ulHeight: number = 0;
+  filtered: IProfile[];
+  @Input() profileFromSearch: string;
+  ul: Element;
 
   constructor(private fb: FormBuilder,
               private searchService: SearchService,
@@ -48,7 +51,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
               private renderer: Renderer2,
               private cdr: ChangeDetectorRef) {
   }
-
 
   @HostListener('document:click', ['$event'])
   handleOutsideClickForLocations(event) {
@@ -63,11 +65,17 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   ngOnInit() {
     this.imgSrc = environment.azIcon;
+
     this.initializeSearchForm();
+
+    if (this.profileFromSearch) {
+      // this.ulHeight = 81;
+      this.onSearchByEmployee();
+    }
   }
+
   /**
    * Initialize searchForm
    */
@@ -79,8 +87,32 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  changeHeightOfAutocompleteDynamically() {
+    if (this.showAutocompleteByEmployee) {
+      const virtualScroll = document.querySelector('.users');
+      console.log(virtualScroll);
+      if (virtualScroll) {
+        const vsChildren = virtualScroll.children;
+        const children = vsChildren[0].children;
+        this.ul = children[0];
+        setTimeout(() => {
+          if (this.ul) {
+            for (let i = 0; i < this.ul.children.length; i++) {
+              if (i <= 4) {
+                this.ulHeight += (<HTMLElement>this.ul.children[i]).getBoundingClientRect().height + 5;
+                this.cdr.detectChanges();
+              }else{
+                this.showAutocompleteByEmployee = false;
+              }
+            }
+          }
+        }, 500);
+      }
 
+    }
+  }
+
+  ngAfterViewInit() {
 
   }
 
@@ -98,29 +130,27 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
   /**
    * select profile
-   * pass the selected profile value to the service setSearch
+   * pass the selected profile value to the 'Search service'
    */
   onSearchByEmployee() {
-    // this.showAutocompleteByEmployee = false;
-    // console.log(this.byEmployee.value);
+    if (this.profileFromSearch) {
+      this.selectedUser = this.profileFromSearch;
+      this.byEmployee.patchValue(this.selectedUser);
+
+      this.showAutocompleteByEmployee = this.byEmployee.value !== '';
+      this.changeHeightOfAutocompleteDynamically();
+    }
     this.selectedUser = this.byEmployee.value;
     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
 
+    this.changeHeightOfAutocompleteDynamically();
 
-    // if (this.byEmployee.value === '') {
-    //   this.showAutocompleteByEmployee = false;
-    // }
-
-
-    // this.selectedUser = this.byEmployee.get() + ' ' + profile.LastName;
-    // this.showUsers = false;
-    this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue(this.selectedUser);
     this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
-    // TODO: add service for highlight
     this.cdr.detectChanges();
 
   }
+
   /**
    * Select department
    * pass the selected profile value to the service setSearch
@@ -129,6 +159,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.showAutocompleteByDepartment = true;
     this.searchService.setSearch({type: 'byDepartment', value: ''});
   }
+
   /**
    * Select location
    * pass the selected location value to the service setSearch
@@ -184,5 +215,26 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
     // TODO : redirect to Search page and pass this.selectedUser as parameter
 
+  }
+
+  onClearInputByEmployee() {
+    this.showAutocompleteByEmployee = false;
+    this.byEmployee.patchValue('');
+    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+  }
+
+  onClearDepartmentInput() {
+    if (this.profileFromSearch) {
+      this.showAutocompleteByDepartment = false;
+    }
+    this.showAutocompleteByDepartment = false;
+    this.byDepartment.patchValue('');
+    this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
+  }
+
+  onClearLocationInput() {
+    this.showAutocompleteByLocation = false;
+    this.byLocation.patchValue('');
+    this.searchService.setSearch({type: 'byLocation', value: this.byLocation.value || ''});
   }
 }

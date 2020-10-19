@@ -6,17 +6,37 @@ import {IProfile} from '../models/profile.model';
 })
 export class SearchByEmployeePipe implements PipeTransform {
 
-  transform(profiles: IProfile[], searchTerm: string): any {
+  transform(profiles: IProfile[], searchTerm: string): IProfile[] {
     if (!profiles || !searchTerm) {
       return profiles;
     }
 
-    return profiles.filter((user) => {
-      return user.FirstName.toLowerCase().startsWith(searchTerm.toLowerCase()) || user.LastName.toLowerCase().includes(searchTerm.toLowerCase()) || user.FullName.toLowerCase().includes(searchTerm.toLowerCase());
+    return profiles.filter((profile) => {
+      if (profile.FirstName.toLowerCase().startsWith(searchTerm.toLowerCase()) || profile.FullName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+        profile.Rank = 1;
+        return profile;
+
+      } else if (profile.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) || profile.FullName.toLowerCase().includes(searchTerm.toLowerCase())) {
+        profile.Rank = 3;
+        return profile;
+      } else if (profile.LastName.toLowerCase().startsWith(searchTerm.toLowerCase()) || profile.FullName.toLowerCase().includes(searchTerm.toLowerCase())) {
+        profile.Rank = 2;
+        return profile;
+
+      } else if (profile.LastName.toLowerCase().includes(searchTerm.toLowerCase()) || profile.FullName.toLowerCase().includes(searchTerm.toLowerCase())) {
+        profile.Rank = 4;
+        return profile;
+
+      }
+    }).sort((a, b) => {
+      if (a.Rank >= b.Rank) {
+        return 1;
+      } else {
+        return -1;
+      }
+
     });
+
   }
-
-
-
 
 }

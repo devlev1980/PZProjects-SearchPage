@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit, QueryList, Renderer2,
+  ViewChild
+} from '@angular/core';
 import {MockService} from '../../services/mock.service';
 import {IEmployee} from '../../models/employee';
 import {ISearchTerm, SearchService} from '../../services/search.service';
@@ -6,6 +15,7 @@ import {MatMenuTrigger} from '@angular/material/menu';
 import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
+import {strictEqual} from 'assert';
 
 @Component({
   selector: 'app-employees-list',
@@ -14,8 +24,7 @@ import {environment} from '../../../environments/environment';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeesListComponent implements OnInit {
-  // @Input() employeeList: IEmployee[];
-  @Input() profiles: IProfile[] = [];
+  @Input() profiles: IProfile[];
   searchTerm: ISearchTerm = {type: '', value: ''};
   byEmployeeTerm: string;
   byDepartmentTerm: string;
@@ -23,29 +32,46 @@ export class EmployeesListComponent implements OnInit {
   byAZ: string;
   @ViewChild('menu') menu: MatMenuTrigger;
   totalItems: number;
+  iconSources: any[] = [];
   currentPage: number = 1;
   workPhoneImgSrc: string = '';
+  workPhoneHoverImgSrc: string = '';
   mobilePhoneImgSrc: string = '';
+  mobilePhoneHoverImgSrc: string = '';
+  emailImgSrc: string = '';
+  jobImgSrc: string = '';
+  locationImgSrc: string = '';
+  locationHoverImgSrc: string = '';
+  managerIcon: string = '';
   hoverBgColor: string = '#000';
-  isShowMobileIcon: boolean = false;
+  isShowWorkIcon: boolean = false;
+  isShowMobileHoverIcon: boolean = false;
   isShowDepartmentIcon: boolean = false;
+  isShowLocationHoverIcon: boolean = false;
   filterResults: any[] = [];
-  totals;
+  @ViewChild('workPhonesIconsRef') workPhonesIconsRef: QueryList<ElementRef>;
+  profileIndex: number;
+  @Input() profileFromAutocompleteSearch: string;
 
   constructor(private employeeService: MockService,
               private searchService: SearchService,
               private sortService: SortService,
+              private renderer: Renderer2,
               private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.totalItems = this.profiles.length;
-    this.workPhoneImgSrc = environment.workPhoneImgSrc;
-    this.mobilePhoneImgSrc = environment.mobilePhoneImgSrc;
+    this.workPhoneImgSrc = environment.workPhoneIcon;
+    this.mobilePhoneImgSrc = environment.mobilePhoneIcon;
+    this.emailImgSrc = environment.emailIcon;
+    this.jobImgSrc = environment.jobIcon;
+    this.locationImgSrc = environment.locationIcon;
+    this.managerIcon = environment.managerIcon;
 
     this.onSearchByType();
     this.onSort();
-
+    this.cdr.detectChanges();
 
   }
 
@@ -53,34 +79,40 @@ export class EmployeesListComponent implements OnInit {
    * search service by type (byEmployee,byDepartment,byLocation,byAZ)
    */
   onSearchByType() {
+
+    if (this.profileFromAutocompleteSearch) {
+      this.byEmployeeTerm = this.profileFromAutocompleteSearch;
+      this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);
+      this.totalItems = this.filterResults.length;
+    }
     this.searchService.getSearch().subscribe((searchTerm) => {
       switch (searchTerm.type) {
         case 'byEmployee':
-          this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
-          this.totalItems = this.filterResults.length;
+          console.log('--', searchTerm.value);
           this.byEmployeeTerm = searchTerm.value;
+          this.filterResults = this.profiles.filter(profile => profile.FullName === this.byEmployeeTerm);
+          this.totalItems = this.filterResults.length;
 
           this.cdr.detectChanges();
           break;
         case 'byDepartment':
           this.byDepartmentTerm = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.Department === searchTerm.value);
+          this.filterResults = this.profiles.filter(profile => profile.Department ===  this.byDepartmentTerm);
           this.totalItems = this.filterResults.length;
-
           this.cdr.detectChanges();
           break;
         case 'byLocation':
           console.log('location', searchTerm.value);
           this.byLocation = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.Office === searchTerm.value);
+          this.filterResults = this.profiles.filter(profile => profile.Office === this.byLocation);
           this.totalItems = this.filterResults.length;
-
           this.cdr.detectChanges();
           break;
         case 'byAZ':
+          console.log('az', searchTerm.value);
           this.byAZ = searchTerm.value;
-          this.profiles.filter(profile => profile.FullName.startsWith(searchTerm.value));
-
+          this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(this.byAZ));
+          this.totalItems = this.filterResults.length;
           this.cdr.detectChanges();
           break;
       }
@@ -93,38 +125,37 @@ export class EmployeesListComponent implements OnInit {
    */
   onSort() {
     this.sortService.getOrder().subscribe(order => {
-      console.log('order', order);
-
       switch (order) {
         case 'asc':
-          this.profiles = this.profiles.sort((item1: IProfile, item2: IProfile) => {
-            return item1.FirstName.localeCompare(item2.FirstName)
+          this.profiles = this.profiles.sort((profile_first: IProfile, profile_next: IProfile) => {
+            return profile_first.FirstName.localeCompare(profile_next.FirstName);
           });
           this.totalItems = this.profiles.length;
-          console.log('asc', this.profiles);
           this.cdr.detectChanges();
-
-
           break;
         case 'desc':
-          this.profiles = this.profiles.sort((item1: IProfile, item2: IProfile) => {
-            return item2.FirstName.localeCompare(item1.FirstName);
+          this.profiles = this.profiles.sort((profile_first: IProfile, profile_next: IProfile) => {
+            return profile_next.FirstName.localeCompare(profile_first.FirstName);
           });
           this.totalItems = this.profiles.length;
-          console.log('desc', this.profiles);
           this.cdr.detectChanges();
-
           break;
         default:
           this.profiles = this.profiles.sort();
-
       }
-
     });
-
   }
 
   pageChanged($event: number) {
+
+  }
+
+  onHoverOnWorkPhone(profile, i) {
+    this.profileIndex = this.profiles.indexOf(profile);
+    this.workPhoneImgSrc = environment.workPhoneIcon;
+  }
+
+  onLeaveOnWorkPhone(profile, i) {
 
   }
 
@@ -132,14 +163,14 @@ export class EmployeesListComponent implements OnInit {
    * Change mobile icon on hover
    */
   onHoverOnMobileIcon() {
-    this.isShowMobileIcon = true;
+    this.mobilePhoneImgSrc = environment.mobilePhoneHoverIcon;
   }
 
   /**
    * Change mobile icon to default
    */
   onLeaveOnMobileIcon() {
-    this.isShowMobileIcon = false;
+    this.mobilePhoneImgSrc = environment.mobilePhoneIcon;
   }
 
   /**
@@ -154,5 +185,14 @@ export class EmployeesListComponent implements OnInit {
    */
   onLeaveOnDepartmentIcon() {
     this.isShowDepartmentIcon = false;
+  }
+
+  onHoverLocationSubMenu() {
+    this.isShowLocationHoverIcon = true;
+    this.locationImgSrc = environment.locationHoverIcon;
+  }
+
+  onLeaveLocationSubMenu() {
+    this.locationImgSrc = environment.locationIcon;
   }
 }

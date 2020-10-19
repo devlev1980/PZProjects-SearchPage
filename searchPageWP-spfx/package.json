@@ -16,14 +16,14 @@
   },
   "dependencies": {
     "@microsoft/sp-core-library": "~1.4.0",
-    "@microsoft/sp-office-ui-fabric-core": "~1.4.0",
     "@microsoft/sp-lodash-subset": "~1.4.0",
+    "@microsoft/sp-office-ui-fabric-core": "~1.4.0",
     "@microsoft/sp-webpart-base": "~1.4.0",
     "@pnp/pnpjs": "^2.0.6",
     "@pnp/spfx-property-controls": "1.19.0",
-    "@types/jquery": "^3.5.0",
-    "jquery": "^3.5.1",
-    "search-page-wp": "file:../searchPageWP"
+    "search-page-wp": "file:../searchPageWP",
+    "terser-webpack-plugin-legacy": "1.2.3",
+    "webpack-merge": "4.2.1"
   },
   "devDependencies": {
     "@microsoft/microsoft-graph-types": "^1.12.0",
@@ -38,7 +38,6 @@
     "gulp": "~3.9.1",
     "gulp-sequence": "1.0.0",
     "lodash": "^4.17.15",
-    "spfx-uifabric-themes": "^0.8.0",
-    "webpack-bundle-analyzer": "^3.8.0"
+    "spfx-uifabric-themes": "^0.8.0"
   }
 }

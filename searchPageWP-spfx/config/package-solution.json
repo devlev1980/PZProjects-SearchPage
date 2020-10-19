@@ -4,7 +4,8 @@
     "name": "search-page-wp-spfx-client-side-solution",
     "id": "fb7561c6-25ea-4402-8da8-31e2a2f8bf70",
     "version": "1.0.0.0",
-    "includeClientSideAssets": true
+    "includeClientSideAssets": false,
+    "skipFeatureDeployment": true
   },
   "paths": {
     "zippedPackage": "solution/search-page-wp-spfx.sppkg"

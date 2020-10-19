@@ -3,6 +3,7 @@ import {MockService} from '../services/mock.service';
 import {IEmployee} from '../models/employee';
 import {SharepointService} from '../services/sharepoint.service';
 import {IProfile} from '../models/profile.model';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-search-page-spfx-web-part',
@@ -17,6 +18,8 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   AZ_characters: Array<string> = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   departments: string[] = [];
   locations: string[] = [];
+  profileFromSearch: string = '';
+
 
   constructor(private employeeService: MockService,
               private cdr: ChangeDetectorRef,
@@ -24,12 +27,17 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.employeeService.getEmployeeList().subscribe((data) => this.employeeList = data);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.profileFromSearch = urlParams.get('profile');
+    console.log('searched profile', this.profileFromSearch);
+
     this.sharepointService.getPofilesCached().subscribe(profiles => {
-      console.log('Profiles in component', profiles);
       this.profiles = profiles;
       this.departments = [];
       this.profiles.forEach(item => {
+        item.Rank = null;
         this.departments.push(item.Department);
         if (item.Office !== null) {
           this.locations.push(item.Office);

@@ -23,13 +23,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/config/package-solution.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/config/package-solution.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/config/write-manifests.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/config/write-manifests.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/gulpfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/src/webparts/searchPageSpfx/SearchPageSpfxWebPart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/src/webparts/searchPageSpfx/SearchPageSpfxWebPart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/models/profile.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/models/profile.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/services/sort.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/services/sort.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/environments/environment.prod.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/environments/environment.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/styles.scss" afterDir="false" />
@@ -75,6 +87,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="D:\PZProject\Mobileye\PZProjects-SearchPage\searchPageWP\node_modules\typescript\lib" />
+    <property name="tslint.code.style.apply.dismiss" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -158,7 +171,9 @@
       <workItem from="1599630935689" duration="2054000" />
       <workItem from="1600181162684" duration="5228000" />
       <workItem from="1601818006020" duration="14514000" />
-      <workItem from="1602162630194" duration="24432000" />
+      <workItem from="1602162630194" duration="50481000" />
+      <workItem from="1602498550478" duration="19484000" />
+      <workItem from="1602577733983" duration="33923000" />
     </task>
     <task id="LOCAL‎00001" summary="add project">
       <created>1598966054486</created>
@@ -184,7 +199,13 @@
       <option name="presentableId" value="LOCAL‎00004" />
       <updated>1602167873312</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL‎00005" summary="working on filtering pagination &#10;working on sorting profiles by asc or desc">
+      <created>1602420688314</created>
+      <option name="number" value="LOCAL‎00005" />
+      <option name="presentableId" value="LOCAL‎00005" />
+      <updated>1602420688314</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,17 +228,22 @@
     <MESSAGE value="adding icons&#10;sharepoint service" />
     <MESSAGE value="adding search-by-location pipe&#10;fixing style" />
     <MESSAGE value="fixing autocomplete" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing autocomplete" />
+    <MESSAGE value="working on filtering pagination &#10;working on sorting profiles by asc or desc" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on filtering pagination &#10;working on sorting profiles by asc or desc" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="506" y="239" width="774" height="441" key="#TSLint" timestamp="1602480197020">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="506" y="239" width="774" height="441" key="#TSLint/0.0.1280.680@0.0.1280.680" timestamp="1602480197020" />
     <state x="689" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598960924240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598960924240" />
-    <state x="383" y="0" key="CommitChangelistDialog2" timestamp="1602167871412">
+    <state x="383" y="0" key="CommitChangelistDialog2" timestamp="1602420686842">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="383" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1602167871412" />
+    <state x="383" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1602420686842" />
     <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1599632252652" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599548996748">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -227,38 +253,39 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599631200912" />
-    <state width="1259" height="153" key="GridCell.Tab.0.bottom" timestamp="1602420307683">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1899" height="305" key="GridCell.Tab.0.bottom" timestamp="1603111288507">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1259" height="153" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1602420307683" />
-    <state width="1899" height="273" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600255656042" />
-    <state width="1259" height="153" key="GridCell.Tab.0.center" timestamp="1602420307683">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1259" height="156" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
+    <state width="1899" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603111288507" />
+    <state width="1899" height="305" key="GridCell.Tab.0.center" timestamp="1603111288507">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1259" height="153" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1602420307683" />
-    <state width="1899" height="273" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600255656042" />
-    <state width="1259" height="153" key="GridCell.Tab.0.left" timestamp="1602420307683">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1259" height="156" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
+    <state width="1899" height="305" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603111288507" />
+    <state width="1899" height="305" key="GridCell.Tab.0.left" timestamp="1603111288507">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1259" height="153" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1602420307683" />
-    <state width="1899" height="273" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600255656042" />
-    <state width="1259" height="153" key="GridCell.Tab.0.right" timestamp="1602420307683">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1259" height="156" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
+    <state width="1899" height="305" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603111288507" />
+    <state width="1899" height="305" key="GridCell.Tab.0.right" timestamp="1603111288507">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1259" height="153" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1602420307683" />
-    <state width="1899" height="273" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600255656042" />
+    <state width="1259" height="156" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
+    <state width="1899" height="305" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603111288507" />
     <state x="745" y="222" key="RollbackChangesDialog" timestamp="1599548614234">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="745" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599548614234" />
-    <state width="498" height="446" key="SwitcherDM" timestamp="1599551716198">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1599551716198" />
-    <state x="367" y="147" key="Vcs.Push.Dialog.v2" timestamp="1602167879931">
+    <state width="498" height="398" key="SwitcherDM" timestamp="1602488956865">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="367" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1602167879931" />
+    <state width="498" height="398" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1602488956865" />
+    <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1599551716198" />
+    <state x="367" y="147" key="Vcs.Push.Dialog.v2" timestamp="1602420692472">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="367" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1602420692472" />
     <state x="551" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599477948716" />
     <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598965993197">
       <screen x="0" y="0" width="1920" height="1040" />

@@ -5,14 +5,12 @@ import {
   PropertyPaneTextField
 } from '@microsoft/sp-webpart-base';
 
-import { escape } from '@microsoft/sp-lodash-subset';
-
 import * as strings from 'SearchPageSpfxWebPartStrings';
 
 /** Include Angular Elements JS and Style */
+
 import 'search-page-wp/dist/searchPageWP/bundle.js';
 require('../../../node_modules/search-page-wp/dist/searchPageWP/styles.css');
-
 export interface ISearchPageSpfxWebPartProps {
   description: string;
 }

@@ -12,4 +12,5 @@ export interface IProfile {
   OfficeNumber: string;
   Department: string;
   JobTitle: string;
+  Rank?: number;
 }
