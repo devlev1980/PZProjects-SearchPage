@@ -67,12 +67,12 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.imgSrc = environment.azIcon;
-
     this.initializeSearchForm();
-
     if (this.profileFromSearch) {
-      // this.ulHeight = 81;
+      this.showAutocompleteByEmployee = false;
       this.onSearchByEmployee();
+      this.cdr.detectChanges();
+
     }
   }
 
@@ -87,29 +87,26 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Change height of searchbar(autocomplete) dynamically
+   */
   changeHeightOfAutocompleteDynamically() {
     if (this.showAutocompleteByEmployee) {
-      const virtualScroll = document.querySelector('.users');
-      console.log(virtualScroll);
-      if (virtualScroll) {
+      setTimeout(() => {
+        this.ulHeight = 2;
+        const virtualScroll = document.querySelector('.users');
         const vsChildren = virtualScroll.children;
         const children = vsChildren[0].children;
-        this.ul = children[0];
-        setTimeout(() => {
-          if (this.ul) {
-            for (let i = 0; i < this.ul.children.length; i++) {
-              if (i <= 4) {
-                this.ulHeight += (<HTMLElement>this.ul.children[i]).getBoundingClientRect().height + 5;
-                this.cdr.detectChanges();
-              }else{
-                this.showAutocompleteByEmployee = false;
-              }
-            }
+        const ul = children[0];
+        for (let i = 0; i < ul.children.length; i++) {
+          if (i <= 4) {
+            this.ulHeight += (<HTMLElement>ul.children[i]).getBoundingClientRect().height + 5;
+            this.cdr.detectChanges();
           }
-        }, 500);
-      }
-
+        }
+      }, 500);
     }
+
   }
 
   ngAfterViewInit() {
@@ -133,20 +130,20 @@ export class SearchByComponent implements OnInit, AfterViewInit {
    * pass the selected profile value to the 'Search service'
    */
   onSearchByEmployee() {
-    if (this.profileFromSearch) {
+    if (this.profileFromSearch !== '') {
       this.selectedUser = this.profileFromSearch;
       this.byEmployee.patchValue(this.selectedUser);
-
-      this.showAutocompleteByEmployee = this.byEmployee.value !== '';
-      this.changeHeightOfAutocompleteDynamically();
+      this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+      this.cdr.detectChanges();
+      return;
     }
     this.selectedUser = this.byEmployee.value;
+    this.byEmployee.patchValue(this.selectedUser);
     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
 
     this.changeHeightOfAutocompleteDynamically();
-
-    this.byEmployee.patchValue(this.selectedUser);
     this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+
     this.cdr.detectChanges();
 
   }
@@ -206,23 +203,32 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Choose employee and show him in input
+   * @param profile: IProfile
+   */
   onSelectUser(profile: IProfile) {
-
     this.selectedUser = profile.FirstName + ' ' + profile.LastName;
     this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue(this.selectedUser);
     this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
-
-    // TODO : redirect to Search page and pass this.selectedUser as parameter
-
   }
-
+  /**
+   * Click on 'Clear icon' to clear the 'Employee input'
+   */
   onClearInputByEmployee() {
+    if (this.profileFromSearch !== '') {
+      this.profileFromSearch = '';
+      this.byEmployee.patchValue('');
+
+    }
     this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue('');
     this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
   }
-
+  /**
+   * Click on 'Clear icon' to clear the 'Department input'
+   */
   onClearDepartmentInput() {
     if (this.profileFromSearch) {
       this.showAutocompleteByDepartment = false;
@@ -232,9 +238,24 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
   }
 
+  /**
+   * Click on 'Clear icon' to clear the 'Location input'
+   */
   onClearLocationInput() {
     this.showAutocompleteByLocation = false;
     this.byLocation.patchValue('');
     this.searchService.setSearch({type: 'byLocation', value: this.byLocation.value || ''});
+  }
+
+  /**
+   * CLick on 'Clear all' button  to clear all the inputs
+   */
+  onClearAllInputs() {
+    this.byEmployee.patchValue('');
+    this.byDepartment.patchValue('');
+    this.byLocation.patchValue('');
+    this.searchService.setSearch({type: 'byLocation', value: this.byLocation.value || ''});
+    this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
+    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
   }
 }

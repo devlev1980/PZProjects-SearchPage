@@ -1,4 +1,5 @@
 <div class="search__container">
+  <button class="clear_all" (click)="onClearAllInputs()">Clear all</button>
   <div class="searchbar_container">
       <form [formGroup]="searchForm">
         <div class="form-group">
@@ -20,7 +21,7 @@
             </button>
 <!--            ================================= Autocomplete -->
 
-            <cdk-virtual-scroll-viewport class="users" [style.height.px]="ulHeight"  [itemSize]="5" *ngIf="showAutocompleteByEmployee">
+            <cdk-virtual-scroll-viewport class="users" [style.height.px]="ulHeight"  [itemSize]="5" *ngIf="showAutocompleteByEmployee && !profileFromSearch">
 <!--              <div class="footer" *ngIf="showAutocompleteByEmployee">{{(profiles  | searchByEmployee: selectedUser).length}} matches-->
 <!--                for {{selectedUser}}</div>-->
               <ul class="autocomplete_wrapper" >
@@ -53,9 +54,6 @@
                   </div>
                 </li>
               </ul>
-
-<!--              <div class="footer" *ngIf="showAutocompleteByEmployee">{{(profiles  | searchByEmployee: selectedUser).length}} matches-->
-<!--                for {{selectedUser}}</div>-->
             </cdk-virtual-scroll-viewport>
 
 
@@ -100,8 +98,6 @@
               </ul>
             </div>
           </div>
-
-
         </div>
       </form>
   </div>

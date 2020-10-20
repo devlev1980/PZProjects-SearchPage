@@ -16,6 +16,7 @@ import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
 import {strictEqual} from 'assert';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-employees-list',
@@ -36,7 +37,7 @@ export class EmployeesListComponent implements OnInit {
   currentPage: number = 1;
   workPhoneImgSrc: string = '';
   workPhoneHoverImgSrc: string = '';
-  mobilePhoneImgSrc: string = '';
+
   mobilePhoneHoverImgSrc: string = '';
   emailImgSrc: string = '';
   jobImgSrc: string = '';
@@ -52,11 +53,13 @@ export class EmployeesListComponent implements OnInit {
   @ViewChild('workPhonesIconsRef') workPhonesIconsRef: QueryList<ElementRef>;
   profileIndex: number;
   @Input() profileFromAutocompleteSearch: string;
+  mobilePhoneImgSrc: string = '';
 
   constructor(private employeeService: MockService,
               private searchService: SearchService,
               private sortService: SortService,
               private renderer: Renderer2,
+              public _sanitizer: DomSanitizer,
               private cdr: ChangeDetectorRef) {
   }
 
@@ -79,7 +82,6 @@ export class EmployeesListComponent implements OnInit {
    * search service by type (byEmployee,byDepartment,byLocation,byAZ)
    */
   onSearchByType() {
-
     if (this.profileFromAutocompleteSearch) {
       this.byEmployeeTerm = this.profileFromAutocompleteSearch;
       this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);
@@ -88,16 +90,14 @@ export class EmployeesListComponent implements OnInit {
     this.searchService.getSearch().subscribe((searchTerm) => {
       switch (searchTerm.type) {
         case 'byEmployee':
-          console.log('--', searchTerm.value);
           this.byEmployeeTerm = searchTerm.value;
           this.filterResults = this.profiles.filter(profile => profile.FullName === this.byEmployeeTerm);
           this.totalItems = this.filterResults.length;
-
           this.cdr.detectChanges();
           break;
         case 'byDepartment':
           this.byDepartmentTerm = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.Department ===  this.byDepartmentTerm);
+          this.filterResults = this.profiles.filter(profile => profile.Department === this.byDepartmentTerm);
           this.totalItems = this.filterResults.length;
           this.cdr.detectChanges();
           break;
@@ -121,7 +121,7 @@ export class EmployeesListComponent implements OnInit {
   }
 
   /**
-   * Sort service by ascending or descending
+   * Sort cards by ascending or descending
    */
   onSort() {
     this.sortService.getOrder().subscribe(order => {
@@ -152,7 +152,16 @@ export class EmployeesListComponent implements OnInit {
 
   onHoverOnWorkPhone(profile, i) {
     this.profileIndex = this.profiles.indexOf(profile);
-    this.workPhoneImgSrc = environment.workPhoneIcon;
+    console.log('img index', i);
+
+    this.profiles.forEach((element, index) => {
+      if (i === index) {
+        console.log('yes');
+        element.workPhoneIconUrl = 'aaa';
+
+      }
+    });
+    this.cdr.detectChanges();
   }
 
   onLeaveOnWorkPhone(profile, i) {
@@ -194,5 +203,13 @@ export class EmployeesListComponent implements OnInit {
 
   onLeaveLocationSubMenu() {
     this.locationImgSrc = environment.locationIcon;
+  }
+
+  onOpenMenu(manager: string) {
+    let newManager = manager.substring(8);
+    console.log('new manager', newManager);
+    let managerPerProfile = this.profiles.filter(profile => profile.UserName === newManager);
+    console.log('---', managerPerProfile);
+
   }
 }

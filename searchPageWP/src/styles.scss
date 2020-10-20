@@ -1,13 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import "~bootstrap/dist/css/bootstrap.css";
 // Color's Variables
 $inputBg: #72819B;
+
+
 $white: #fff;
 $primaryBg: #102344;
 $borderColor: #1C3B61;
 $textColor: #b0b0b0;
 $footerBg: #0b1b37;
+$secondaryBg: #00bca9;
+$inputBorderColor: #ccc;
+$inputBorderFocusColor: #949494;
 
 *, *::after, *::before {
   margin: 0;

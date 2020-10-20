@@ -20,7 +20,6 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   locations: string[] = [];
   profileFromSearch: string = '';
 
-
   constructor(private employeeService: MockService,
               private cdr: ChangeDetectorRef,
               private sharepointService: SharepointService) {
@@ -31,11 +30,12 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     this.profileFromSearch = urlParams.get('profile');
-    console.log('searched profile', this.profileFromSearch);
 
     this.sharepointService.getPofilesCached().subscribe(profiles => {
       this.profiles = profiles;
+      console.log('profiles', this.profiles);
       this.departments = [];
+
       this.profiles.forEach(item => {
         item.Rank = null;
         this.departments.push(item.Department);

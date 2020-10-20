@@ -4,7 +4,9 @@ import {environment} from '../../environments/environment';
 import {map, shareReplay} from 'rxjs/operators';
 import {IProfile} from '../models/profile.model';
 import {Observable} from 'rxjs';
+
 const CACHE_SIZE = 1;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,9 +29,8 @@ export class SharepointService {
   private getProfiles() {
     const appweburl = `_api/search/query`;
     // tslint:disable-next-line:max-line-length
-    // const properties = 'Office,Id,FirstName,LastName,MobilePhone,WorkPhone,AccountName,Department,JobTitle,PictureURL,WorkEmail,WorkId,EmployeeID'
     // tslint:disable-next-line:max-line-length
-    const properties = 'EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,manager.DisplayName,OfficeNumber,Department,Office,JobTitle';
+    const properties = 'UserName,EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,Manager,OfficeNumber,Department,Office,JobTitle';
     const httpURL = `${environment.apiUrl}${appweburl}`;
     const httpParams = new HttpParams()
       .set('queryText', `'*'`)
@@ -50,7 +51,6 @@ export class SharepointService {
                 profiles = this.profiles;
               }
             }
-
             return profiles;
           }
         ));
@@ -59,6 +59,7 @@ export class SharepointService {
 
   mapKeyToValue(profile: any) {
     const profileObject: IProfile = {
+      UserName: '',
       EmployeeID: '',
       FirstName: '',
       LastName: '',
@@ -67,14 +68,31 @@ export class SharepointService {
       MobilePhone: '',
       WorkEmail: '',
       FullName: '',
+      Manager: '',
       ManagerDisplayName: '',
       Department: '',
       OfficeNumber: '',
       Office: '',
-      JobTitle: ''
+      JobTitle: '',
+      workPhoneIconUrl: '',
+      mobilePhoneIconUrl: '',
+      emailIconUrl: '',
+      departmentIconUrl: '',
+      locationIconUrl: '',
+      jobIconUrl: '',
+      managerIconUrl: '',
+      workADayIconUrl: ''
     };
     for (const property of profile) {
       profileObject.FullName = '';
+      profileObject.workPhoneIconUrl = environment.workPhoneIcon;
+      profileObject.mobilePhoneIconUrl = environment.mobilePhoneIcon;
+      profileObject.emailIconUrl = environment.emailIcon;
+      profileObject.jobIconUrl = environment.jobIcon;
+      profileObject.departmentIconUrl = environment.departmetIcon;
+      profileObject.locationIconUrl = environment.locationIcon;
+      profileObject.managerIconUrl = environment.managerIcon;
+      profileObject.workADayIconUrl = environment.workaDayIcon;
       profileObject[property.Key] = property.Value;
       if (profileObject[property.Key] === 'manager.DisplayName') {
         profileObject[property.Key] = 'ManagerDisplayName';

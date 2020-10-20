@@ -26,6 +26,10 @@ export class AZComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * click on A-Z character and send selected to the 'Search service'
+   * @param char: sting
+   */
   onSelectedCharacter(char: string) {
     this.selectedChar = this.azCharacters.indexOf(char);
     this.searchService.setSearch({type: 'byAZ', value: char});

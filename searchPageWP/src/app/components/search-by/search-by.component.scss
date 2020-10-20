@@ -1,10 +1,25 @@
 @import "src/styles";
-
+// Color
 
 
 .search__container {
   width: 100%;
   margin-bottom: 2rem;
+  position: relative;
+
+  button.clear_all {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    background: #00bca9;
+    color: #fff;
+    top: 72px;
+    position: absolute;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .5);
+    right: 36px;
+
+  }
 
   .searchbar_container {
     position: relative;
@@ -12,7 +27,6 @@
     form {
       .form-group {
         display: flex;
-        //max-width: 92%;
         justify-content: space-between;
         flex-wrap: wrap;
 
@@ -39,13 +53,14 @@
             top: 10px;
             border: 0;
             background: 0;
+            cursor: pointer;
           }
 
           input {
             width: 100%;
             border-radius: 20px;
             padding: 11px 50px;
-            border: 1px solid #ccc;
+            border: 1px solid $inputBorderColor;
             box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 
             &.byEmployee::placeholder {
@@ -64,7 +79,7 @@
             }
 
             &:focus {
-              border: 1px solid #949494;
+              border: 1px solid $inputBorderFocusColor;
             }
           }
         }
@@ -75,10 +90,6 @@
             left: 10px;
             top: 50%;
             transform: translateY(-50%);
-
-            &:hover {
-              //display: none;
-            }
           }
 
           .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
@@ -91,7 +102,7 @@
             width: calc(100% - 30px);
             top: 117%;
             right: 13px;
-            background: #102344;
+            background: $primaryBg;
             padding: 5px;
             height: 306px;
             z-index: 10;
@@ -103,8 +114,6 @@
               color: $textColor;
               padding: 0 15px;
               height: auto;
-
-
             }
 
             span.highlight {
@@ -165,8 +174,8 @@
                   justify-content: center;
                   align-items: center;
                   color: #102344;
-                  border: 3px solid #72819b;
-                  background: #72819b;
+                  border: 3px solid $inputBg;
+                  background: $inputBg;
                 }
 
                 div {
@@ -181,15 +190,10 @@
                     text-decoration: none;
                     color: $textColor;
                   }
-
                 }
-
               }
             }
-
-
           }
-
         }
 
         .by__department, .by__location {
@@ -201,7 +205,7 @@
             left: 13px;
             width: calc(100% - 20px);
             background: $primaryBg;
-            color: #fff;
+            color: $white;
             z-index: 1;
             height: 167px;
             overflow-y: auto;
@@ -226,8 +230,6 @@
             top: 50%;
             transform: translateY(-50%);
           }
-
-
         }
 
         .by__department {
@@ -252,9 +254,9 @@
     width: calc(100% - 42px);
     left: 17px;
     z-index: 1000;
-    background: #0b1b37;
+    background: $footerBg;
     padding: 5.8px;
-    color: #fff;
+    color: $white;
   }
 }
 
