@@ -23,5 +23,6 @@ export interface IProfile {
   locationIconUrl?: string;
   managerIconUrl?: string;
   workADayIconUrl?: string;
+  menuIconUrl?: string;
 
 }

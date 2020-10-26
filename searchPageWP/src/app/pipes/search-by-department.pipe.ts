@@ -6,13 +6,12 @@ import {IProfile} from '../models/profile.model';
 })
 export class SearchByDepartmentPipe implements PipeTransform {
 
-  transform(profiles: IProfile[], searchTerm: any): any {
-    if (!profiles || !searchTerm) {
-      console.log('good');
-      return profiles;
+  transform(departments: string[], searchTerm: string): any {
+    if (!departments || !searchTerm) {
+      return departments;
     }
-    return profiles.filter((profile) => {
-      return  profile.Department.includes(searchTerm);
+    return departments.filter((department) => {
+      return  department.toLowerCase().includes(searchTerm.toLowerCase());
     });
   }
 

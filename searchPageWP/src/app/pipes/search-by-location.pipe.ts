@@ -1,22 +1,22 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {IProfile} from '../models/profile.model';
+import {ILocation} from '../search-page-spfx-web-part/search-page-spfx-web-part.component';
 
 @Pipe({
   name: 'searchByLocation'
 })
 export class SearchByLocationPipe implements PipeTransform {
 
-  transform(profiles: IProfile[], searchTerm: any): any {
+  transform(locations: string[], searchTerm: string): any {
 
-    if (!profiles || !searchTerm) {
-      return profiles;
+    if (!locations || !searchTerm) {
+      return locations;
     }
-    return profiles.filter((profile) => {
-      console.log('location office', profile.Office);
-      if (profile.Office !== null) {
-        return profile.Office.includes(searchTerm);
-      }
+
+    return locations.filter((location) => {
+
+        return location.toLowerCase().includes(searchTerm.toLowerCase());
+
     });
   }
-
 }

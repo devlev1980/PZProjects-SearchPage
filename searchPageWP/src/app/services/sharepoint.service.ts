@@ -81,7 +81,8 @@ export class SharepointService {
       locationIconUrl: '',
       jobIconUrl: '',
       managerIconUrl: '',
-      workADayIconUrl: ''
+      workADayIconUrl: '',
+      menuIconUrl: ''
     };
     for (const property of profile) {
       profileObject.FullName = '';
@@ -89,10 +90,11 @@ export class SharepointService {
       profileObject.mobilePhoneIconUrl = environment.mobilePhoneIcon;
       profileObject.emailIconUrl = environment.emailIcon;
       profileObject.jobIconUrl = environment.jobIcon;
-      profileObject.departmentIconUrl = environment.departmetIcon;
+      profileObject.departmentIconUrl = environment.departmentIcon;
       profileObject.locationIconUrl = environment.locationIcon;
       profileObject.managerIconUrl = environment.managerIcon;
       profileObject.workADayIconUrl = environment.workaDayIcon;
+      profileObject.menuIconUrl = environment.menuIcon;
       profileObject[property.Key] = property.Value;
       if (profileObject[property.Key] === 'manager.DisplayName') {
         profileObject[property.Key] = 'ManagerDisplayName';

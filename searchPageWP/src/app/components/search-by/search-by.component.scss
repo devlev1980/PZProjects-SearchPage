@@ -13,11 +13,11 @@
     border: 1px solid transparent;
     background: #00bca9;
     color: #fff;
-    top: 72px;
+    top: 51px;
     position: absolute;
     cursor: pointer;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, .5);
-    right: 36px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.5);
+    right: 3px;
 
   }
 
@@ -30,12 +30,18 @@
         justify-content: space-between;
         flex-wrap: wrap;
 
+        &.by__employee{
+          position: relative;
+        }
+
         .form-item {
           flex-basis: 455px;
           flex-grow: 0;
           flex-shrink: 1;
           position: relative;
           margin-bottom: 1rem;
+
+
 
           .btn__sort {
             cursor: pointer;
@@ -45,6 +51,11 @@
             right: 54px;
             box-shadow: none;
             border: 0;
+
+            &:hover{
+              background: #cccccc;
+              border-radius: 50%;
+            }
           }
 
           .btn_clear {
@@ -85,6 +96,7 @@
         }
 
         .by__employee {
+          position: relative;
           img {
             position: absolute;
             left: 10px;
@@ -193,11 +205,15 @@
                 }
               }
             }
+            &.hidden{
+              display: none;
+            }
           }
         }
 
         .by__department, .by__location {
           position: relative;
+          display: inline-block;
 
           .autocomplete__departments, .autocomplete__locations {
             position: absolute;
@@ -249,14 +265,32 @@
 
   .footer {
     position: absolute;
-    top: 100%;
+    bottom: -41.3vh;
     margin: auto;
-    width: calc(100% - 42px);
+    width: calc(100% - 40px);
     left: 17px;
     z-index: 1000;
-    background: $footerBg;
+    background: #0b1b37;
     padding: 5.8px;
-    color: $white;
+    color: #fff;
+
+    &.small_autocomplete,&.mini_autocomplete,&.only_footer{
+      width: calc(100% - 116px);
+    }
+
+    //&.small_autocomplete{
+    //  top: 107%;
+    //}
+    //&.mini_autocomplete{
+    //  top: 117%;
+    //}
+    //&.only_footer{
+    //  bottom: -84%;
+    //  width: 94%;
+    //}
+    //&.last_element{
+    //  bottom: -410px;
+    //}
   }
 }
 

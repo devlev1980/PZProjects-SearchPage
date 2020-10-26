@@ -3,7 +3,6 @@ import {MockService} from '../services/mock.service';
 import {IEmployee} from '../models/employee';
 import {SharepointService} from '../services/sharepoint.service';
 import {IProfile} from '../models/profile.model';
-import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-search-page-spfx-web-part',
@@ -17,7 +16,7 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   employeeList: IEmployee[] = [];
   AZ_characters: Array<string> = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   departments: string[] = [];
-  locations: string[] = [];
+  locations: ILocation[] = [];
   profileFromSearch: string = '';
 
   constructor(private employeeService: MockService,
@@ -33,20 +32,42 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
 
     this.sharepointService.getPofilesCached().subscribe(profiles => {
       this.profiles = profiles;
-      console.log('profiles', this.profiles);
       this.departments = [];
+      this.locations = [];
 
-      this.profiles.forEach(item => {
-        item.Rank = null;
-        this.departments.push(item.Department);
-        if (item.Office !== null) {
-          this.locations.push(item.Office);
-        }
+      this.departments = this.profiles.map(el => el.Department);
+      this.profiles.forEach(el => {
+
+        // item.Rank = null;
+
       });
-      this.departments = Array.from(new Set(this.departments)).sort();
-      this.locations = Array.from(new Set(this.locations)).sort();
+
+      // this.profiles.forEach(item => {
+      // item.Rank = null;
+      // this.departments.push(item.Department);
+      // if (item.Office) {
+      //   this.locations.push(item.Office);
+      // this.locations.push({
+      //   location: item.Office,
+      //   profilesInRoom: this.locations.filter(el => item.Office.includes(el.location)).length
+      // });
+      // }
+      // });
+      // this.departments = Array.from(new Set(this.departments)).sort();
+      // this.locations = Array.from(new Set(this.locations)).sort();
+      console.log('loc', this.locations);
+      console.log('dep', this.departments);
+
+      // Todo: sort locations by count of people in rooms
+
+      // this.profiles.filter(profile => profile.Office === this.byLocation);
       this.cdr.detectChanges();
     });
   }
 
+}
+
+export interface ILocation {
+  location: string;
+  count: number;
 }

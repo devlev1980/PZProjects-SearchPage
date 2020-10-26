@@ -11,7 +11,7 @@ export class SearchByAZPipe implements PipeTransform {
       return employees;
     }
     return employees.filter((user) => {
-      return user.FirstName.includes(searchTerm);
+      return user.FirstName.startsWith(searchTerm);
     });
   }
 

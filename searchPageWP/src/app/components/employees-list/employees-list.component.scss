@@ -136,8 +136,9 @@ pagination-controls#custom {
   background: #e6e6e6;
   text-decoration: none;
 }
-::ng-deep .mat-menu-pane{
-  max-width: 179px !important;
+::ng-deep .mat-menu-panel{
+  min-width: 195px !important;
+  left: -56px !important;
 }
 ::ng-deep .sub__menu{
   right: auto;

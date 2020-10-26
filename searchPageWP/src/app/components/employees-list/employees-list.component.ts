@@ -1,22 +1,22 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
-  OnInit, QueryList, Renderer2,
+  OnInit,
+  QueryList,
+  Renderer2,
   ViewChild
 } from '@angular/core';
 import {MockService} from '../../services/mock.service';
-import {IEmployee} from '../../models/employee';
 import {ISearchTerm, SearchService} from '../../services/search.service';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
-import {strictEqual} from 'assert';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {by} from 'protractor';
+import {PassCharService} from '../../services/pass-char.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -30,22 +30,28 @@ export class EmployeesListComponent implements OnInit {
   byEmployeeTerm: string;
   byDepartmentTerm: string;
   byLocation: string;
-  byAZ: string;
+  byAZ: string = '';
   @ViewChild('menu') menu: MatMenuTrigger;
   totalItems: number;
   iconSources: any[] = [];
   currentPage: number = 1;
+  menuIcon: string = '';
   workPhoneImgSrc: string = '';
   workPhoneHoverImgSrc: string = '';
-
+  mobilePhoneImgSrc: string = '';
   mobilePhoneHoverImgSrc: string = '';
   emailImgSrc: string = '';
+  emailHoverImgSrc: string = '';
   jobImgSrc: string = '';
   locationImgSrc: string = '';
   locationHoverImgSrc: string = '';
-  managerIcon: string = '';
+  managerImgSrc: string = '';
+  managerHoverImgSrc: string = '';
+  workADayImgSrc: string = '';
+  workADayHoverImgSrc: string = '';
   hoverBgColor: string = '#000';
-  isShowWorkIcon: boolean = false;
+  isShowWorkPhone: boolean = true;
+  isShowWorkHoverIcon: boolean = false;
   isShowMobileHoverIcon: boolean = false;
   isShowDepartmentIcon: boolean = false;
   isShowLocationHoverIcon: boolean = false;
@@ -53,25 +59,35 @@ export class EmployeesListComponent implements OnInit {
   @ViewChild('workPhonesIconsRef') workPhonesIconsRef: QueryList<ElementRef>;
   profileIndex: number;
   @Input() profileFromAutocompleteSearch: string;
-  mobilePhoneImgSrc: string = '';
+
+  managerProfile: IProfile;
 
   constructor(private employeeService: MockService,
               private searchService: SearchService,
+              private passCharService: PassCharService,
               private sortService: SortService,
               private renderer: Renderer2,
-              public _sanitizer: DomSanitizer,
               private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.totalItems = this.profiles.length;
+    this.menuIcon = environment.menuIcon;
     this.workPhoneImgSrc = environment.workPhoneIcon;
+    this.workPhoneHoverImgSrc = environment.workPhoneHoverIcon;
     this.mobilePhoneImgSrc = environment.mobilePhoneIcon;
+    this.mobilePhoneHoverImgSrc = environment.mobilePhoneHoverIcon;
     this.emailImgSrc = environment.emailIcon;
+    this.emailHoverImgSrc = environment.emailHover;
     this.jobImgSrc = environment.jobIcon;
     this.locationImgSrc = environment.locationIcon;
-    this.managerIcon = environment.managerIcon;
+    this.locationHoverImgSrc = environment.locationHoverIcon;
+    this.managerImgSrc = environment.managerIcon;
+    this.managerHoverImgSrc = environment.managerHoverIcon;
+    this.workADayImgSrc = environment.workaDayIcon;
+    this.workADayHoverImgSrc = environment.workaDayHoverIcon;
 
+    this.cdr.detectChanges();
     this.onSearchByType();
     this.onSort();
     this.cdr.detectChanges();
@@ -91,7 +107,8 @@ export class EmployeesListComponent implements OnInit {
       switch (searchTerm.type) {
         case 'byEmployee':
           this.byEmployeeTerm = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.FullName === this.byEmployeeTerm);
+          this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
+          console.log('profiles', this.filterResults);
           this.totalItems = this.filterResults.length;
           this.cdr.detectChanges();
           break;
@@ -102,14 +119,12 @@ export class EmployeesListComponent implements OnInit {
           this.cdr.detectChanges();
           break;
         case 'byLocation':
-          console.log('location', searchTerm.value);
           this.byLocation = searchTerm.value;
           this.filterResults = this.profiles.filter(profile => profile.Office === this.byLocation);
           this.totalItems = this.filterResults.length;
           this.cdr.detectChanges();
           break;
         case 'byAZ':
-          console.log('az', searchTerm.value);
           this.byAZ = searchTerm.value;
           this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(this.byAZ));
           this.totalItems = this.filterResults.length;
@@ -117,7 +132,6 @@ export class EmployeesListComponent implements OnInit {
           break;
       }
     });
-
   }
 
   /**
@@ -146,26 +160,28 @@ export class EmployeesListComponent implements OnInit {
     });
   }
 
-  pageChanged($event: number) {
+  pageChanged(event: number, char: string) {
+
 
   }
 
   onHoverOnWorkPhone(profile, i) {
     this.profileIndex = this.profiles.indexOf(profile);
     console.log('img index', i);
-
+    this.isShowWorkHoverIcon = true;
     this.profiles.forEach((element, index) => {
       if (i === index) {
         console.log('yes');
-        element.workPhoneIconUrl = 'aaa';
 
+        this.cdr.detectChanges();
       }
     });
-    this.cdr.detectChanges();
+
   }
 
   onLeaveOnWorkPhone(profile, i) {
-
+    this.isShowWorkHoverIcon = false;
+    this.isShowWorkPhone = true;
   }
 
   /**
@@ -205,11 +221,29 @@ export class EmployeesListComponent implements OnInit {
     this.locationImgSrc = environment.locationIcon;
   }
 
+  /**
+   * open menu in card profile
+   * @param manager = string
+   */
   onOpenMenu(manager: string) {
-    let newManager = manager.substring(8);
-    console.log('new manager', newManager);
-    let managerPerProfile = this.profiles.filter(profile => profile.UserName === newManager);
-    console.log('---', managerPerProfile);
+    const newManager = manager.substring(8);
+    this.managerProfile = this.profiles.find(profile => profile.UserName === newManager);
+    console.log('---', this.managerProfile);
+
+  }
+
+  /**
+   * Navigate to manager profile page
+   * @param profile : IProfile
+   */
+  onNavigateToTheManagerPage(profile: IProfile) {
+    window.location.href = `https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5C${profile.UserName}`;
+    // https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5Cjeremya
+  }
+
+  nextPage(page: number, byAZ: string) {
+    this.currentPage = page;
+    this.cdr.detectChanges();
 
   }
 }

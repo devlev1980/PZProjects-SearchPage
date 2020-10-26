@@ -1,5 +1,5 @@
-
-<div class="filter_results" *ngIf="profiles.length > 0">Results: {{(profiles | searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation | searchByAZ: byAZ).length}}</div>
+<div class="filter_results" >
+  Results: {{(profiles | searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation | searchByAZ: byAZ).length}}</div>
 
 <div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
 
@@ -9,62 +9,79 @@
   searchByLocation: byLocation |
   searchByEmployee: byEmployeeTerm |
   searchByAZ: byAZ |
-   paginate: {id: 'custom', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems };let i=index"    >
+   paginate: {id: 'custom', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems };let i=index">
     <div class="card__body">
-      <h3 class="card__title" >{{profile.FirstName}} {{profile.LastName}}</h3>
+      <h3 class="card__title">{{profile.FirstName}} {{profile.LastName}}</h3>
       <div class="card__phones">
         <a href="tel:{{profile.WorkPhone}}">
-          <img   [src]="profile.workPhoneIconUrl" #workPhonesIconsRef [id]="'icon'+i"  (mouseover)="onHoverOnWorkPhone(profile,i)" (mouseout)="onLeaveOnWorkPhone(profile,i)" class="work__phone" alt="work phone" >
-<!--          <img *ngIf="isShowWorkIcon && i === profileIndex" #workPhoneHoverImgRef  [src]="workPhoneImgSrc"    class="work__phone" alt="work phone" >-->
+          <img [src]="profile.workPhoneIconUrl" #workPhonesIconsRef [id]="'icon'+i"
+               (mouseover)="profile.workPhoneIconUrl = workPhoneHoverImgSrc"
+               (mouseout)="profile.workPhoneIconUrl = workPhoneImgSrc"
+               class="work__phone" alt="work phone">
+
+
           <span class="card__phones-work" *ngIf="profile.WorkPhone;else notAvailable">{{profile.WorkPhone}}</span>
           <ng-template #notAvailable>
             <span class="card__phones-work">N/A</span>
           </ng-template>
         </a>
-        <a href="tel:{{profile.MobilePhone}}" (mouseover)="onHoverOnMobileIcon()" (mouseout)="onLeaveOnMobileIcon()">
-          <img [src]="profile.mobilePhoneIconUrl"     (mouseover)="onHoverOnMobileIcon()" (mouseout)="onLeaveOnMobileIcon()" alt="cell phone" class="cell__phone">
+        <a href="tel:{{profile.MobilePhone}}">
+          <img [src]="profile.mobilePhoneIconUrl"
+               (mouseover)="profile.mobilePhoneIconUrl = mobilePhoneHoverImgSrc"
+               (mouseout)="profile.mobilePhoneIconUrl = mobilePhoneImgSrc"
+               alt="cell phone" class="cell__phone">
           <span class="card__phones-cell" *ngIf="profile.MobilePhone; else notAvailable">{{profile.MobilePhone}}</span>
         </a>
       </div>
       <div class="card__employee-info">
         <div class="card__imgWrapper">
-          <img  src="{{profile.PictureUrl}}" alt="avatar" *ngIf="profile.PictureUrl;else noPicture" >
+          <img src="{{profile.PictureUrl}}" alt="avatar" *ngIf="profile.PictureUrl;else noPicture">
           <ng-template #noPicture>
             <div class="initials">
               <span>{{profile.FirstName.substring(0, 1)}}</span>
-              <span >{{profile.LastName.substring(0, 1)}}</span>
+              <span>{{profile.LastName.substring(0, 1)}}</span>
             </div>
           </ng-template>
         </div>
-        <div class="card__infoWrapper" >
-          <div class="email" >
-            <img [src]="profile.emailIconUrl"   alt="email" (mouseover)="onHoverOnWorkPhone(profile,i)">
-            <a href="mailto:{{profile.WorkEmail}}" *ngIf="profile.WorkEmail;else workEmailNorAvailable" >{{profile.WorkEmail}}</a>
+        <div class="card__infoWrapper">
+          <div class="email">
+
+            <a href="mailto:{{profile.WorkEmail}}">
+              <img [src]="profile?.emailIconUrl" alt="email"
+                   (mouseover)="profile.emailIconUrl = emailHoverImgSrc"
+                   (mouseout)="profile.emailIconUrl = emailImgSrc">
+              <span *ngIf="profile.WorkEmail;else workEmailNorAvailable">{{profile.WorkEmail}}</span>
+            </a>
             <ng-template #workEmailNorAvailable>
               <span>Email N/A</span>
             </ng-template>
           </div>
           <div class="job">
-            <img [src]="jobImgSrc" >
-            <span *ngIf="profile.jobIconUrl;else noJobTitle">{{profile.JobTitle}}</span>
+            <img [src]="profile.jobIconUrl">
+            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>
             <ng-template #noJobTitle>
               <span>Job N/A</span>
             </ng-template>
           </div>
           <div class="department" (mouseover)="onHoverOnDepartmentIcon()" (mouseout)="onLeaveOnDepartmentIcon()">
-            <img [hidden]="isShowDepartmentIcon"  [src]="profile.departmentIconUrl" alt="department">
-<!--            <img [hidden]="!isShowDepartmentIcon" src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_hover.png?csf=1&e=ZzKqbU" alt="">-->
+            <img [src]="profile.departmentIconUrl" alt="department">
+            <!--            <img [hidden]="!isShowDepartmentIcon" src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_hover.png?csf=1&e=ZzKqbU" alt="">-->
             <span>{{profile.Department}}</span>
           </div>
         </div>
       </div>
       <div class="menu">
-        <button mat-icon-button [matMenuTriggerFor]="menu" (menuOpened)="onOpenMenu(profile.Manager)" yPosition="below" class="employee__menu" aria-label="Example icon-button with a menu">
-          <img src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/more_vert-black-18dp.svg?csf=1&e=LDjLqn" alt="menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" (menuOpened)="onOpenMenu(profile.Manager)" yPosition="below"
+                class="employee__menu" aria-label="Example icon-button with a menu">
+          <img [src]="profile.menuIconUrl"
+               alt="menu">
         </button>
         <mat-menu #menu="matMenu" class="sub__menu">
-          <button mat-menu-item (mouseover)="onHoverLocationSubMenu()" (mouseleave)="onLeaveLocationSubMenu()">
-            <img   alt="location" [src]="profile.locationIconUrl">
+          <button mat-menu-item
+                  (mouseover)="profile.locationIconUrl = locationHoverImgSrc"
+                  (mouseout)="profile.locationIconUrl = locationImgSrc">
+            <img alt="location" [src]="profile.locationIconUrl"
+            >
             <span *ngIf="profile.Office;else buildingNotAvailable"> {{profile.Office}}</span>
             <ng-template #buildingNotAvailable>
               <span>Office N/A</span>
@@ -74,12 +91,19 @@
               <div>Room N/A</div>
             </ng-template>
           </button>
-          <button mat-menu-item >
-            <img [src]="profile.managerIconUrl" alt="manager">
-            <span>AAA</span>
+          <button mat-menu-item
+                  (mouseover)="profile.managerIconUrl = managerHoverImgSrc"
+                  (mouseout)="profile.managerIconUrl = managerImgSrc"
+                  (click)="onNavigateToTheManagerPage(managerProfile)">
+            <img [src]="profile.managerIconUrl" alt="manager"
+            >
+            <span>{{managerProfile?.FullName}}</span>
           </button>
-          <button mat-menu-item>
-            <img [src]="profile.workADayIconUrl" alt="work a day">
+          <button mat-menu-item
+                  (mouseover)="profile.workADayIconUrl = workADayHoverImgSrc"
+                  (mouseout)="profile.workADayIconUrl = workADayImgSrc">
+            <img [src]="profile.workADayIconUrl" alt="work a day"
+            >
             <a href="#">View in workday</a>
           </button>
         </mat-menu>
@@ -89,15 +113,14 @@
 </div>
 
 
-
 <ng-template #noProfiles>
   <div class="spinner__container">
     <div class="spinner-border" role="status"></div>
   </div>
 </ng-template>
 
-<pagination-controls *ngIf="profiles.length> 0" (pageBoundsCorrection)="pageChanged($event)"
-                     (pageChange)="currentPage = $event"
+<pagination-controls *ngIf="profiles.length> 0" (pageBoundsCorrection)="pageChanged($event,byAZ)"
+                     (pageChange)="nextPage($event,byAZ)"
                      autoHide="false"
                      directionLinks="true"
                      id="custom"
