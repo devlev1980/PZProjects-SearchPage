@@ -37,6 +37,23 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
 
       this.departments = this.profiles.map(el => el.Department);
       this.locations = this.profiles.map(el => el.Office);
+      // this.profiles.map(item => {
+      //   if (item.Office) {
+      //    this.locations.push({
+      //       location: item.Office,
+      //       profilesInRoom: this.locations.filter(el => item.Office.includes(el.location)).length
+      //     });
+      //
+      //   }
+      // });
+
+      // if (item.Office) {
+      //   this.locations.push(item.Office);
+      // this.locations.push({
+      //   location: item.Office,
+      //   profilesInRoom: this.locations.filter(el => item.Office.includes(el.location)).length
+      // });
+      // }
       // if (item.Office) {
       //   //   this.locations.push(item.Office);
       // this.profiles.forEach(el => {
@@ -72,5 +89,5 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
 
 export interface ILocation {
   location: string;
-  count: number;
+  profilesInRoom: number;
 }

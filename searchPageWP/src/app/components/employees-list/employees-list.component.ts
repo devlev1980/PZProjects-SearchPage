@@ -18,6 +18,9 @@ import {environment} from '../../../environments/environment';
 import {by} from 'protractor';
 import {PassCharService} from '../../services/pass-char.service';
 import {SearchByDepartmentService} from '../../services/search-by-department.service';
+import {SearchByAzService} from '../../services/search-by-az.service';
+import {validate} from 'codelyzer/walkerFactory/walkerFn';
+import {SaveSearchCharService} from '../../services/save-search-char.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -67,6 +70,8 @@ export class EmployeesListComponent implements OnInit {
   constructor(private employeeService: MockService,
               private searchByEmployeeService: SearchByEmployeeService,
               private searchByDepartmentService: SearchByDepartmentService,
+              private searchByAzService: SearchByAzService,
+              private saveSearchCharService: SaveSearchCharService,
               private passCharService: PassCharService,
               private sortService: SortService,
               private renderer: Renderer2,
@@ -93,6 +98,7 @@ export class EmployeesListComponent implements OnInit {
     // this.cdr.detectChanges();
     this.onSearchByEmployee();
     this.onSearchByDepartment();
+    this.onSearchByAZ();
     this.onSort();
     this.cdr.detectChanges();
 
@@ -110,10 +116,8 @@ export class EmployeesListComponent implements OnInit {
     this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
       if (searchTerm.value !== '') {
         this.currentPage = 0;
-        console.log('by employee');
         this.byEmployeeTerm = searchTerm.value;
         this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
-        console.log('filter results', this.filterResults);
         this.totalItems = this.filterResults.length;
         this.cdr.detectChanges();
       }
@@ -164,7 +168,6 @@ export class EmployeesListComponent implements OnInit {
         this.currentPage = 0;
         this.byDepartmentTerm = searchTerm.value;
         this.filterResults = this.profiles.filter(profile => profile.Department === searchTerm.value);
-        console.log('filter results', this.filterResults);
         this.totalItems = this.filterResults.length;
         this.cdr.detectChanges();
       }
@@ -176,6 +179,18 @@ export class EmployeesListComponent implements OnInit {
       }
     });
 
+  }
+
+  onSearchByAZ() {
+    this.searchByAzService.getSearch().subscribe((searchTerm) => {
+      if (searchTerm.value) {
+        this.byAZ = searchTerm.value;
+        this.currentPage = 0;
+        this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(searchTerm.value));
+        this.totalItems = this.filterResults.length;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   /**
@@ -206,7 +221,6 @@ export class EmployeesListComponent implements OnInit {
 
   pageChanged(event: number, char: string) {
     this.currentPage = event;
-    // this.profiles = this.profilesCopyFiltered;
   }
 
   onHoverOnWorkPhone(profile, i) {
@@ -270,7 +284,6 @@ export class EmployeesListComponent implements OnInit {
   onOpenMenu(manager: string) {
     const newManager = manager.substring(8);
     this.managerProfile = this.profiles.find(profile => profile.UserName === newManager);
-    console.log('---', this.managerProfile);
 
   }
 
@@ -285,11 +298,7 @@ export class EmployeesListComponent implements OnInit {
 
   nextPage(page: number, byAZ: string) {
     this.currentPage = page;
-    // this.filterResults = this.profiles.filter(profile => profile.FullName === byAZ);
-    // console.log('profiles', this.filterResults);
-    // this.profiles = this.profiles.filter(profile => profile.FirstName === this.byAZ);
-    //  this.totalItems = this.profiles.length;
-    // this.onSearchByType();
+    this.saveSearchCharService.saveChar(this.byAZ);
 
   }
 
