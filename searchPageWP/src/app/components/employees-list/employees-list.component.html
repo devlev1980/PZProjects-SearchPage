@@ -1,5 +1,6 @@
 <div class="filter_results" >
-  Results: {{(profiles | searchByEmployee: byEmployeeTerm | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation | searchByAZ: byAZ).length}}</div>
+  Results: {{(profiles | searchByEmployee: byEmployeeTerm  | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation | searchByAZ: byAZ).length}}</div>
+<!--  Results: {{totalItems}}</div>-->
 
 <div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
 

@@ -4,7 +4,7 @@ import {Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class SearchByEmployeeService {
   private search: Subject<ISearchTerm>;
 
   constructor() {

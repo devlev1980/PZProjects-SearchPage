@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {ISearchTerm, SearchService} from './search.service';
 import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({

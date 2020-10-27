@@ -20,6 +20,4 @@ export class SortService {
   }
 }
 
-interface IOrder {
 
-}

@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {SearchService} from '../../services/search.service';
+import {SearchByEmployeeService} from '../../services/searchByEmployee.service';
 import {PassCharService} from '../../services/pass-char.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class AZComponent implements OnInit {
   @ViewChild('azRef') azRef: ElementRef;
   selectedCharOnPaging: string = '';
 
-  constructor(private searchService: SearchService,
+  constructor(private searchService: SearchByEmployeeService,
               private cdr: ChangeDetectorRef,
               private passCharService: PassCharService) {
   }
@@ -34,11 +34,11 @@ export class AZComponent implements OnInit {
     if (!elementRefInPath) {
       this.searchService.setSearch({type: 'byAZ', value: ''});
       this.selectedChar = null;
+      this.selectedCharOnPaging = null;
     }
   }
 
   ngOnInit() {
-    console.log('a');
   }
 
   /**
@@ -48,6 +48,6 @@ export class AZComponent implements OnInit {
   onSelectedCharacter(char: string) {
     this.selectedChar = this.azCharacters.indexOf(char);
     this.selectedCharOnPaging = char;
-    this.searchService.setSearch({type: 'byAZ', value: char});
+    // this.searchService.setSearch({type: 'byAZ', value: char});
   }
 }

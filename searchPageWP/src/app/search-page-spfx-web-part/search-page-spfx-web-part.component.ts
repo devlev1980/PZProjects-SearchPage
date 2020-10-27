@@ -16,7 +16,7 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   employeeList: IEmployee[] = [];
   AZ_characters: Array<string> = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   departments: string[] = [];
-  locations: ILocation[] = [];
+  locations: string[] = [];
   profileFromSearch: string = '';
 
   constructor(private employeeService: MockService,
@@ -36,11 +36,14 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       this.locations = [];
 
       this.departments = this.profiles.map(el => el.Department);
-      this.profiles.forEach(el => {
-
-        // item.Rank = null;
-
-      });
+      this.locations = this.profiles.map(el => el.Office);
+      // if (item.Office) {
+      //   //   this.locations.push(item.Office);
+      // this.profiles.forEach(el => {
+      //
+      //   // item.Rank = null;
+      //
+      // });
 
       // this.profiles.forEach(item => {
       // item.Rank = null;
@@ -53,8 +56,8 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       // });
       // }
       // });
-      // this.departments = Array.from(new Set(this.departments)).sort();
-      // this.locations = Array.from(new Set(this.locations)).sort();
+      this.departments = Array.from(new Set(this.departments)).sort();
+      this.locations = Array.from(new Set(this.locations)).sort();
       console.log('loc', this.locations);
       console.log('dep', this.departments);
 

@@ -6,7 +6,7 @@ import {IProfile} from '../models/profile.model';
 })
 export class SearchByEmployeePipe implements PipeTransform {
 
-  transform(profiles: IProfile[], searchTerm: string): IProfile[] {
+  transform(profiles: IProfile[], searchTerm: string): any[] {
     if (!profiles || !searchTerm) {
       return profiles;
     }

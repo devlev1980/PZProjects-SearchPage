@@ -11,7 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {SearchService} from '../../services/search.service';
+import {SearchByEmployeeService} from '../../services/searchByEmployee.service';
 import {SortService} from '../../services/sort.service';
 import {fromEvent, Subscription} from 'rxjs';
 import {IProfile} from '../../models/profile.model';
@@ -58,7 +58,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   lastElement: boolean = false;
 
   constructor(private fb: FormBuilder,
-              private searchService: SearchService,
+              private searchService: SearchByEmployeeService,
               private sortService: SortService,
               private renderer: Renderer2,
               private passService: PassCharService,
@@ -97,7 +97,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
   onScroll(event: any) {
-    console.log(event);
     // visible height + pixel scrolled >= total height
     if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
       console.log('End');
@@ -117,7 +116,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     if (this.profileFromSearch) {
       this.showAutocompleteByEmployee = false;
       this.byEmployee.patchValue(this.profileFromSearch);
-      // this.showAutocompleteByEmployee = this.byEmployee.value !== '';
       this.searchService.setSearch({type: 'byEmployee', value: this.profileFromSearch || ''});
       this.cdr.detectChanges();
 
@@ -185,7 +183,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
    * pass the selected profile value to the 'Search service'
    */
   onSearchByEmployee() {
-
     this.profileFromSearch = '';
     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
     this.selectedUser = this.byEmployee.value;

@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {MockService} from '../../services/mock.service';
-import {ISearchTerm, SearchService} from '../../services/search.service';
+import {ISearchTerm, SearchByEmployeeService} from '../../services/searchByEmployee.service';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
@@ -61,9 +61,10 @@ export class EmployeesListComponent implements OnInit {
   @Input() profileFromAutocompleteSearch: string;
 
   managerProfile: IProfile;
+  profilesCopyFiltered: IProfile[];
 
   constructor(private employeeService: MockService,
-              private searchService: SearchService,
+              private searchService: SearchByEmployeeService,
               private passCharService: PassCharService,
               private sortService: SortService,
               private renderer: Renderer2,
@@ -87,8 +88,8 @@ export class EmployeesListComponent implements OnInit {
     this.workADayImgSrc = environment.workaDayIcon;
     this.workADayHoverImgSrc = environment.workaDayHoverIcon;
 
-    this.cdr.detectChanges();
-    this.onSearchByType();
+    // this.cdr.detectChanges();
+    this.onSearchByEmployee();
     this.onSort();
     this.cdr.detectChanges();
 
@@ -97,41 +98,53 @@ export class EmployeesListComponent implements OnInit {
   /**
    * search service by type (byEmployee,byDepartment,byLocation,byAZ)
    */
-  onSearchByType() {
+  onSearchByEmployee() {
     if (this.profileFromAutocompleteSearch) {
       this.byEmployeeTerm = this.profileFromAutocompleteSearch;
       this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);
       this.totalItems = this.filterResults.length;
     }
-    this.searchService.getSearch().subscribe((searchTerm) => {
-      switch (searchTerm.type) {
-        case 'byEmployee':
-          this.byEmployeeTerm = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
-          console.log('profiles', this.filterResults);
-          this.totalItems = this.filterResults.length;
-          this.cdr.detectChanges();
-          break;
-        case 'byDepartment':
-          this.byDepartmentTerm = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.Department === this.byDepartmentTerm);
-          this.totalItems = this.filterResults.length;
-          this.cdr.detectChanges();
-          break;
-        case 'byLocation':
-          this.byLocation = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.Office === this.byLocation);
-          this.totalItems = this.filterResults.length;
-          this.cdr.detectChanges();
-          break;
-        case 'byAZ':
-          this.byAZ = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(this.byAZ));
-          this.totalItems = this.filterResults.length;
-          this.cdr.detectChanges();
-          break;
+    this.searchService.getSearch().subscribe((searchTerm)=>{
+      if(searchTerm.value !== ''){
+        console.log('by employee');
+        this.byEmployeeTerm = searchTerm.value;
+        this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
+        console.log('filter results', this.filterResults);
+        this.totalItems = this.filterResults.length;
+        this.cdr.detectChanges();
       }
+
     });
+    // this.searchService.getSearch().subscribe((searchTerm) => {
+    //   switch (searchTerm.type) {
+    //     // case 'byEmployee':
+    //     //   this.byEmployeeTerm = searchTerm.value;
+    //     //   this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
+    //     //   console.log('by employee result', this.filterResults);
+    //     //   this.totalItems = this.filterResults.length;
+    //     //   this.cdr.detectChanges();
+    //     //   break;
+    //     case 'byDepartment':
+    //       // this.byDepartmentTerm = searchTerm.value;
+    //       // this.filterResults = this.profiles.filter(profile => profile.Department === this.byDepartmentTerm);
+    //       // this.totalItems = this.filterResults.length;
+    //       // this.cdr.detectChanges();
+    //       break;
+    //     case 'byLocation':
+    //       // this.byLocation = searchTerm.value;
+    //       // this.filterResults = this.profiles.filter(profile => profile.Office === this.byLocation);
+    //       // this.totalItems = this.filterResults.length;
+    //       // this.cdr.detectChanges();
+    //       break;
+    //     case 'byAZ':
+    //       console.log('az');
+    //       // this.byAZ = searchTerm.value;
+    //       // this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(this.byAZ));
+    //       // this.totalItems = this.filterResults.length;
+    //       // this.cdr.detectChanges();
+    //       break;
+    //   }
+    // });
   }
 
   /**
@@ -161,8 +174,8 @@ export class EmployeesListComponent implements OnInit {
   }
 
   pageChanged(event: number, char: string) {
-
-
+    this.currentPage = event;
+    // this.profiles = this.profilesCopyFiltered;
   }
 
   onHoverOnWorkPhone(profile, i) {
@@ -243,7 +256,12 @@ export class EmployeesListComponent implements OnInit {
 
   nextPage(page: number, byAZ: string) {
     this.currentPage = page;
-    this.cdr.detectChanges();
+    // this.filterResults = this.profiles.filter(profile => profile.FullName === byAZ);
+    // console.log('profiles', this.filterResults);
+    // this.profiles = this.profiles.filter(profile => profile.FirstName === this.byAZ);
+    //  this.totalItems = this.profiles.length;
+    // this.onSearchByType();
 
   }
+
 }
