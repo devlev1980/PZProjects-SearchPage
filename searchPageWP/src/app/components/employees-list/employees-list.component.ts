@@ -10,13 +10,14 @@ import {
   ViewChild
 } from '@angular/core';
 import {MockService} from '../../services/mock.service';
-import {ISearchTerm, SearchByEmployeeService} from '../../services/searchByEmployee.service';
+import {ISearchTerm, SearchByEmployeeService} from '../../services/search-by-employee.service';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
 import {by} from 'protractor';
 import {PassCharService} from '../../services/pass-char.service';
+import {SearchByDepartmentService} from '../../services/search-by-department.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -26,7 +27,7 @@ import {PassCharService} from '../../services/pass-char.service';
 })
 export class EmployeesListComponent implements OnInit {
   @Input() profiles: IProfile[];
-  searchTerm: ISearchTerm = {type: '', value: ''};
+  searchTerm: ISearchTerm = {type: '', value: '', deleteClick: false};
   byEmployeeTerm: string;
   byDepartmentTerm: string;
   byLocation: string;
@@ -64,7 +65,8 @@ export class EmployeesListComponent implements OnInit {
   profilesCopyFiltered: IProfile[];
 
   constructor(private employeeService: MockService,
-              private searchService: SearchByEmployeeService,
+              private searchByEmployeeService: SearchByEmployeeService,
+              private searchByDepartmentService: SearchByDepartmentService,
               private passCharService: PassCharService,
               private sortService: SortService,
               private renderer: Renderer2,
@@ -90,6 +92,7 @@ export class EmployeesListComponent implements OnInit {
 
     // this.cdr.detectChanges();
     this.onSearchByEmployee();
+    this.onSearchByDepartment();
     this.onSort();
     this.cdr.detectChanges();
 
@@ -104,8 +107,9 @@ export class EmployeesListComponent implements OnInit {
       this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);
       this.totalItems = this.filterResults.length;
     }
-    this.searchService.getSearch().subscribe((searchTerm)=>{
-      if(searchTerm.value !== ''){
+    this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
+      if (searchTerm.value !== '') {
+        this.currentPage = 0;
         console.log('by employee');
         this.byEmployeeTerm = searchTerm.value;
         this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
@@ -114,8 +118,15 @@ export class EmployeesListComponent implements OnInit {
         this.cdr.detectChanges();
       }
 
+      if (searchTerm.deleteClick) {
+        this.currentPage = 0;
+        this.byEmployeeTerm = '';
+        this.totalItems = this.profiles.length;
+        this.cdr.detectChanges();
+      }
     });
-    // this.searchService.getSearch().subscribe((searchTerm) => {
+
+    // this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
     //   switch (searchTerm.type) {
     //     // case 'byEmployee':
     //     //   this.byEmployeeTerm = searchTerm.value;
@@ -145,6 +156,26 @@ export class EmployeesListComponent implements OnInit {
     //       break;
     //   }
     // });
+  }
+
+  onSearchByDepartment() {
+    this.searchByDepartmentService.getSearch().subscribe((searchTerm) => {
+      if (searchTerm.value !== '') {
+        this.currentPage = 0;
+        this.byDepartmentTerm = searchTerm.value;
+        this.filterResults = this.profiles.filter(profile => profile.Department === searchTerm.value);
+        console.log('filter results', this.filterResults);
+        this.totalItems = this.filterResults.length;
+        this.cdr.detectChanges();
+      }
+      if (searchTerm.deleteClick) {
+        this.currentPage = 0;
+        this.byDepartmentTerm = '';
+        this.totalItems = this.profiles.length;
+        this.cdr.detectChanges();
+      }
+    });
+
   }
 
   /**
@@ -180,11 +211,9 @@ export class EmployeesListComponent implements OnInit {
 
   onHoverOnWorkPhone(profile, i) {
     this.profileIndex = this.profiles.indexOf(profile);
-    console.log('img index', i);
     this.isShowWorkHoverIcon = true;
     this.profiles.forEach((element, index) => {
       if (i === index) {
-        console.log('yes');
 
         this.cdr.detectChanges();
       }

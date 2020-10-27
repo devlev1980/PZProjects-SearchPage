@@ -11,9 +11,8 @@ export class SearchByDepartmentPipe implements PipeTransform {
       return departments;
     }
     return departments.filter((department) => {
-      return  department.toLowerCase().includes(searchTerm.toLowerCase());
+      return department.toLowerCase().includes(searchTerm.toLowerCase());
     });
   }
-
 
 }

@@ -11,13 +11,14 @@ import {
   ViewChild
 } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {SearchByEmployeeService} from '../../services/searchByEmployee.service';
+import {SearchByEmployeeService} from '../../services/search-by-employee.service';
 import {SortService} from '../../services/sort.service';
 import {fromEvent, Subscription} from 'rxjs';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
 import {ILocation} from '../../search-page-spfx-web-part/search-page-spfx-web-part.component';
 import {PassCharService} from '../../services/pass-char.service';
+import {SearchByDepartmentService} from '../../services/search-by-department.service';
 
 @Component({
   selector: 'app-search-by',
@@ -58,7 +59,8 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   lastElement: boolean = false;
 
   constructor(private fb: FormBuilder,
-              private searchService: SearchByEmployeeService,
+              private searchByEmployeeService: SearchByEmployeeService,
+              private searchByDepartmentService: SearchByDepartmentService,
               private sortService: SortService,
               private renderer: Renderer2,
               private passService: PassCharService,
@@ -116,7 +118,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     if (this.profileFromSearch) {
       this.showAutocompleteByEmployee = false;
       this.byEmployee.patchValue(this.profileFromSearch);
-      this.searchService.setSearch({type: 'byEmployee', value: this.profileFromSearch || ''});
+      this.searchByEmployeeService.setSearch({
+        type: 'byEmployee',
+        value: this.profileFromSearch || '',
+        deleteClick: false
+      });
       this.cdr.detectChanges();
 
     } else {
@@ -189,7 +195,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.byEmployee.patchValue(this.selectedUser);
 
     this.changeHeightOfAutocompleteDynamically();
-    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+    this.searchByEmployeeService.setSearch({
+      type: 'byEmployee',
+      value: this.byEmployee.value || '',
+      deleteClick: false
+    });
     this.cdr.detectChanges();
 
   }
@@ -200,7 +210,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
    */
   onSearchByDepartment() {
     this.showAutocompleteByDepartment = true;
-    this.searchService.setSearch({type: 'byDepartment', value: ''});
+    this.searchByDepartmentService.setSearch({
+      type: 'byDepartment',
+      value: this.byDepartment.value || '',
+      deleteClick: false
+    });
     this.cdr.detectChanges();
   }
 
@@ -209,7 +223,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
    * pass the selected location value to the service setSearch
    */
   onSearchByLocation() {
-    this.searchService.setSearch({type: 'byLocation', value: ''});
+    this.searchByEmployeeService.setSearch({type: 'byLocation', value: '', deleteClick: false});
     this.cdr.detectChanges();
   }
 
@@ -221,7 +235,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onSelectDepartment(department: string) {
     this.byDepartment.patchValue(department);
     this.showAutocompleteByDepartment = false;
-    this.searchService.setSearch({type: 'byDepartment', value: department || ''});
+    this.searchByDepartmentService.setSearch({type: 'byDepartment', value: department || '', deleteClick: false});
     this.cdr.detectChanges();
   }
 
@@ -233,7 +247,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onSelectLocation(office: string) {
     this.showAutocompleteByLocation = false;
     this.byLocation.patchValue(office);
-    this.searchService.setSearch({type: 'byLocation', value: office || ''});
+    this.searchByEmployeeService.setSearch({type: 'byLocation', value: office || '', deleteClick: false});
     this.cdr.detectChanges();
   }
 
@@ -260,7 +274,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onSelectUser(profile: IProfile) {
     this.selectedUser = profile.FirstName + ' ' + profile.LastName;
     this.byEmployee.patchValue(this.selectedUser);
-    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+    this.searchByEmployeeService.setSearch({
+      type: 'byEmployee',
+      value: this.byEmployee.value || '',
+      deleteClick: false
+    });
     this.profileFromSearch = '';
     this.ulHeight = 0;
     this.showAutocompleteByEmployee = false;
@@ -280,7 +298,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
     this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue('');
-    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+    this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '',deleteClick: true});
     this.cdr.detectChanges();
 
   }
@@ -294,7 +312,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
     this.showAutocompleteByDepartment = false;
     this.byDepartment.patchValue('');
-    this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
+    this.searchByDepartmentService.setSearch({
+      type: 'byDepartment',
+      value: this.byDepartment.value || '',
+      deleteClick: true
+    });
     this.cdr.detectChanges();
   }
 
@@ -304,7 +326,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onClearLocationInput() {
     this.showAutocompleteByLocation = false;
     this.byLocation.patchValue('');
-    this.searchService.setSearch({type: 'byLocation', value: this.byLocation.value || ''});
+    this.searchByEmployeeService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});
     this.cdr.detectChanges();
   }
 
@@ -315,9 +337,13 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.byEmployee.patchValue('');
     this.byDepartment.patchValue('');
     this.byLocation.patchValue('');
-    this.searchService.setSearch({type: 'byLocation', value: this.byLocation.value || ''});
-    this.searchService.setSearch({type: 'byDepartment', value: this.byDepartment.value || ''});
-    this.searchService.setSearch({type: 'byEmployee', value: this.byEmployee.value || ''});
+    this.searchByEmployeeService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});
+    this.searchByEmployeeService.setSearch({
+      type: 'byDepartment',
+      value: this.byDepartment.value || '',
+      deleteClick: true
+    });
+    this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '', deleteClick: true});
     this.cdr.detectChanges();
   }
 

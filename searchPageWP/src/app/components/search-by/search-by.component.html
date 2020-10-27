@@ -17,7 +17,7 @@
                 </svg>
               </button>
 
-              <button class="btn__sort" type="button" #sortBtn (click)="onSort()">
+              <button class="btn__sort" type="button" #sortBtn (click)="onSort()" *ngIf="inputEmployeeRef.value === ''">
                 <img [src]="imgSrc" alt="sort">
               </button>
               <!--            ================================= Autocomplete -->

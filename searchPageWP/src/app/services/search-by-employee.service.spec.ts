@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SearchService } from './searchByEmployee.service';
+import { SearchService } from './search-by-employee.service';
 
 describe('SearchService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

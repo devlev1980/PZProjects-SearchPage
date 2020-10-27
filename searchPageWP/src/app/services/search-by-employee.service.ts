@@ -24,5 +24,6 @@ export class SearchByEmployeeService {
 export interface ISearchTerm {
   type: string;
   value: string;
+  deleteClick: boolean;
 }
 

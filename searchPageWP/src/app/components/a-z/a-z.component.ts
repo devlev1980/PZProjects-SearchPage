@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {SearchByEmployeeService} from '../../services/searchByEmployee.service';
+import {SearchByEmployeeService} from '../../services/search-by-employee.service';
 import {PassCharService} from '../../services/pass-char.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class AZComponent implements OnInit {
   public onGlobalClick(targetElementPath: Array<any>) {
     const elementRefInPath = targetElementPath.find(e => e === this.azRef.nativeElement);
     if (!elementRefInPath) {
-      this.searchService.setSearch({type: 'byAZ', value: ''});
+      this.searchService.setSearch({type: 'byAZ', value: '', deleteClick: false});
       this.selectedChar = null;
       this.selectedCharOnPaging = null;
     }
