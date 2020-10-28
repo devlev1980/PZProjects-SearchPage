@@ -1,5 +1,5 @@
 <div class="filter_results" >
-  Results: {{(profiles | searchByEmployee: byEmployeeTerm  | cardsByDepartment: byDepartmentTerm | searchByLocation: byLocation | searchByAZ: byAZ).length}}
+  Results: {{(profiles | searchByEmployee: byEmployeeTerm  | cardsByDepartment: byDepartmentTerm | cardsByLocation: byLocation | searchByAZ: byAZ).length}}
 <!--  Results: {{totalItems}}-->
 </div>
 
@@ -8,8 +8,8 @@
   <!--paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems  } | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation |searchByEmployee: byEmployeeTerm "  >-->
   <div class="card" *ngFor="let profile of profiles |searchByEmployee: byEmployeeTerm
    | cardsByDepartment: byDepartmentTerm
-   | searchByLocation: byLocation
-   | searchByAZ: byAZ |
+   | searchByAZ: byAZ
+   | cardsByLocation: byLocation|
    paginate: {id: 'custom', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems };let i=index">
     <div class="card__body">
       <h3 class="card__title">{{profile.FirstName}} {{profile.LastName}}</h3>

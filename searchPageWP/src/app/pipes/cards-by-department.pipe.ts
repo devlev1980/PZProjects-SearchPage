@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {IProfile} from '../models/profile.model';
 
 @Pipe({
@@ -12,8 +12,7 @@ export class CardsByDepartmentPipe implements PipeTransform {
     }
 
     return profiles.filter((profile) => {
-      return profile.Department.toLowerCase().startsWith(searchTerm.toLowerCase())
-
+      return profile.Department.toLowerCase().startsWith(searchTerm.toLowerCase());
     });
 
   }

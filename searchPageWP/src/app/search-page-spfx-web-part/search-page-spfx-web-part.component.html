@@ -1,11 +1,11 @@
 <div class="components__wrapper">
+  <app-a-z [azCharacters]="AZ_characters"></app-a-z>
   <app-search-by [departments]="departments"
-                 [locations]="locations"
+                 [locations]="locationByOffice"
                  [profiles]="profiles"
                  [profileFromSearch]="profileFromSearch">
 
   </app-search-by>
-  <app-a-z [azCharacters]="AZ_characters"></app-a-z>
   <app-employees-list [profiles]="profiles"
                       [profileFromAutocompleteSearch]="profileFromSearch">
 

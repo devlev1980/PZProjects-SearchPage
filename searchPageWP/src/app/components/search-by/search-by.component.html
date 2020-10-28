@@ -17,9 +17,9 @@
                 </svg>
               </button>
 
-              <button class="btn__sort" type="button" #sortBtn (click)="onSort()" *ngIf="inputEmployeeRef.value === ''">
-                <img [src]="imgSrc" alt="sort">
-              </button>
+<!--              <button class="btn__sort" type="button" #sortBtn (click)="onSort()" *ngIf="inputEmployeeRef.value === ''">-->
+<!--                <img [src]="imgSrc" alt="sort">-->
+<!--              </button>-->
               <!--            ================================= Autocomplete -->
 
 <!--              <div class="footer"  [class.small_autocomplete]="smallAutocomplete && (profiles | searchByEmployee: selectedUser).length > 0"-->
@@ -32,7 +32,7 @@
 <!--                for {{selectedUser}}-->
 <!--              </div>-->
 
-              <cdk-virtual-scroll-viewport #virtualScrollRef (scroll)="onScroll($event)" class="users" [ngClass]="{'hidden': ulHeight === 0}" [style.height.px]="ulHeight"  [itemSize]="5" *ngIf="showAutocompleteByEmployee">
+              <cdk-virtual-scroll-viewport #virtualScrollRef (scroll)="onScroll($event)" class="users" [ngClass]="{'hidden': autocompleteByEmployee_ulHeight === 0}" [style.height.px]="autocompleteByEmployee_ulHeight" [itemSize]="5" *ngIf="showAutocompleteByEmployee">
                 <!--              <div class="footer" *ngIf="showAutocompleteByEmployee">{{(profiles  | searchByEmployee: selectedUser).length}} matches-->
                 <!--                for {{selectedUser}}</div>-->
                 <ul class="autocomplete_wrapper" >
@@ -80,7 +80,8 @@
               </svg>
             </button>
 <!-- ================       Autocomplete     =============================-->
-            <div class="autocomplete__departments" *ngIf="showAutocompleteByDepartment"  >
+
+            <div class="autocomplete__departments" *ngIf="showAutocompleteByDepartment"  [style.height.px]="autocompleteByDepartment_ulHeight">
               <ul>
                 <li *ngFor="let department of departments | searchByDepartment: byDepartment.value " (click)="onSelectDepartment(department)">
                   <span [innerHTML]="department | highlight: byDepartment.value">{{department}}</span>
@@ -90,7 +91,7 @@
           </div>
           <!-- ===========================================================-->
           <div class="form-item by__location" #autocompleteLocationsRef>
-            <input type="text"  class="byLocation" #inputLocationRef (click)="showAutocompleteByLocation = true" (input)="onSearchByLocation()" formControlName="byLocation" placeholder="Location">
+            <input type="text"  class="byLocation" #inputLocationRef  (click)="onSearchByLocation()" formControlName="byLocation" placeholder="Location">
             <img class="byLocation" [src]="searchByLocationImgSrc" alt="by location">
 
             <button (click)="onClearLocationInput()" class="btn_clear" *ngIf="inputLocationRef.value !== ''">
@@ -100,10 +101,11 @@
                   d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
               </svg>
             </button>
-            <div class="autocomplete__locations" *ngIf="showAutocompleteByLocation" #autocompleteLocations>
+
+            <div class="autocomplete__locations" *ngIf="showAutocompleteByLocation" #autocompleteLocations [style.height.px]="autocompleteByLocation_ulHeight">
               <ul>
-                <li *ngFor="let location of locations | searchByLocation: byLocation.value " (click)="onSelectLocation(location)">
-                  <span [innerHTML]="location | highlight: byLocation.value">{{location}}</span>
+                <li *ngFor="let location of locations | searchByLocation: byLocation.value " (click)="onSelectLocation(location.Office)">
+                  <span [innerHTML]="location.Office | highlight: byLocation.value">{{location.Office}}</span>
 <!--                  <span >Profiles in room: {{location.profilesInRoom}}</span>-->
                 </li>
               </ul>

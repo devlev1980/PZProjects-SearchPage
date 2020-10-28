@@ -2,11 +2,15 @@
 
 .filter_results {
   background: #00bca9;
-  margin-bottom: 2rem;
+  //margin-bottom: 2rem;
   display: inline-block;
-  padding: 5px 10px;
-  border-radius: 10px;
-  color: #ffffff;
+  padding: 7px 10px;
+  border-radius: 5px;
+  color: #fff;
+  position: relative;
+  top: -160px;
+  right: -94px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,.5);
 }
 .cards__container{
   display: grid;

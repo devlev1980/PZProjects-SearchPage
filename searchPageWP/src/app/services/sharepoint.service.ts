@@ -47,6 +47,7 @@ export class SharepointService {
               mappedProfile = this.mapKeyToValue(profile);
               if (mappedProfile.EmployeeID !== null && mappedProfile.FirstName !== '') {
                 mappedProfile.FullName = mappedProfile.FirstName + ' ' + mappedProfile.LastName;
+
                 this.profiles.push(mappedProfile);
                 profiles = this.profiles;
               }

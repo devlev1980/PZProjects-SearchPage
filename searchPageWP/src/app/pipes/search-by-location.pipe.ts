@@ -7,15 +7,13 @@ import {ILocation} from '../search-page-spfx-web-part/search-page-spfx-web-part.
 })
 export class SearchByLocationPipe implements PipeTransform {
 
-  transform(locations: string[], searchTerm: string): any {
+  transform(locations: ILocation[], searchTerm: string): any {
 
     if (!locations || !searchTerm) {
       return locations;
     }
-
     return locations.filter((location) => {
-
-        return location.toLowerCase().includes(searchTerm.toLowerCase());
+        return location.Office.toLowerCase().startsWith(searchTerm.toLowerCase());
 
     });
   }

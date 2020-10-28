@@ -21,6 +21,9 @@ import {SearchByDepartmentService} from '../../services/search-by-department.ser
 import {SearchByAzService} from '../../services/search-by-az.service';
 import {validate} from 'codelyzer/walkerFactory/walkerFn';
 import {SaveSearchCharService} from '../../services/save-search-char.service';
+import {SearchByLocationService} from '../../services/search-by-location.service';
+import set = Reflect.set;
+import {ClearAllService} from '../../services/clear-all.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -71,7 +74,9 @@ export class EmployeesListComponent implements OnInit {
               private searchByEmployeeService: SearchByEmployeeService,
               private searchByDepartmentService: SearchByDepartmentService,
               private searchByAzService: SearchByAzService,
+              private searchByLocationService: SearchByLocationService,
               private saveSearchCharService: SaveSearchCharService,
+              private clearAllService: ClearAllService,
               private passCharService: PassCharService,
               private sortService: SortService,
               private renderer: Renderer2,
@@ -79,6 +84,7 @@ export class EmployeesListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.profiles = this.profiles.filter(profile => profile.Office !== null);
     this.totalItems = this.profiles.length;
     this.menuIcon = environment.menuIcon;
     this.workPhoneImgSrc = environment.workPhoneIcon;
@@ -99,7 +105,9 @@ export class EmployeesListComponent implements OnInit {
     this.onSearchByEmployee();
     this.onSearchByDepartment();
     this.onSearchByAZ();
+    this.onSearchByLocation();
     this.onSort();
+    this.onClearAll();
     this.cdr.detectChanges();
 
   }
@@ -188,6 +196,38 @@ export class EmployeesListComponent implements OnInit {
         this.currentPage = 0;
         this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(searchTerm.value));
         this.totalItems = this.filterResults.length;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  onSearchByLocation() {
+    setTimeout(() => {
+      this.searchByLocationService.getSearch().subscribe((searchTerm) => {
+        if (searchTerm.value !== '') {
+          this.currentPage = 0;
+          this.byLocation = searchTerm.value;
+          this.filterResults = this.profiles.filter(profile => profile.Office === searchTerm.value);
+          this.totalItems = this.filterResults.length;
+          this.cdr.detectChanges();
+        }
+        if (searchTerm.deleteClick) {
+          this.currentPage = 0;
+          this.byLocation = '';
+          this.totalItems = this.profiles.length;
+          this.cdr.detectChanges();
+        }
+      });
+    }, 0);
+
+  }
+
+  onClearAll() {
+    this.clearAllService.getSearch().subscribe((result) => {
+      if (result.deleteClick) {
+        this.byAZ = '';
+        this.currentPage = 0;
+        this.totalItems = this.profiles.length;
         this.cdr.detectChanges();
       }
     });

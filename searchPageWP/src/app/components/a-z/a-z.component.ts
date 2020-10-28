@@ -35,7 +35,7 @@ export class AZComponent implements OnInit {
   public onGlobalClick(targetElementPath: Array<any>) {
     const elementRefInPath = targetElementPath.find(e => e === this.azRef.nativeElement);
     if (!elementRefInPath) {
-      this.searchByAzService.setSearch({type: 'byAZ', value: '', deleteClick: false});
+      this.searchByAzService.setSearch({type: 'byAZ', value: '', deleteClick: true});
       this.selectedChar = null;
       this.selectedCharOnPaging = null;
     }
@@ -43,11 +43,8 @@ export class AZComponent implements OnInit {
 
   ngOnInit() {
     this.saveSearchCharService.getSavedChar().subscribe(char => {
-      // this.selectedCharOnPaging = char;
       this.selectedChars = [];
       this.selectedChars.push(char);
-
-      console.log('aaa', this.selectedChars);
     });
   }
 

@@ -22,6 +22,7 @@ import { HoverDirective } from './directives/hover.directive';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {HighlightPipe} from './pipes/highlight.pipe';
 import { CardsByDepartmentPipe } from './pipes/cards-by-department.pipe';
+import { CardsByLocationPipe } from './pipes/cards-by-location.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CardsByDepartmentPipe } from './pipes/cards-by-department.pipe';
     SearchByLocationPipe,
     HoverDirective,
     HighlightPipe,
-    CardsByDepartmentPipe
+    CardsByDepartmentPipe,
+    CardsByLocationPipe
   ],
     imports: [
         BrowserModule,

@@ -19,6 +19,11 @@ import {environment} from '../../../environments/environment';
 import {ILocation} from '../../search-page-spfx-web-part/search-page-spfx-web-part.component';
 import {PassCharService} from '../../services/pass-char.service';
 import {SearchByDepartmentService} from '../../services/search-by-department.service';
+import {SearchByLocationService} from '../../services/search-by-location.service';
+import {SearchByAzService} from '../../services/search-by-az.service';
+import {ClearAllService} from '../../services/clear-all.service';
+import {SaveSearchCharService} from '../../services/save-search-char.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-by',
@@ -28,7 +33,7 @@ import {SearchByDepartmentService} from '../../services/search-by-department.ser
 })
 export class SearchByComponent implements OnInit, AfterViewInit {
   @Input() departments: string[] = [];
-  @Input() locations: string[] = [];
+  @Input() locations: ILocation[];
   @Input() profiles: IProfile[];
   searchForm: FormGroup;
   @ViewChild('sortBtn') sortBtn: ElementRef;
@@ -45,7 +50,9 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   @ViewChild('virtualScrollRef') virtualScrollRef: ElementRef;
   isShow: boolean = true;
   selectedUser: string = '';
-  ulHeight: number = 0;
+  autocompleteByEmployee_ulHeight: number = 0;
+  autocompleteByDepartment_ulHeight: number = 0;
+  autocompleteByLocation_ulHeight: number = 0;
   filtered: IProfile[];
   @Input() profileFromSearch: string;
   ul: Element;
@@ -61,6 +68,10 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder,
               private searchByEmployeeService: SearchByEmployeeService,
               private searchByDepartmentService: SearchByDepartmentService,
+              private searchByLocationService: SearchByLocationService,
+              private searchByAzService: SearchByAzService,
+              private saveSearchCharService: SaveSearchCharService,
+              private clearAllService: ClearAllService,
               private sortService: SortService,
               private renderer: Renderer2,
               private passService: PassCharService,
@@ -90,10 +101,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       this.showAutocompleteByDepartment = false;
     }
     if (!this.autocompleteEmployeeRef.nativeElement.contains(event.target)) {
+      console.log('a');
       this.showAutocompleteByEmployee = false;
-      this.selectedUser = this.byEmployee.value;
-      this.byEmployee.patchValue(this.selectedUser);
-      this.showAutocompleteByEmployee = this.byEmployee.value !== '';
+      // this.selectedUser = this.byEmployee.value;
+      // this.byEmployee.patchValue(this.selectedUser);
+      this.cdr.detectChanges();
 
     }
   }
@@ -101,7 +113,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onScroll(event: any) {
     // visible height + pixel scrolled >= total height
     if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
-      console.log('End');
       this.lastElement = true;
     } else {
       this.lastElement = false;
@@ -145,11 +156,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   /**
    * Change height of searchbar(autocomplete) dynamically
    */
-  changeHeightOfAutocompleteDynamically() {
+  changeHeightOfAutocompleteByEmployeeDynamically() {
 
     if (this.showAutocompleteByEmployee) {
       setTimeout(() => {
-        this.ulHeight = 2;
+        this.autocompleteByEmployee_ulHeight = 2;
         const virtualScroll = document.querySelector('.users');
         if (virtualScroll !== null) {
           const vsChildren = virtualScroll.children;
@@ -157,7 +168,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
           const ul = children[0];
           for (let i = 0; i < ul.children.length; i++) {
             if (i <= 4) {
-              this.ulHeight += (<HTMLElement>ul.children[i]).getBoundingClientRect().height;
+              this.autocompleteByEmployee_ulHeight += (<HTMLElement>ul.children[i]).getBoundingClientRect().height;
               this.cdr.detectChanges();
             }
           }
@@ -165,6 +176,48 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
       }, 500);
 
+    }
+
+  }
+
+  changeHeightOfAutoCompleteByDepartment() {
+
+      setTimeout(() => {
+        this.autocompleteByDepartment_ulHeight = 3;
+        const autocomplete = document.querySelector('.autocomplete__departments');
+
+        const vsChildren = autocomplete.children;
+          const children = vsChildren[0].children;
+          for (let i = 0; i < children.length; i++) {
+            if (i <= 4) {
+              this.autocompleteByDepartment_ulHeight += (<HTMLElement>children[i]).getBoundingClientRect().height;
+              this.cdr.detectChanges();
+            }
+          }
+      }, 500);
+
+
+
+  }
+
+  changeHeightOfAutoCompleteByLocation() {
+    if (this.showAutocompleteByLocation) {
+      setTimeout(() => {
+        this.autocompleteByLocation_ulHeight = 3;
+        const autocomplete = document.querySelector('.autocomplete__locations');
+        const vsChildren = autocomplete.children;
+        if (vsChildren) {
+          console.log('auto', vsChildren);
+          const children = vsChildren[0].children;
+          for (let i = 0; i < children.length; i++) {
+            if (i <= 4) {
+              this.autocompleteByLocation_ulHeight += (<HTMLElement>children[i]).getBoundingClientRect().height;
+              this.cdr.detectChanges();
+            }
+          }
+        }
+
+      }, 500);
     }
 
   }
@@ -194,7 +247,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.selectedUser = this.byEmployee.value;
     this.byEmployee.patchValue(this.selectedUser);
 
-    this.changeHeightOfAutocompleteDynamically();
+    this.changeHeightOfAutocompleteByEmployeeDynamically();
     this.searchByEmployeeService.setSearch({
       type: 'byEmployee',
       value: this.byEmployee.value || '',
@@ -215,7 +268,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       value: this.byDepartment.value || '',
       deleteClick: false
     });
-    this.cdr.detectChanges();
+    this.changeHeightOfAutoCompleteByDepartment();
   }
 
   /**
@@ -223,7 +276,9 @@ export class SearchByComponent implements OnInit, AfterViewInit {
    * pass the selected location value to the service setSearch
    */
   onSearchByLocation() {
-    this.searchByEmployeeService.setSearch({type: 'byLocation', value: '', deleteClick: false});
+    this.showAutocompleteByLocation = true;
+    this.searchByLocationService.setSearch({type: 'byLocation', value: this.byLocation.value, deleteClick: false});
+    this.changeHeightOfAutoCompleteByLocation();
     this.cdr.detectChanges();
   }
 
@@ -235,6 +290,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onSelectDepartment(department: string) {
     this.byDepartment.patchValue(department);
     this.showAutocompleteByDepartment = false;
+
     this.searchByDepartmentService.setSearch({type: 'byDepartment', value: department || '', deleteClick: false});
     this.cdr.detectChanges();
   }
@@ -245,27 +301,31 @@ export class SearchByComponent implements OnInit, AfterViewInit {
    * @param office:string
    */
   onSelectLocation(office: string) {
-    this.showAutocompleteByLocation = false;
     this.byLocation.patchValue(office);
-    this.searchByEmployeeService.setSearch({type: 'byLocation', value: office || '', deleteClick: false});
+    this.searchByLocationService.setSearch({
+      type: 'byLocation',
+      value: this.byLocation.value || '',
+      deleteClick: false
+    });
+    this.showAutocompleteByLocation = false;
     this.cdr.detectChanges();
   }
 
   /**
    * Click on Sort icon in input
    */
-  onSort() {
-    this.count++;
-    if (this.count % 2 === 0) {
-      this.sortService.setOrder('asc');
-      this.imgSrc = environment.zaIcon;
-      this.cdr.detectChanges();
-    } else {
-      this.sortService.setOrder('desc');
-      this.imgSrc = environment.azIcon;
-      this.cdr.detectChanges();
-    }
-  }
+  // onSort() {
+  //   this.count++;
+  //   if (this.count % 2 === 0) {
+  //     this.sortService.setOrder('asc');
+  //     this.imgSrc = environment.zaIcon;
+  //     this.cdr.detectChanges();
+  //   } else {
+  //     this.sortService.setOrder('desc');
+  //     this.imgSrc = environment.azIcon;
+  //     this.cdr.detectChanges();
+  //   }
+  // }
 
   /**
    * Choose employee and show him in input
@@ -280,7 +340,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       deleteClick: false
     });
     this.profileFromSearch = '';
-    this.ulHeight = 0;
+    this.autocompleteByEmployee_ulHeight = 0;
     this.showAutocompleteByEmployee = false;
 
     this.cdr.detectChanges();
@@ -298,7 +358,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
     this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue('');
-    this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '',deleteClick: true});
+    this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '', deleteClick: true});
     this.cdr.detectChanges();
 
   }
@@ -321,12 +381,12 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Click on 'Clear icon' to clear the 'Location input'
+   * Click on 'Clear icon' to clear the 'Location input and s'
    */
   onClearLocationInput() {
-    this.showAutocompleteByLocation = false;
     this.byLocation.patchValue('');
-    this.searchByEmployeeService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});
+    this.searchByLocationService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});
+    this.showAutocompleteByLocation = false;
     this.cdr.detectChanges();
   }
 
@@ -337,13 +397,15 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.byEmployee.patchValue('');
     this.byDepartment.patchValue('');
     this.byLocation.patchValue('');
-    this.searchByEmployeeService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});
-    this.searchByEmployeeService.setSearch({
+
+    this.searchByLocationService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});
+    this.searchByDepartmentService.setSearch({
       type: 'byDepartment',
       value: this.byDepartment.value || '',
       deleteClick: true
     });
     this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '', deleteClick: true});
+    this.clearAllService.setSearch({type: 'clearAll', value: '', deleteClick: true});
     this.cdr.detectChanges();
   }
 

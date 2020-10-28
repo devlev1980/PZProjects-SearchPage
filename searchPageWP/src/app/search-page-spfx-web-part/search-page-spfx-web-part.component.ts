@@ -18,6 +18,8 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
   departments: string[] = [];
   locations: string[] = [];
   profileFromSearch: string = '';
+  locationByOffice: ILocation[] = [];
+  orderedLocations: any = [];
 
   constructor(private employeeService: MockService,
               private cdr: ChangeDetectorRef,
@@ -34,19 +36,57 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       this.profiles = profiles;
       this.departments = [];
       this.locations = [];
+      // let locationByOffice = [];
 
       this.departments = this.profiles.map(el => el.Department);
-      this.locations = this.profiles.map(el => el.Office);
-      // this.profiles.map(item => {
-      //   if (item.Office) {
-      //    this.locations.push({
-      //       location: item.Office,
-      //       profilesInRoom: this.locations.filter(el => item.Office.includes(el.location)).length
-      //     });
-      //
-      //   }
-      // });
 
+      this.profiles.forEach(item => {
+        if (this.locationByOffice.findIndex(el => el.Office === item.Office) === -1) {
+          this.locationByOffice.push({
+            Office: item.Office,
+            count: 1
+          });
+        } else {
+          let index = this.locationByOffice.findIndex(el => el.Office === item.Office);
+          this.locationByOffice[index].count++;
+        }
+      });
+      this.locationByOffice = this.locationByOffice.filter(location => location.Office !== null).sort((a, b) => {
+        if (a.count < b.count) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      console.log('loc', this.locationByOffice);
+
+      // this.locations = this.profiles.map(el => el.Office);
+      // let a = [];
+      // this.profiles.forEach(item => {
+      //
+      //   if (item.Office) {
+      //
+      //     a.push(item);
+      //   }
+      //
+      // });
+      // let count = 0;
+      // this.profiles.forEach((item, index) => {
+      //   if (item.Office === this.locations[index]) {
+      //     console.log('jjj');
+      //     // count++;
+      //     this.orderedLocations.push({
+      //       location: item.Office,
+      //       count: this.locations.filter(el => item.Office === el).length
+      //     });
+      //   }
+      //
+      //   this.orderedLocations =  Array.from(new Set(this.orderedLocations))
+      //
+      // });
+      // console.log('---', a);
+
+      // console.log('...',this.orderedLocations);
       // if (item.Office) {
       //   this.locations.push(item.Office);
       // this.locations.push({
@@ -75,8 +115,6 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       // });
       this.departments = Array.from(new Set(this.departments)).sort();
       this.locations = Array.from(new Set(this.locations)).sort();
-      console.log('loc', this.locations);
-      console.log('dep', this.departments);
 
       // Todo: sort locations by count of people in rooms
 
@@ -88,6 +126,6 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
 }
 
 export interface ILocation {
-  location: string;
-  profilesInRoom: number;
+  Office: string;
+  count: number;
 }
