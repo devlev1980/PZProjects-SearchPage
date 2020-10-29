@@ -41,6 +41,10 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       this.departments = this.profiles.map(el => el.Department);
 
       this.profiles.forEach(item => {
+        item.FirstNameRankOnStart = null;
+        item.FirstNameRankNotStart = null;
+        item.LastNameRankOnStart = null;
+        item.LastNameRankNotOnStart = null;
         if (this.locationByOffice.findIndex(el => el.Office === item.Office) === -1) {
           this.locationByOffice.push({
             Office: item.Office,

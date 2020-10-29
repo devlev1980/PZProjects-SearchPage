@@ -182,21 +182,19 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
   changeHeightOfAutoCompleteByDepartment() {
 
-      setTimeout(() => {
-        this.autocompleteByDepartment_ulHeight = 3;
-        const autocomplete = document.querySelector('.autocomplete__departments');
+    setTimeout(() => {
+      this.autocompleteByDepartment_ulHeight = 3;
+      const autocomplete = document.querySelector('.autocomplete__departments');
 
-        const vsChildren = autocomplete.children;
-          const children = vsChildren[0].children;
-          for (let i = 0; i < children.length; i++) {
-            if (i <= 4) {
-              this.autocompleteByDepartment_ulHeight += (<HTMLElement>children[i]).getBoundingClientRect().height;
-              this.cdr.detectChanges();
-            }
-          }
-      }, 500);
-
-
+      const vsChildren = autocomplete.children;
+      const children = vsChildren[0].children;
+      for (let i = 0; i < children.length; i++) {
+        if (i <= 4) {
+          this.autocompleteByDepartment_ulHeight += (<HTMLElement>children[i]).getBoundingClientRect().height;
+          this.cdr.detectChanges();
+        }
+      }
+    }, 500);
 
   }
 
@@ -246,6 +244,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
     this.selectedUser = this.byEmployee.value;
     this.byEmployee.patchValue(this.selectedUser);
+
 
     this.changeHeightOfAutocompleteByEmployeeDynamically();
     this.searchByEmployeeService.setSearch({
@@ -409,4 +408,16 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  onEnterSelectProfile(profile: string) {
+    this.searchByEmployeeService.setSearch({
+      type: 'byEmployee',
+      value: profile || '',
+      deleteClick: false
+    });
+    this.profileFromSearch = '';
+    this.autocompleteByEmployee_ulHeight = 0;
+    this.showAutocompleteByEmployee = false;
+
+    this.cdr.detectChanges();
+  }
 }

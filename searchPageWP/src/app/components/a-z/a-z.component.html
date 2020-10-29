@@ -1,4 +1,4 @@
 <div class="search__container" #azRef >
-  <button   *ngFor="let char of azCharacters;let i=index" class="character" [ngClass]="{'selected': selectedChar === i || selectedCharOnPaging === char || selectedChars[0] === char }" (click)="onSelectedCharacter(char)">{{char}}</button>
+  <button #charRef  *ngFor="let char of azCharacters;let i=index" class="character" [ngClass]="{'selected': selectedChar === i || selectedCharOnPaging === char || selectedChars[0] === char }" (click)="onSelectedCharacter(char)">{{char}}</button>
 </div>
 

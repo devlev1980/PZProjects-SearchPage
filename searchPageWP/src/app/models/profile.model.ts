@@ -24,5 +24,9 @@ export interface IProfile {
   managerIconUrl?: string;
   workADayIconUrl?: string;
   menuIconUrl?: string;
+  FirstNameRankOnStart?: number;
+  FirstNameRankNotStart?: number;
+  LastNameRankOnStart?: number;
+  LastNameRankNotOnStart?: number;
 
 }

@@ -7,7 +7,7 @@
             <div class="form-item by__employee" #autocompleteEmployeeRef>
               <img [src]="searchByEmployeeImgSrc" alt="search" class="byEmployee">
               <!--            <input type="text" class="byEmployee" (input)="onSearchByEmployee()" formControlName="byEmployee" placeholder="Type employee's name">-->
-              <input type="text" id="autocompleteInput" class="byEmployee" #inputEmployeeRef (input)="onSearchByEmployee()"  placeholder="Type employee's name" formControlName="byEmployee">
+              <input type="text" id="autocompleteInput" class="byEmployee" (keydown.enter)="onEnterSelectProfile(byEmployee.value)" #inputEmployeeRef (input)="onSearchByEmployee()"   placeholder="Type employee's name" formControlName="byEmployee">
 
               <button (click)="onClearInputByEmployee()" class="btn_clear" *ngIf="inputEmployeeRef.value !== ''">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#35435c" width="18px" height="18px">
