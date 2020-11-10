@@ -1,3 +1,7 @@
+/**
+ * Employee model Interface
+ */
+
 export interface IEmployee {
   id: string;
   first_name: string;

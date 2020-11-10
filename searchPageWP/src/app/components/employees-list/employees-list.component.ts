@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Input,
+  Input, OnDestroy,
   OnInit,
   QueryList,
   Renderer2,
@@ -15,15 +15,14 @@ import {MatMenuTrigger} from '@angular/material/menu';
 import {SortService} from '../../services/sort.service';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
-import {by} from 'protractor';
 import {PassCharService} from '../../services/pass-char.service';
 import {SearchByDepartmentService} from '../../services/search-by-department.service';
 import {SearchByAzService} from '../../services/search-by-az.service';
-import {validate} from 'codelyzer/walkerFactory/walkerFn';
 import {SaveSearchCharService} from '../../services/save-search-char.service';
 import {SearchByLocationService} from '../../services/search-by-location.service';
-import set = Reflect.set;
 import {ClearAllService} from '../../services/clear-all.service';
+import {SearchByEmployeeEnterService} from '../../services/search-by-employee-enter.service';
+import {SubSink} from 'subsink';
 
 @Component({
   selector: 'app-employees-list',
@@ -31,16 +30,15 @@ import {ClearAllService} from '../../services/clear-all.service';
   styleUrls: ['./employees-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmployeesListComponent implements OnInit {
+export class EmployeesListComponent implements OnInit, OnDestroy {
   @Input() profiles: IProfile[];
+  @Input() profileFromAutocompleteSearch: string;
   searchTerm: ISearchTerm = {type: '', value: '', deleteClick: false};
   byEmployeeTerm: string;
   byDepartmentTerm: string;
   byLocation: string;
   byAZ: string = '';
-  @ViewChild('menu') menu: MatMenuTrigger;
   totalItems: number;
-  iconSources: any[] = [];
   currentPage: number = 1;
   menuIcon: string = '';
   workPhoneImgSrc: string = '';
@@ -57,21 +55,16 @@ export class EmployeesListComponent implements OnInit {
   workADayImgSrc: string = '';
   workADayHoverImgSrc: string = '';
   hoverBgColor: string = '#000';
-  isShowWorkPhone: boolean = true;
-  isShowWorkHoverIcon: boolean = false;
-  isShowMobileHoverIcon: boolean = false;
-  isShowDepartmentIcon: boolean = false;
-  isShowLocationHoverIcon: boolean = false;
   filterResults: any[] = [];
-  @ViewChild('workPhonesIconsRef') workPhonesIconsRef: QueryList<ElementRef>;
-  profileIndex: number;
-  @Input() profileFromAutocompleteSearch: string;
-
   managerProfile: IProfile;
   profilesCopyFiltered: IProfile[];
+  @ViewChild('workPhonesIconsRef', {static: false}) workPhonesIconsRef: QueryList<ElementRef>;
+  @ViewChild('menu', {static: false}) menu: MatMenuTrigger;
+  private sink = new SubSink();
 
   constructor(private employeeService: MockService,
               private searchByEmployeeService: SearchByEmployeeService,
+              private searchByEmployeeEnterService: SearchByEmployeeEnterService,
               private searchByDepartmentService: SearchByDepartmentService,
               private searchByAzService: SearchByAzService,
               private searchByLocationService: SearchByLocationService,
@@ -101,13 +94,12 @@ export class EmployeesListComponent implements OnInit {
     this.workADayImgSrc = environment.workaDayIcon;
     this.workADayHoverImgSrc = environment.workaDayHoverIcon;
 
-    // this.cdr.detectChanges();
     this.onSearchByEmployee();
     this.onSearchByDepartment();
     this.onSearchByAZ();
     this.onSearchByLocation();
-    this.onSort();
     this.onClearAll();
+    this.onSearchByEmployeeOnEnter();
     this.cdr.detectChanges();
 
   }
@@ -116,205 +108,161 @@ export class EmployeesListComponent implements OnInit {
    * search service by type (byEmployee,byDepartment,byLocation,byAZ)
    */
   onSearchByEmployee() {
+    this.sink.add(
+      this.searchByEmployeeEnterService.getSearch().subscribe(searchTerm => {
+        if (searchTerm.type === 'onEnter') {
+          return;
+        }
+      }, error => {
+        console.log('Something went wrong', error);
+      })
+    );
     if (this.profileFromAutocompleteSearch) {
       this.byEmployeeTerm = this.profileFromAutocompleteSearch;
       this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);
       this.totalItems = this.filterResults.length;
     }
-    this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
-      if (searchTerm.value !== '') {
-        this.currentPage = 0;
+    this.sink.add(
+      this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
+        if (searchTerm.value !== '') {
+          this.currentPage = 0;
+          this.byEmployeeTerm = searchTerm.value;
+          this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
+          this.totalItems = this.filterResults.length;
+          this.cdr.detectChanges();
+        }
+
+        if (searchTerm.deleteClick) {
+          this.currentPage = 0;
+          this.byEmployeeTerm = '';
+          this.totalItems = this.profiles.length;
+          this.cdr.detectChanges();
+        }
+      }, error => {
+        console.log('Something went wrong', error);
+      })
+    );
+
+  }
+
+  /**
+   * Search employee (show cards) by pressing on 'Enter'
+   */
+  onSearchByEmployeeOnEnter() {
+    this.sink.add(
+      this.searchByEmployeeEnterService.getSearch().subscribe(searchTerm => {
         this.byEmployeeTerm = searchTerm.value;
-        this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
-        this.totalItems = this.filterResults.length;
-        this.cdr.detectChanges();
-      }
-
-      if (searchTerm.deleteClick) {
-        this.currentPage = 0;
-        this.byEmployeeTerm = '';
-        this.totalItems = this.profiles.length;
-        this.cdr.detectChanges();
-      }
-    });
-
-    // this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
-    //   switch (searchTerm.type) {
-    //     // case 'byEmployee':
-    //     //   this.byEmployeeTerm = searchTerm.value;
-    //     //   this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
-    //     //   console.log('by employee result', this.filterResults);
-    //     //   this.totalItems = this.filterResults.length;
-    //     //   this.cdr.detectChanges();
-    //     //   break;
-    //     case 'byDepartment':
-    //       // this.byDepartmentTerm = searchTerm.value;
-    //       // this.filterResults = this.profiles.filter(profile => profile.Department === this.byDepartmentTerm);
-    //       // this.totalItems = this.filterResults.length;
-    //       // this.cdr.detectChanges();
-    //       break;
-    //     case 'byLocation':
-    //       // this.byLocation = searchTerm.value;
-    //       // this.filterResults = this.profiles.filter(profile => profile.Office === this.byLocation);
-    //       // this.totalItems = this.filterResults.length;
-    //       // this.cdr.detectChanges();
-    //       break;
-    //     case 'byAZ':
-    //       console.log('az');
-    //       // this.byAZ = searchTerm.value;
-    //       // this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(this.byAZ));
-    //       // this.totalItems = this.filterResults.length;
-    //       // this.cdr.detectChanges();
-    //       break;
-    //   }
-    // });
-  }
-
-  onSearchByDepartment() {
-    this.searchByDepartmentService.getSearch().subscribe((searchTerm) => {
-      if (searchTerm.value !== '') {
-        this.currentPage = 0;
-        this.byDepartmentTerm = searchTerm.value;
-        this.filterResults = this.profiles.filter(profile => profile.Department === searchTerm.value);
-        this.totalItems = this.filterResults.length;
-        this.cdr.detectChanges();
-      }
-      if (searchTerm.deleteClick) {
-        this.currentPage = 0;
-        this.byDepartmentTerm = '';
-        this.totalItems = this.profiles.length;
-        this.cdr.detectChanges();
-      }
-    });
-
-  }
-
-  onSearchByAZ() {
-    this.searchByAzService.getSearch().subscribe((searchTerm) => {
-      if (searchTerm.value) {
-        this.byAZ = searchTerm.value;
         this.currentPage = 0;
         this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(searchTerm.value));
         this.totalItems = this.filterResults.length;
         this.cdr.detectChanges();
-      }
-    });
+      }, error => {
+        console.log('Something went wrong', error);
+      })
+    );
+
   }
 
-  onSearchByLocation() {
-    setTimeout(() => {
-      this.searchByLocationService.getSearch().subscribe((searchTerm) => {
+  /**
+   * Search employee (show cards) by department
+   */
+  onSearchByDepartment() {
+    this.sink.add(
+      this.searchByDepartmentService.getSearch().subscribe((searchTerm) => {
         if (searchTerm.value !== '') {
           this.currentPage = 0;
-          this.byLocation = searchTerm.value;
-          this.filterResults = this.profiles.filter(profile => profile.Office === searchTerm.value);
+          this.byDepartmentTerm = searchTerm.value;
+          this.filterResults = this.profiles.filter(profile => profile.Department === searchTerm.value);
           this.totalItems = this.filterResults.length;
           this.cdr.detectChanges();
         }
         if (searchTerm.deleteClick) {
           this.currentPage = 0;
-          this.byLocation = '';
+          this.byDepartmentTerm = '';
           this.totalItems = this.profiles.length;
           this.cdr.detectChanges();
         }
-      });
+      }, error => {
+        console.log('Something went wrong', error);
+      })
+    );
+
+  }
+
+  /**
+   * Searching employee(show cards) by A-Z
+   */
+  onSearchByAZ() {
+    this.sink.add(
+      this.searchByAzService.getSearch().subscribe((searchTerm) => {
+        if (searchTerm.value) {
+          this.byAZ = searchTerm.value;
+          this.currentPage = 0;
+          this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(searchTerm.value));
+          this.totalItems = this.filterResults.length;
+          this.cdr.detectChanges();
+        }
+      }, error => {
+        console.log('Something went wrong', error);
+      })
+    );
+
+  }
+
+  /**
+   * Searching employee(show cards) by A-Z
+   */
+  onSearchByLocation() {
+    setTimeout(() => {
+      this.sink.add(
+        this.searchByLocationService.getSearch().subscribe((searchTerm) => {
+          if (searchTerm.value !== '') {
+            this.currentPage = 0;
+            this.byLocation = searchTerm.value;
+            this.filterResults = this.profiles.filter(profile => profile.Office === searchTerm.value);
+            this.totalItems = this.filterResults.length;
+            this.cdr.detectChanges();
+          }
+          if (searchTerm.deleteClick) {
+            this.currentPage = 0;
+            this.byLocation = '';
+            this.totalItems = this.profiles.length;
+            this.cdr.detectChanges();
+          }
+        }, error => {
+          console.log('Something went wrong', error);
+        })
+      );
+
     }, 0);
 
   }
 
+  /**
+   * Show all the cards by pressing on 'Clear all' button
+   */
   onClearAll() {
-    this.clearAllService.getSearch().subscribe((result) => {
-      if (result.deleteClick) {
-        this.byAZ = '';
-        this.currentPage = 0;
-        this.totalItems = this.profiles.length;
-        this.cdr.detectChanges();
-      }
-    });
+    this.sink.add(
+      this.clearAllService.getSearch().subscribe((result) => {
+        if (result.deleteClick) {
+          this.byAZ = '';
+          this.currentPage = 0;
+          this.totalItems = this.profiles.length;
+          this.cdr.detectChanges();
+        }
+      }, error => {
+        console.log('Something went wrong', error);
+      })
+    );
+
   }
 
   /**
-   * Sort cards by ascending or descending
+   * PAge changed
+   * @param event: number
    */
-  onSort() {
-    this.sortService.getOrder().subscribe(order => {
-      switch (order) {
-        case 'asc':
-          this.profiles = this.profiles.sort((profile_first: IProfile, profile_next: IProfile) => {
-            return profile_first.FirstName.localeCompare(profile_next.FirstName);
-          });
-          this.totalItems = this.profiles.length;
-          this.cdr.detectChanges();
-          break;
-        case 'desc':
-          this.profiles = this.profiles.sort((profile_first: IProfile, profile_next: IProfile) => {
-            return profile_next.FirstName.localeCompare(profile_first.FirstName);
-          });
-          this.totalItems = this.profiles.length;
-          this.cdr.detectChanges();
-          break;
-        default:
-          this.profiles = this.profiles.sort();
-      }
-    });
-  }
-
-  pageChanged(event: number, char: string) {
+  pageChanged(event: number) {
     this.currentPage = event;
-  }
-
-  onHoverOnWorkPhone(profile, i) {
-    this.profileIndex = this.profiles.indexOf(profile);
-    this.isShowWorkHoverIcon = true;
-    this.profiles.forEach((element, index) => {
-      if (i === index) {
-
-        this.cdr.detectChanges();
-      }
-    });
-
-  }
-
-  onLeaveOnWorkPhone(profile, i) {
-    this.isShowWorkHoverIcon = false;
-    this.isShowWorkPhone = true;
-  }
-
-  /**
-   * Change mobile icon on hover
-   */
-  onHoverOnMobileIcon() {
-    this.mobilePhoneImgSrc = environment.mobilePhoneHoverIcon;
-  }
-
-  /**
-   * Change mobile icon to default
-   */
-  onLeaveOnMobileIcon() {
-    this.mobilePhoneImgSrc = environment.mobilePhoneIcon;
-  }
-
-  /**
-   * Change department icon on hover
-   */
-  onHoverOnDepartmentIcon() {
-    this.isShowDepartmentIcon = true;
-  }
-
-  /**
-   * Change department icon to default
-   */
-  onLeaveOnDepartmentIcon() {
-    this.isShowDepartmentIcon = false;
-  }
-
-  onHoverLocationSubMenu() {
-    this.isShowLocationHoverIcon = true;
-    this.locationImgSrc = environment.locationHoverIcon;
-  }
-
-  onLeaveLocationSubMenu() {
-    this.locationImgSrc = environment.locationIcon;
   }
 
   /**
@@ -324,7 +272,6 @@ export class EmployeesListComponent implements OnInit {
   onOpenMenu(manager: string) {
     const newManager = manager.substring(8);
     this.managerProfile = this.profiles.find(profile => profile.UserName === newManager);
-
   }
 
   /**
@@ -333,13 +280,19 @@ export class EmployeesListComponent implements OnInit {
    */
   onNavigateToTheManagerPage(profile: IProfile) {
     window.location.href = `https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5C${profile.UserName}`;
-    // https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5Cjeremya
   }
 
-  nextPage(page: number, byAZ: string) {
+  /**
+   * Click on next page
+   * @param page: number
+   */
+  nextPage(page: number) {
     this.currentPage = page;
     this.saveSearchCharService.saveChar(this.byAZ);
+  }
 
+  ngOnDestroy() {
+    this.sink.unsubscribe();
   }
 
 }

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -13,7 +12,7 @@ import {
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SearchByEmployeeService} from '../../services/search-by-employee.service';
 import {SortService} from '../../services/sort.service';
-import {fromEvent, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {IProfile} from '../../models/profile.model';
 import {environment} from '../../../environments/environment';
 import {ILocation} from '../../search-page-spfx-web-part/search-page-spfx-web-part.component';
@@ -23,7 +22,7 @@ import {SearchByLocationService} from '../../services/search-by-location.service
 import {SearchByAzService} from '../../services/search-by-az.service';
 import {ClearAllService} from '../../services/clear-all.service';
 import {SaveSearchCharService} from '../../services/save-search-char.service';
-import {switchMap} from 'rxjs/operators';
+import {SearchByEmployeeEnterService} from '../../services/search-by-employee-enter.service';
 
 @Component({
   selector: 'app-search-by',
@@ -31,12 +30,12 @@ import {switchMap} from 'rxjs/operators';
   styleUrls: ['./search-by.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchByComponent implements OnInit, AfterViewInit {
+export class SearchByComponent implements OnInit {
   @Input() departments: string[] = [];
   @Input() locations: ILocation[];
   @Input() profiles: IProfile[];
+  @Input() profileFromSearch: string;
   searchForm: FormGroup;
-  @ViewChild('sortBtn') sortBtn: ElementRef;
   click$: Subscription;
   count: number = 1;
   imgSrc: string = '';
@@ -44,17 +43,12 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   showAutocompleteByDepartment: boolean = false;
   showAutocompleteByLocation: boolean = false;
   showAutocompleteByEmployee: boolean = false;
-  @ViewChild('autocompleteDepartmentsRef') autocompleteDepartmentsRef: ElementRef;
-  @ViewChild('autocompleteLocationsRef') autocompleteLocationsRef: ElementRef;
-  @ViewChild('autocompleteEmployeeRef') autocompleteEmployeeRef: ElementRef;
-  @ViewChild('virtualScrollRef') virtualScrollRef: ElementRef;
   isShow: boolean = true;
   selectedUser: string = '';
   autocompleteByEmployee_ulHeight: number = 0;
   autocompleteByDepartment_ulHeight: number = 0;
   autocompleteByLocation_ulHeight: number = 0;
   filtered: IProfile[];
-  @Input() profileFromSearch: string;
   ul: Element;
   searchByEmployeeImgSrc: string = '';
   searchByDepartmentImgSrc: string = '';
@@ -64,6 +58,11 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   miniAutocomplete: boolean = false;
   onlyFooter: boolean = false;
   lastElement: boolean = false;
+  @ViewChild('sortBtn', {static: false}) sortBtn: ElementRef;
+  @ViewChild('autocompleteDepartmentsRef', {static: false}) autocompleteDepartmentsRef: ElementRef;
+  @ViewChild('autocompleteLocationsRef', {static: false}) autocompleteLocationsRef: ElementRef;
+  @ViewChild('autocompleteEmployeeRef', {static: false}) autocompleteEmployeeRef: ElementRef;
+  @ViewChild('virtualScrollRef', {static: false}) virtualScrollRef: ElementRef;
 
   constructor(private fb: FormBuilder,
               private searchByEmployeeService: SearchByEmployeeService,
@@ -71,6 +70,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
               private searchByLocationService: SearchByLocationService,
               private searchByAzService: SearchByAzService,
               private saveSearchCharService: SaveSearchCharService,
+              private searchByEmployeeEnterService: SearchByEmployeeEnterService,
               private clearAllService: ClearAllService,
               private sortService: SortService,
               private renderer: Renderer2,
@@ -78,45 +78,32 @@ export class SearchByComponent implements OnInit, AfterViewInit {
               private cdr: ChangeDetectorRef) {
   }
 
-  // @HostListener('scroll', ['$event'])
-  // onScroll(event: any) {
-  //   console.log(event);
-  //   // visible height + pixel scrolled >= total height
-  //   if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
-  //     console.log('End');
-  //     this.lastElement = true;
-  //   } else {
-  //     this.lastElement = false;
-  //   }
-  // }
-
+  /**
+   * Click outside of the autocompletes 'by Employee','by Department,'by Location'
+   * @param event
+   */
   @HostListener('document:click', ['$event'])
   handleOutsideClickForLocations(event) {
-
     if (!this.autocompleteLocationsRef.nativeElement.contains(event.target)) {
       this.showAutocompleteByLocation = false;
-
     }
     if (!this.autocompleteDepartmentsRef.nativeElement.contains(event.target)) {
       this.showAutocompleteByDepartment = false;
     }
     if (!this.autocompleteEmployeeRef.nativeElement.contains(event.target)) {
-      console.log('a');
       this.showAutocompleteByEmployee = false;
-      // this.selectedUser = this.byEmployee.value;
-      // this.byEmployee.patchValue(this.selectedUser);
+      this.selectedUser = this.byEmployee.value;
+      this.byEmployee.patchValue(this.selectedUser);
       this.cdr.detectChanges();
-
     }
   }
 
+  /**
+   * Find last element in autocomplete on scroll
+   * @param event: any
+   */
   onScroll(event: any) {
-    // visible height + pixel scrolled >= total height
-    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
-      this.lastElement = true;
-    } else {
-      this.lastElement = false;
-    }
+    this.lastElement = event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight;
   }
 
   ngOnInit() {
@@ -153,8 +140,20 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     });
   }
 
+  get byEmployee() {
+    return this.searchForm.get('byEmployee');
+  }
+
+  get byDepartment() {
+    return this.searchForm.get('byDepartment');
+  }
+
+  get byLocation() {
+    return this.searchForm.get('byLocation');
+  }
+
   /**
-   * Change height of searchbar(autocomplete) dynamically
+   * Change height of autocomplete (by Employee) dynamically
    */
   changeHeightOfAutocompleteByEmployeeDynamically() {
 
@@ -180,6 +179,9 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * Change height of autocomplete (by Department) dynamically
+   */
   changeHeightOfAutoCompleteByDepartment() {
 
     setTimeout(() => {
@@ -198,6 +200,9 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * Change height of autocomplete (by Location) dynamically
+   */
   changeHeightOfAutoCompleteByLocation() {
     if (this.showAutocompleteByLocation) {
       setTimeout(() => {
@@ -220,21 +225,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-  }
-
-  get byEmployee() {
-    return this.searchForm.get('byEmployee');
-  }
-
-  get byDepartment() {
-    return this.searchForm.get('byDepartment');
-  }
-
-  get byLocation() {
-    return this.searchForm.get('byLocation');
-  }
-
   /**
    * select profile
    * pass the selected profile value to the 'Search service'
@@ -242,9 +232,15 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   onSearchByEmployee() {
     this.profileFromSearch = '';
     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
+    if (this.byEmployee.value === '') {
+      this.searchByEmployeeService.setSearch({
+        type: 'byEmployee',
+        value: this.byEmployee.value || '',
+        deleteClick: true
+      });
+    }
     this.selectedUser = this.byEmployee.value;
     this.byEmployee.patchValue(this.selectedUser);
-
 
     this.changeHeightOfAutocompleteByEmployeeDynamically();
     this.searchByEmployeeService.setSearch({
@@ -311,22 +307,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Click on Sort icon in input
-   */
-  // onSort() {
-  //   this.count++;
-  //   if (this.count % 2 === 0) {
-  //     this.sortService.setOrder('asc');
-  //     this.imgSrc = environment.zaIcon;
-  //     this.cdr.detectChanges();
-  //   } else {
-  //     this.sortService.setOrder('desc');
-  //     this.imgSrc = environment.azIcon;
-  //     this.cdr.detectChanges();
-  //   }
-  // }
-
-  /**
    * Choose employee and show him in input
    * @param profile: IProfile
    */
@@ -357,7 +337,12 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
     this.showAutocompleteByEmployee = false;
     this.byEmployee.patchValue('');
-    this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '', deleteClick: true});
+    this.searchByEmployeeService.setSearch({
+      type: 'byEmployee',
+      value: this.byEmployee.value || '',
+      deleteClick: true
+    });
+
     this.cdr.detectChanges();
 
   }
@@ -408,16 +393,19 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  onEnterSelectProfile(profile: string) {
-    this.searchByEmployeeService.setSearch({
-      type: 'byEmployee',
-      value: profile || '',
+  /**
+   * Click on Enter to select profile
+   * @param value: string
+   */
+  onEnterSelectProfile(value: string) {
+    this.searchByEmployeeEnterService.setSearch({
+      type: 'onEnter',
+      value: value,
       deleteClick: false
     });
     this.profileFromSearch = '';
     this.autocompleteByEmployee_ulHeight = 0;
     this.showAutocompleteByEmployee = false;
-
     this.cdr.detectChanges();
   }
 }

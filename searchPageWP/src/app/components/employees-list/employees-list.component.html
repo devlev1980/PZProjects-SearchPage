@@ -1,12 +1,10 @@
 <div class="filter_results" >
   Results: {{(profiles | searchByEmployee: byEmployeeTerm  | cardsByDepartment: byDepartmentTerm | cardsByLocation: byLocation | searchByAZ: byAZ).length}}
-<!--  Results: {{totalItems}}-->
 </div>
 
 <div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
 
-  <!--paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems  } | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation |searchByEmployee: byEmployeeTerm "  >-->
-  <div class="card" *ngFor="let profile of profiles |searchByEmployee: byEmployeeTerm
+  <div class="card" *ngFor="let profile of profiles |sortCards: 'asc' |searchByEmployee: byEmployeeTerm
    | cardsByDepartment: byDepartmentTerm
    | searchByAZ: byAZ
    | cardsByLocation: byLocation|
@@ -19,8 +17,6 @@
                (mouseover)="profile.workPhoneIconUrl = workPhoneHoverImgSrc"
                (mouseout)="profile.workPhoneIconUrl = workPhoneImgSrc"
                class="work__phone" alt="work phone">
-
-
           <span class="card__phones-work" *ngIf="profile.WorkPhone;else notAvailable">{{profile.WorkPhone}}</span>
           <ng-template #notAvailable>
             <span class="card__phones-work">N/A</span>
@@ -46,7 +42,6 @@
         </div>
         <div class="card__infoWrapper">
           <div class="email">
-
             <a href="mailto:{{profile.WorkEmail}}">
               <img [src]="profile?.emailIconUrl" alt="email"
                    (mouseover)="profile.emailIconUrl = emailHoverImgSrc"
@@ -57,16 +52,15 @@
               <span>Email N/A</span>
             </ng-template>
           </div>
-          <div class="job">
+          <div class="job" *ngIf="profile.JobTitle">
             <img [src]="profile.jobIconUrl">
             <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>
             <ng-template #noJobTitle>
               <span>Job N/A</span>
             </ng-template>
           </div>
-          <div class="department" (mouseover)="onHoverOnDepartmentIcon()" (mouseout)="onLeaveOnDepartmentIcon()">
+          <div class="department" >
             <img [src]="profile.departmentIconUrl" alt="department">
-            <!--            <img [hidden]="!isShowDepartmentIcon" src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_hover.png?csf=1&e=ZzKqbU" alt="">-->
             <span>{{profile.Department}}</span>
           </div>
         </div>
@@ -105,7 +99,7 @@
                   (mouseout)="profile.workADayIconUrl = workADayImgSrc">
             <img [src]="profile.workADayIconUrl" alt="work a day"
             >
-            <a href="#">View in workday</a>
+            <a href="{{profile.WorkdayProfile}}" target="_blank">View in workday</a>
           </button>
         </mat-menu>
       </div>
@@ -120,8 +114,8 @@
   </div>
 </ng-template>
 
-<pagination-controls *ngIf="profiles.length> 0" (pageBoundsCorrection)="pageChanged($event,byAZ)"
-                     (pageChange)="nextPage($event,byAZ)"
+<pagination-controls *ngIf="profiles.length> 0" (pageBoundsCorrection)="pageChanged($event)"
+                     (pageChange)="nextPage($event)"
                      autoHide="false"
                      directionLinks="true"
                      id="custom"

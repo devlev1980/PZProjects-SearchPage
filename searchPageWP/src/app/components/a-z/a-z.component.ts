@@ -4,15 +4,14 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
+  Input, OnDestroy,
   OnInit,
   ViewChild
 } from '@angular/core';
-import {SearchByEmployeeService} from '../../services/search-by-employee.service';
-import {PassCharService} from '../../services/pass-char.service';
 import {SearchByAzService} from '../../services/search-by-az.service';
 import {SaveSearchCharService} from '../../services/save-search-char.service';
 import {ClearAllService} from '../../services/clear-all.service';
+import {SubSink} from 'subsink';
 
 @Component({
   selector: 'app-a-z',
@@ -20,45 +19,53 @@ import {ClearAllService} from '../../services/clear-all.service';
   styleUrls: ['./a-z.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AZComponent implements OnInit {
+export class AZComponent implements OnInit, OnDestroy {
   @Input() azCharacters: Array<string> = [];
   selectedChar: number;
-  @ViewChild('azRef') azRef: ElementRef;
+  @ViewChild('azRef', {static: false}) azRef: ElementRef;
   selectedCharOnPaging: string = '';
   selectedChars: string[] = [];
+  private sink = new SubSink();
 
   constructor(private searchByAzService: SearchByAzService,
               private cdr: ChangeDetectorRef,
               private saveSearchCharService: SaveSearchCharService,
               private clearAllService: ClearAllService,
-              private passCharService: PassCharService) {
+  ) {
   }
 
+  /**
+   * Click outside the character
+   * @param targetElementPath: Array
+   */
   @HostListener('click', ['$event.path'])
   public onGlobalClick(targetElementPath: Array<any>) {
     const elementRefInPath = targetElementPath.find(e => e === this.azRef.nativeElement);
     if (!elementRefInPath) {
-      // this.searchByAzService.setSearch({type: 'byAZ', value: '', deleteClick: true});
-      // this.selectedChar = null;
-      // this.selectedCharOnPaging = null;
     }
   }
 
-  ngOnInit() {
-    this.clearAllService.getSearch().subscribe((char) => {
-      console.log(char);
-      if (char.deleteClick) {
-        this.selectedChar = null;
-        this.selectedCharOnPaging = null;
-        this.selectedChars = [];
-        this.cdr.detectChanges();
-      }
+  /**
+   * Remove selected character on 'Clear all' button
+   */
 
-    });
-    this.saveSearchCharService.getSavedChar().subscribe(char => {
-      this.selectedChars = [];
-      this.selectedChars.push(char);
-    });
+  ngOnInit() {
+    this.sink.add(
+      this.clearAllService.getSearch().subscribe((char) => {
+        if (char.deleteClick) {
+          this.selectedChar = null;
+          this.selectedCharOnPaging = null;
+          this.selectedChars = [];
+          this.cdr.detectChanges();
+        }
+      })
+    );
+    this.sink.add(
+      this.saveSearchCharService.getSavedChar().subscribe(char => {
+        this.selectedChars = [];
+        this.selectedChars.push(char);
+      })
+    );
 
   }
 
@@ -71,7 +78,10 @@ export class AZComponent implements OnInit {
     this.selectedCharOnPaging = char;
     this.selectedChars = [];
     this.searchByAzService.setSearch({type: 'byAZ', value: char, deleteClick: false});
-
     this.cdr.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.sink.unsubscribe();
   }
 }

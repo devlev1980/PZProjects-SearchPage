@@ -8,7 +8,6 @@ export class CardsByLocationPipe implements PipeTransform {
 
   transform(profiles: IProfile[], searchTerm: string): any[] {
     let newProfiles = profiles.filter(profile=> profile.Office !== null)
-    console.log('profiles in pip', newProfiles);
     if (!profiles || !searchTerm) {
       return profiles;
     }

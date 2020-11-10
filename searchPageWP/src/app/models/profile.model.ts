@@ -1,3 +1,7 @@
+/**
+ * Profile model
+ */
+
 export interface IProfile {
   UserName: string;
   EmployeeID: string;
@@ -28,5 +32,6 @@ export interface IProfile {
   FirstNameRankNotStart?: number;
   LastNameRankOnStart?: number;
   LastNameRankNotOnStart?: number;
+  WorkdayProfile: string;
 
 }
