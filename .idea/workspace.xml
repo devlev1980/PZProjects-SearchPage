@@ -23,10 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +225,13 @@
       <option name="presentableId" value="LOCAL‎00011" />
       <updated>1603892426846</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL‎00012" summary="works version">
+      <created>1605700890175</created>
+      <option name="number" value="LOCAL‎00012" />
+      <option name="presentableId" value="LOCAL‎00012" />
+      <updated>1605700890175</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,7 +261,8 @@
     <MESSAGE value="fix pagination + add pipe for search by departments" />
     <MESSAGE value="fix selected char on pagination" />
     <MESSAGE value="fix height of locations and departments" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix height of locations and departments" />
+    <MESSAGE value="works version" />
+    <option name="LAST_COMMIT_MESSAGE" value="works version" />
   </component>
   <component name="WindowStateProjectService">
     <state x="506" y="239" width="774" height="441" key="#TSLint" timestamp="1602480197020">
@@ -268,11 +273,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598960924240" />
-    <state x="574" y="94" key="CommitChangelistDialog2" timestamp="1603892423557">
+    <state x="574" y="94" key="CommitChangelistDialog2" timestamp="1605700888178">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="383" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1602420686842" />
-    <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1603892423557" />
+    <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605700888178" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599548996748">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -281,26 +286,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599631200912" />
-    <state width="1899" height="235" key="GridCell.Tab.0.bottom" timestamp="1605700531367">
+    <state width="1899" height="235" key="GridCell.Tab.0.bottom" timestamp="1605701197667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="235" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605700531367" />
-    <state width="1899" height="235" key="GridCell.Tab.0.center" timestamp="1605700531367">
+    <state width="1899" height="235" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605701197667" />
+    <state width="1899" height="235" key="GridCell.Tab.0.center" timestamp="1605701197667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="235" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605700531367" />
-    <state width="1899" height="235" key="GridCell.Tab.0.left" timestamp="1605700531367">
+    <state width="1899" height="235" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605701197667" />
+    <state width="1899" height="235" key="GridCell.Tab.0.left" timestamp="1605701197667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="235" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605700531367" />
-    <state width="1899" height="235" key="GridCell.Tab.0.right" timestamp="1605700531367">
+    <state width="1899" height="235" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605701197667" />
+    <state width="1899" height="235" key="GridCell.Tab.0.right" timestamp="1605701197667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="235" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605700531367" />
+    <state width="1899" height="235" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605701197667" />
     <state x="745" y="222" key="RollbackChangesDialog" timestamp="1603727481085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -314,19 +319,19 @@
     </state>
     <state width="498" height="398" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1602488956865" />
     <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1603279332324" />
-    <state x="551" y="252" key="Vcs.Push.Dialog.v2" timestamp="1603892430531">
+    <state x="551" y="252" key="Vcs.Push.Dialog.v2" timestamp="1605700895551">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="367" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1602420692472" />
-    <state x="551" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1603892430531" />
+    <state x="551" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605700895551" />
     <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598965993197">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598965993197" />
-    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate" timestamp="1603870748702">
+    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate" timestamp="1605701190122">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate/0.0.1920.1040@0.0.1920.1040" timestamp="1603870748702" />
+    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate/0.0.1920.1040@0.0.1920.1040" timestamp="1605701190122" />
     <state x="601" y="246" width="700" height="530" key="recent.locations.popup" timestamp="1603199374318">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

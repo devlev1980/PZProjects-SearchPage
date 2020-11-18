@@ -23,6 +23,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {HighlightPipe} from './pipes/highlight.pipe';
 import {CardsByDepartmentPipe} from './pipes/cards-by-department.pipe';
 import {CardsByLocationPipe} from './pipes/cards-by-location.pipe';
+import { SortCardsPipe } from './pipes/sort-cards.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {CardsByLocationPipe} from './pipes/cards-by-location.pipe';
     HoverDirective,
     HighlightPipe,
     CardsByDepartmentPipe,
-    CardsByLocationPipe
+    CardsByLocationPipe,
+    SortCardsPipe
   ],
   imports: [
     BrowserModule,
