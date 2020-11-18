@@ -15,7 +15,13 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
+          "customWebpackConfig": {
+            "path": "./extra-webpack.config.js",
+            "mergeStrategies": {
+              "externals": "replace"
+            }
+          },
           "options": {
             "outputPath": "dist/searchPageWP",
             "index": "src/index.html",

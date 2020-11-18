@@ -1,0 +1,890 @@
+Index: searchPageWP/src/app/pipes/cards-by-department.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\nimport {IProfile} from '../models/profile.model';\r\n\r\n@Pipe({\r\n  name: 'cardsByDepartment'\r\n})\r\nexport class CardsByDepartmentPipe implements PipeTransform {\r\n\r\n  transform(profiles: IProfile[], searchTerm: string): any[] {\r\n    if (!profiles || !searchTerm) {\r\n      return profiles;\r\n    }\r\n\r\n    return profiles.filter((profile) => {\r\n      return profile.Department.toLowerCase().startsWith(searchTerm.toLowerCase());\r\n    });\r\n\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/cards-by-department.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/cards-by-department.pipe.ts	(date 1605020395236)
+@@ -5,7 +5,9 @@
+   name: 'cardsByDepartment'
+ })
+ export class CardsByDepartmentPipe implements PipeTransform {
+-
++  /**
++   * Filter cards(profiles) by Department the starts with the search term
++   */
+   transform(profiles: IProfile[], searchTerm: string): any[] {
+     if (!profiles || !searchTerm) {
+       return profiles;
+Index: searchPageWP/src/app/components/employees-list/employees-list.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><div class=\"filter_results\" >\r\n  Results: {{(profiles | searchByEmployee: byEmployeeTerm  | cardsByDepartment: byDepartmentTerm | cardsByLocation: byLocation | searchByAZ: byAZ).length}}\r\n</div>\r\n\r\n<div class=\"cards__container\" *ngIf=\"profiles.length> 0;else noProfiles\">\r\n\r\n  <div class=\"card\" *ngFor=\"let profile of profiles |sortCards: 'asc' |searchByEmployee: byEmployeeTerm\r\n   | cardsByDepartment: byDepartmentTerm\r\n   | searchByAZ: byAZ\r\n   | cardsByLocation: byLocation|\r\n   paginate: {id: 'custom', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems };let i=index\">\r\n    <div class=\"card__body\">\r\n      <h3 class=\"card__title\">{{profile.FirstName}} {{profile.LastName}}</h3>\r\n      <div class=\"card__phones\">\r\n        <a href=\"tel:{{profile.WorkPhone}}\">\r\n          <img [src]=\"profile.workPhoneIconUrl\" #workPhonesIconsRef [id]=\"'icon'+i\"\r\n               (mouseover)=\"profile.workPhoneIconUrl = workPhoneHoverImgSrc\"\r\n               (mouseout)=\"profile.workPhoneIconUrl = workPhoneImgSrc\"\r\n               class=\"work__phone\" alt=\"work phone\">\r\n          <span class=\"card__phones-work\" *ngIf=\"profile.WorkPhone;else notAvailable\">{{profile.WorkPhone}}</span>\r\n          <ng-template #notAvailable>\r\n            <span class=\"card__phones-work\">N/A</span>\r\n          </ng-template>\r\n        </a>\r\n        <a href=\"tel:{{profile.MobilePhone}}\">\r\n          <img [src]=\"profile.mobilePhoneIconUrl\"\r\n               (mouseover)=\"profile.mobilePhoneIconUrl = mobilePhoneHoverImgSrc\"\r\n               (mouseout)=\"profile.mobilePhoneIconUrl = mobilePhoneImgSrc\"\r\n               alt=\"cell phone\" class=\"cell__phone\">\r\n          <span class=\"card__phones-cell\" *ngIf=\"profile.MobilePhone; else notAvailable\">{{profile.MobilePhone}}</span>\r\n        </a>\r\n      </div>\r\n      <div class=\"card__employee-info\">\r\n        <div class=\"card__imgWrapper\">\r\n          <img src=\"{{profile.PictureUrl}}\" alt=\"avatar\" *ngIf=\"profile.PictureUrl;else noPicture\">\r\n          <ng-template #noPicture>\r\n            <div class=\"initials\">\r\n              <span>{{profile.FirstName.substring(0, 1)}}</span>\r\n              <span>{{profile.LastName.substring(0, 1)}}</span>\r\n            </div>\r\n          </ng-template>\r\n        </div>\r\n        <div class=\"card__infoWrapper\">\r\n          <div class=\"email\">\r\n            <a href=\"mailto:{{profile.WorkEmail}}\">\r\n              <img [src]=\"profile?.emailIconUrl\" alt=\"email\"\r\n                   (mouseover)=\"profile.emailIconUrl = emailHoverImgSrc\"\r\n                   (mouseout)=\"profile.emailIconUrl = emailImgSrc\">\r\n              <span *ngIf=\"profile.WorkEmail;else workEmailNorAvailable\">{{profile.WorkEmail}}</span>\r\n            </a>\r\n            <ng-template #workEmailNorAvailable>\r\n              <span>Email N/A</span>\r\n            </ng-template>\r\n          </div>\r\n          <div class=\"job\" *ngIf=\"profile.JobTitle\">\r\n            <img [src]=\"profile.jobIconUrl\">\r\n            <span *ngIf=\"profile.JobTitle;else noJobTitle\">{{profile.JobTitle}}</span>\r\n            <ng-template #noJobTitle>\r\n              <span>Job N/A</span>\r\n            </ng-template>\r\n          </div>\r\n          <div class=\"department\" >\r\n            <img [src]=\"profile.departmentIconUrl\" alt=\"department\">\r\n            <span>{{profile.Department}}</span>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"menu\">\r\n        <button mat-icon-button [matMenuTriggerFor]=\"menu\" (menuOpened)=\"onOpenMenu(profile.Manager)\" yPosition=\"below\"\r\n                class=\"employee__menu\" aria-label=\"Example icon-button with a menu\">\r\n          <img [src]=\"profile.menuIconUrl\"\r\n               alt=\"menu\">\r\n        </button>\r\n        <mat-menu #menu=\"matMenu\" class=\"sub__menu\">\r\n          <button mat-menu-item\r\n                  (mouseover)=\"profile.locationIconUrl = locationHoverImgSrc\"\r\n                  (mouseout)=\"profile.locationIconUrl = locationImgSrc\">\r\n            <img alt=\"location\" [src]=\"profile.locationIconUrl\"\r\n            >\r\n            <span *ngIf=\"profile.Office;else buildingNotAvailable\"> {{profile.Office}}</span>\r\n            <ng-template #buildingNotAvailable>\r\n              <span>Office N/A</span>\r\n            </ng-template>\r\n            <div *ngIf=\"profile.OfficeNumber;else officeNumberNotAvailable\">Room {{profile.OfficeNumber}}</div>\r\n            <ng-template #officeNumberNotAvailable>\r\n              <div>Room N/A</div>\r\n            </ng-template>\r\n          </button>\r\n          <button mat-menu-item\r\n                  (mouseover)=\"profile.managerIconUrl = managerHoverImgSrc\"\r\n                  (mouseout)=\"profile.managerIconUrl = managerImgSrc\"\r\n                  (click)=\"onNavigateToTheManagerPage(managerProfile)\">\r\n            <img [src]=\"profile.managerIconUrl\" alt=\"manager\"\r\n            >\r\n            <span>{{managerProfile?.FullName}}</span>\r\n          </button>\r\n          <button mat-menu-item\r\n                  (mouseover)=\"profile.workADayIconUrl = workADayHoverImgSrc\"\r\n                  (mouseout)=\"profile.workADayIconUrl = workADayImgSrc\">\r\n            <img [src]=\"profile.workADayIconUrl\" alt=\"work a day\"\r\n            >\r\n            <a href=\"{{profile.WorkdayProfile}}\" target=\"_blank\">View in workday</a>\r\n          </button>\r\n        </mat-menu>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n<ng-template #noProfiles>\r\n  <div class=\"spinner__container\">\r\n    <div class=\"spinner-border\" role=\"status\"></div>\r\n  </div>\r\n</ng-template>\r\n\r\n<pagination-controls *ngIf=\"profiles.length> 0\" (pageBoundsCorrection)=\"pageChanged($event)\"\r\n                     (pageChange)=\"nextPage($event)\"\r\n                     autoHide=\"false\"\r\n                     directionLinks=\"true\"\r\n                     id=\"custom\"\r\n                     maxSize=\"9\"\r\n                     nextLabel=\"Next\"\r\n                     previousLabel=\"Previous\"\r\n                     responsive=\"true\"\r\n                     screenReaderCurrentLabel=\"You're on page\"\r\n                     screenReaderPageLabel=\"page\"\r\n                     screenReaderPaginationLabel=\"Pagination\">\r\n</pagination-controls>\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/components/employees-list/employees-list.component.html	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/components/employees-list/employees-list.component.html	(date 1605080120007)
+@@ -2,7 +2,7 @@
+   Results: {{(profiles | searchByEmployee: byEmployeeTerm  | cardsByDepartment: byDepartmentTerm | cardsByLocation: byLocation | searchByAZ: byAZ).length}}
+ </div>
+ 
+-<div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
++<div class="cards__container" *ngIf="profiles?.length> 0;else noProfiles">
+ 
+   <div class="card" *ngFor="let profile of profiles |sortCards: 'asc' |searchByEmployee: byEmployeeTerm
+    | cardsByDepartment: byDepartmentTerm
+@@ -10,20 +10,20 @@
+    | cardsByLocation: byLocation|
+    paginate: {id: 'custom', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems };let i=index">
+     <div class="card__body">
+-      <h3 class="card__title">{{profile.FirstName}} {{profile.LastName}}</h3>
++      <h3 class="card__title">{{profile?.FirstName}} {{profile?.LastName}}</h3>
+       <div class="card__phones">
+         <a href="tel:{{profile.WorkPhone}}">
+           <img [src]="profile.workPhoneIconUrl" #workPhonesIconsRef [id]="'icon'+i"
+                (mouseover)="profile.workPhoneIconUrl = workPhoneHoverImgSrc"
+                (mouseout)="profile.workPhoneIconUrl = workPhoneImgSrc"
+                class="work__phone" alt="work phone">
+-          <span class="card__phones-work" *ngIf="profile.WorkPhone;else notAvailable">{{profile.WorkPhone}}</span>
++          <span class="card__phones-work" *ngIf="profile?.WorkPhone;else notAvailable">{{profile?.WorkPhone}}</span>
+           <ng-template #notAvailable>
+             <span class="card__phones-work">N/A</span>
+           </ng-template>
+         </a>
+-        <a href="tel:{{profile.MobilePhone}}">
+-          <img [src]="profile.mobilePhoneIconUrl"
++        <a href="tel:{{profile?.MobilePhone}}">
++          <img [src]="profile?.mobilePhoneIconUrl"
+                (mouseover)="profile.mobilePhoneIconUrl = mobilePhoneHoverImgSrc"
+                (mouseout)="profile.mobilePhoneIconUrl = mobilePhoneImgSrc"
+                alt="cell phone" class="cell__phone">
+@@ -32,43 +32,43 @@
+       </div>
+       <div class="card__employee-info">
+         <div class="card__imgWrapper">
+-          <img src="{{profile.PictureUrl}}" alt="avatar" *ngIf="profile.PictureUrl;else noPicture">
++          <img src="{{profile?.PictureUrl}}" alt="avatar" *ngIf="profile?.PictureUrl;else noPicture">
+           <ng-template #noPicture>
+             <div class="initials">
+-              <span>{{profile.FirstName.substring(0, 1)}}</span>
+-              <span>{{profile.LastName.substring(0, 1)}}</span>
++              <span>{{profile?.FirstName.substring(0, 1)}}</span>
++              <span>{{profile?.LastName.substring(0, 1)}}</span>
+             </div>
+           </ng-template>
+         </div>
+         <div class="card__infoWrapper">
+           <div class="email">
+-            <a href="mailto:{{profile.WorkEmail}}">
++            <a href="mailto:{{profile?.WorkEmail}}">
+               <img [src]="profile?.emailIconUrl" alt="email"
+                    (mouseover)="profile.emailIconUrl = emailHoverImgSrc"
+                    (mouseout)="profile.emailIconUrl = emailImgSrc">
+-              <span *ngIf="profile.WorkEmail;else workEmailNorAvailable">{{profile.WorkEmail}}</span>
++              <span *ngIf="profile?.WorkEmail;else workEmailNorAvailable">{{profile?.WorkEmail}}</span>
+             </a>
+             <ng-template #workEmailNorAvailable>
+               <span>Email N/A</span>
+             </ng-template>
+           </div>
+           <div class="job" *ngIf="profile.JobTitle">
+-            <img [src]="profile.jobIconUrl">
+-            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>
++            <img [src]="profile?.jobIconUrl">
++            <span *ngIf="profile?.JobTitle;else noJobTitle">{{profile?.JobTitle}}</span>
+             <ng-template #noJobTitle>
+               <span>Job N/A</span>
+             </ng-template>
+           </div>
+           <div class="department" >
+-            <img [src]="profile.departmentIconUrl" alt="department">
+-            <span>{{profile.Department}}</span>
++            <img [src]="profile?.departmentIconUrl" alt="department">
++            <span>{{profile?.Department}}</span>
+           </div>
+         </div>
+       </div>
+       <div class="menu">
+         <button mat-icon-button [matMenuTriggerFor]="menu" (menuOpened)="onOpenMenu(profile.Manager)" yPosition="below"
+                 class="employee__menu" aria-label="Example icon-button with a menu">
+-          <img [src]="profile.menuIconUrl"
++          <img [src]="profile?.menuIconUrl"
+                alt="menu">
+         </button>
+         <mat-menu #menu="matMenu" class="sub__menu">
+@@ -77,11 +77,11 @@
+                   (mouseout)="profile.locationIconUrl = locationImgSrc">
+             <img alt="location" [src]="profile.locationIconUrl"
+             >
+-            <span *ngIf="profile.Office;else buildingNotAvailable"> {{profile.Office}}</span>
++            <span *ngIf="profile?.Office;else buildingNotAvailable"> {{profile.Office}}</span>
+             <ng-template #buildingNotAvailable>
+               <span>Office N/A</span>
+             </ng-template>
+-            <div *ngIf="profile.OfficeNumber;else officeNumberNotAvailable">Room {{profile.OfficeNumber}}</div>
++            <div *ngIf="profile?.OfficeNumber;else officeNumberNotAvailable">Room {{profile?.OfficeNumber}}</div>
+             <ng-template #officeNumberNotAvailable>
+               <div>Room N/A</div>
+             </ng-template>
+@@ -90,16 +90,16 @@
+                   (mouseover)="profile.managerIconUrl = managerHoverImgSrc"
+                   (mouseout)="profile.managerIconUrl = managerImgSrc"
+                   (click)="onNavigateToTheManagerPage(managerProfile)">
+-            <img [src]="profile.managerIconUrl" alt="manager"
++            <img [src]="profile?.managerIconUrl" alt="manager"
+             >
+             <span>{{managerProfile?.FullName}}</span>
+           </button>
+           <button mat-menu-item
+                   (mouseover)="profile.workADayIconUrl = workADayHoverImgSrc"
+                   (mouseout)="profile.workADayIconUrl = workADayImgSrc">
+-            <img [src]="profile.workADayIconUrl" alt="work a day"
++            <img [src]="profile?.workADayIconUrl" alt="work a day"
+             >
+-            <a href="{{profile.WorkdayProfile}}" target="_blank">View in workday</a>
++            <a href="{{profile?.WorkdayProfile}}" target="_blank">View in workday</a>
+           </button>
+         </mat-menu>
+       </div>
+Index: searchPageWP/src/app/components/search-by/search-by.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {\r\n  ChangeDetectionStrategy,\r\n  ChangeDetectorRef,\r\n  Component,\r\n  ElementRef,\r\n  HostListener,\r\n  Input,\r\n  OnInit,\r\n  Renderer2,\r\n  ViewChild\r\n} from '@angular/core';\r\nimport {FormBuilder, FormGroup} from '@angular/forms';\r\nimport {SearchByEmployeeService} from '../../services/search-by-employee.service';\r\nimport {SortService} from '../../services/sort.service';\r\nimport {Subscription} from 'rxjs';\r\nimport {IProfile} from '../../models/profile.model';\r\nimport {environment} from '../../../environments/environment';\r\nimport {ILocation} from '../../search-page-spfx-web-part/search-page-spfx-web-part.component';\r\nimport {PassCharService} from '../../services/pass-char.service';\r\nimport {SearchByDepartmentService} from '../../services/search-by-department.service';\r\nimport {SearchByLocationService} from '../../services/search-by-location.service';\r\nimport {SearchByAzService} from '../../services/search-by-az.service';\r\nimport {ClearAllService} from '../../services/clear-all.service';\r\nimport {SaveSearchCharService} from '../../services/save-search-char.service';\r\nimport {SearchByEmployeeEnterService} from '../../services/search-by-employee-enter.service';\r\n\r\n@Component({\r\n  selector: 'app-search-by',\r\n  templateUrl: './search-by.component.html',\r\n  styleUrls: ['./search-by.component.scss'],\r\n  changeDetection: ChangeDetectionStrategy.OnPush\r\n})\r\nexport class SearchByComponent implements OnInit {\r\n  @Input() departments: string[] = [];\r\n  @Input() locations: ILocation[];\r\n  @Input() profiles: IProfile[];\r\n  @Input() profileFromSearch: string;\r\n  searchForm: FormGroup;\r\n  click$: Subscription;\r\n  count: number = 1;\r\n  imgSrc: string = '';\r\n  DescIcon: boolean;\r\n  showAutocompleteByDepartment: boolean = false;\r\n  showAutocompleteByLocation: boolean = false;\r\n  showAutocompleteByEmployee: boolean = false;\r\n  isShow: boolean = true;\r\n  selectedUser: string = '';\r\n  autocompleteByEmployee_ulHeight: number = 0;\r\n  autocompleteByDepartment_ulHeight: number = 0;\r\n  autocompleteByLocation_ulHeight: number = 0;\r\n  filtered: IProfile[];\r\n  ul: Element;\r\n  searchByEmployeeImgSrc: string = '';\r\n  searchByDepartmentImgSrc: string = '';\r\n  searchByLocationImgSrc: string = '';\r\n  isShowFooterForAutocomplete: boolean = false;\r\n  smallAutocomplete: boolean = false;\r\n  miniAutocomplete: boolean = false;\r\n  onlyFooter: boolean = false;\r\n  lastElement: boolean = false;\r\n  @ViewChild('sortBtn', {static: false}) sortBtn: ElementRef;\r\n  @ViewChild('autocompleteDepartmentsRef', {static: false}) autocompleteDepartmentsRef: ElementRef;\r\n  @ViewChild('autocompleteLocationsRef', {static: false}) autocompleteLocationsRef: ElementRef;\r\n  @ViewChild('autocompleteEmployeeRef', {static: false}) autocompleteEmployeeRef: ElementRef;\r\n  @ViewChild('virtualScrollRef', {static: false}) virtualScrollRef: ElementRef;\r\n\r\n  constructor(private fb: FormBuilder,\r\n              private searchByEmployeeService: SearchByEmployeeService,\r\n              private searchByDepartmentService: SearchByDepartmentService,\r\n              private searchByLocationService: SearchByLocationService,\r\n              private searchByAzService: SearchByAzService,\r\n              private saveSearchCharService: SaveSearchCharService,\r\n              private searchByEmployeeEnterService: SearchByEmployeeEnterService,\r\n              private clearAllService: ClearAllService,\r\n              private sortService: SortService,\r\n              private renderer: Renderer2,\r\n              private passService: PassCharService,\r\n              private cdr: ChangeDetectorRef) {\r\n  }\r\n\r\n  /**\r\n   * Click outside of the autocompletes 'by Employee','by Department,'by Location'\r\n   * @param event\r\n   */\r\n  @HostListener('document:click', ['$event'])\r\n  handleOutsideClickForLocations(event) {\r\n    if (!this.autocompleteLocationsRef.nativeElement.contains(event.target)) {\r\n      this.showAutocompleteByLocation = false;\r\n    }\r\n    if (!this.autocompleteDepartmentsRef.nativeElement.contains(event.target)) {\r\n      this.showAutocompleteByDepartment = false;\r\n    }\r\n    if (!this.autocompleteEmployeeRef.nativeElement.contains(event.target)) {\r\n      this.showAutocompleteByEmployee = false;\r\n      this.selectedUser = this.byEmployee.value;\r\n      this.byEmployee.patchValue(this.selectedUser);\r\n      this.cdr.detectChanges();\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Find last element in autocomplete on scroll\r\n   * @param event: any\r\n   */\r\n  onScroll(event: any) {\r\n    this.lastElement = event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight;\r\n  }\r\n\r\n  ngOnInit() {\r\n    this.imgSrc = environment.azIcon;\r\n    this.searchByEmployeeImgSrc = environment.searchByEmployeeIcon;\r\n    this.searchByDepartmentImgSrc = environment.searchByDepartmentIcon;\r\n    this.searchByLocationImgSrc = environment.searchByLocationIcon;\r\n    this.initializeSearchForm();\r\n\r\n    if (this.profileFromSearch) {\r\n      this.showAutocompleteByEmployee = false;\r\n      this.byEmployee.patchValue(this.profileFromSearch);\r\n      this.searchByEmployeeService.setSearch({\r\n        type: 'byEmployee',\r\n        value: this.profileFromSearch || '',\r\n        deleteClick: false\r\n      });\r\n      this.cdr.detectChanges();\r\n\r\n    } else {\r\n      this.onSearchByEmployee();\r\n    }\r\n\r\n  }\r\n\r\n  /**\r\n   * Initialize searchForm\r\n   */\r\n  initializeSearchForm() {\r\n    this.searchForm = this.fb.group({\r\n      byEmployee: [''],\r\n      byDepartment: [''],\r\n      byLocation: ['']\r\n    });\r\n  }\r\n\r\n  get byEmployee() {\r\n    return this.searchForm.get('byEmployee');\r\n  }\r\n\r\n  get byDepartment() {\r\n    return this.searchForm.get('byDepartment');\r\n  }\r\n\r\n  get byLocation() {\r\n    return this.searchForm.get('byLocation');\r\n  }\r\n\r\n  /**\r\n   * Change height of autocomplete (by Employee) dynamically\r\n   */\r\n  changeHeightOfAutocompleteByEmployeeDynamically() {\r\n\r\n    if (this.showAutocompleteByEmployee) {\r\n      setTimeout(() => {\r\n        this.autocompleteByEmployee_ulHeight = 2;\r\n        const virtualScroll = document.querySelector('.users');\r\n        if (virtualScroll !== null) {\r\n          const vsChildren = virtualScroll.children;\r\n          const children = vsChildren[0].children;\r\n          const ul = children[0];\r\n          for (let i = 0; i < ul.children.length; i++) {\r\n            if (i <= 4) {\r\n              this.autocompleteByEmployee_ulHeight += (<HTMLElement>ul.children[i]).getBoundingClientRect().height;\r\n              this.cdr.detectChanges();\r\n            }\r\n          }\r\n        }\r\n\r\n      }, 500);\r\n\r\n    }\r\n\r\n  }\r\n\r\n  /**\r\n   * Change height of autocomplete (by Department) dynamically\r\n   */\r\n  changeHeightOfAutoCompleteByDepartment() {\r\n\r\n    setTimeout(() => {\r\n      this.autocompleteByDepartment_ulHeight = 3;\r\n      const autocomplete = document.querySelector('.autocomplete__departments');\r\n\r\n      const vsChildren = autocomplete.children;\r\n      const children = vsChildren[0].children;\r\n      for (let i = 0; i < children.length; i++) {\r\n        if (i <= 4) {\r\n          this.autocompleteByDepartment_ulHeight += (<HTMLElement>children[i]).getBoundingClientRect().height;\r\n          this.cdr.detectChanges();\r\n        }\r\n      }\r\n    }, 500);\r\n\r\n  }\r\n\r\n  /**\r\n   * Change height of autocomplete (by Location) dynamically\r\n   */\r\n  changeHeightOfAutoCompleteByLocation() {\r\n    if (this.showAutocompleteByLocation) {\r\n      setTimeout(() => {\r\n        this.autocompleteByLocation_ulHeight = 3;\r\n        const autocomplete = document.querySelector('.autocomplete__locations');\r\n        const vsChildren = autocomplete.children;\r\n        if (vsChildren) {\r\n          console.log('auto', vsChildren);\r\n          const children = vsChildren[0].children;\r\n          for (let i = 0; i < children.length; i++) {\r\n            if (i <= 4) {\r\n              this.autocompleteByLocation_ulHeight += (<HTMLElement>children[i]).getBoundingClientRect().height;\r\n              this.cdr.detectChanges();\r\n            }\r\n          }\r\n        }\r\n\r\n      }, 500);\r\n    }\r\n\r\n  }\r\n\r\n  /**\r\n   * select profile\r\n   * pass the selected profile value to the 'Search service'\r\n   */\r\n  onSearchByEmployee() {\r\n    this.profileFromSearch = '';\r\n    this.showAutocompleteByEmployee = this.byEmployee.value !== '';\r\n    if (this.byEmployee.value === '') {\r\n      this.searchByEmployeeService.setSearch({\r\n        type: 'byEmployee',\r\n        value: this.byEmployee.value || '',\r\n        deleteClick: true\r\n      });\r\n    }\r\n    this.selectedUser = this.byEmployee.value;\r\n    this.byEmployee.patchValue(this.selectedUser);\r\n\r\n    this.changeHeightOfAutocompleteByEmployeeDynamically();\r\n    this.searchByEmployeeService.setSearch({\r\n      type: 'byEmployee',\r\n      value: this.byEmployee.value || '',\r\n      deleteClick: false\r\n    });\r\n    this.cdr.detectChanges();\r\n\r\n  }\r\n\r\n  /**\r\n   * Select department\r\n   * pass the selected profile value to the service setSearch\r\n   */\r\n  onSearchByDepartment() {\r\n    this.showAutocompleteByDepartment = true;\r\n    this.searchByDepartmentService.setSearch({\r\n      type: 'byDepartment',\r\n      value: this.byDepartment.value || '',\r\n      deleteClick: false\r\n    });\r\n    this.changeHeightOfAutoCompleteByDepartment();\r\n  }\r\n\r\n  /**\r\n   * Select location\r\n   * pass the selected location value to the service setSearch\r\n   */\r\n  onSearchByLocation() {\r\n    this.showAutocompleteByLocation = true;\r\n    this.searchByLocationService.setSearch({type: 'byLocation', value: this.byLocation.value, deleteClick: false});\r\n    this.changeHeightOfAutoCompleteByLocation();\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * Click on selected location\r\n   * pass the selected department value to the service setSearch\r\n   * @param department: string\r\n   */\r\n  onSelectDepartment(department: string) {\r\n    this.byDepartment.patchValue(department);\r\n    this.showAutocompleteByDepartment = false;\r\n\r\n    this.searchByDepartmentService.setSearch({type: 'byDepartment', value: department || '', deleteClick: false});\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * Click on selected location\r\n   * pass the value to the service setSearch\r\n   * @param office:string\r\n   */\r\n  onSelectLocation(office: string) {\r\n    this.byLocation.patchValue(office);\r\n    this.searchByLocationService.setSearch({\r\n      type: 'byLocation',\r\n      value: this.byLocation.value || '',\r\n      deleteClick: false\r\n    });\r\n    this.showAutocompleteByLocation = false;\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * Choose employee and show him in input\r\n   * @param profile: IProfile\r\n   */\r\n  onSelectUser(profile: IProfile) {\r\n    this.selectedUser = profile.FirstName + ' ' + profile.LastName;\r\n    this.byEmployee.patchValue(this.selectedUser);\r\n    this.searchByEmployeeService.setSearch({\r\n      type: 'byEmployee',\r\n      value: this.byEmployee.value || '',\r\n      deleteClick: false\r\n    });\r\n    this.profileFromSearch = '';\r\n    this.autocompleteByEmployee_ulHeight = 0;\r\n    this.showAutocompleteByEmployee = false;\r\n\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * Click on 'Clear icon' to clear the 'Employee input'\r\n   */\r\n  onClearInputByEmployee() {\r\n    if (this.profileFromSearch !== '') {\r\n      this.profileFromSearch = '';\r\n      this.byEmployee.patchValue('');\r\n      this.cdr.detectChanges();\r\n\r\n    }\r\n    this.showAutocompleteByEmployee = false;\r\n    this.byEmployee.patchValue('');\r\n    this.searchByEmployeeService.setSearch({\r\n      type: 'byEmployee',\r\n      value: this.byEmployee.value || '',\r\n      deleteClick: true\r\n    });\r\n\r\n    this.cdr.detectChanges();\r\n\r\n  }\r\n\r\n  /**\r\n   * Click on 'Clear icon' to clear the 'Department input'\r\n   */\r\n  onClearDepartmentInput() {\r\n    if (this.profileFromSearch) {\r\n      this.showAutocompleteByDepartment = false;\r\n    }\r\n    this.showAutocompleteByDepartment = false;\r\n    this.byDepartment.patchValue('');\r\n    this.searchByDepartmentService.setSearch({\r\n      type: 'byDepartment',\r\n      value: this.byDepartment.value || '',\r\n      deleteClick: true\r\n    });\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * Click on 'Clear icon' to clear the 'Location input and s'\r\n   */\r\n  onClearLocationInput() {\r\n    this.byLocation.patchValue('');\r\n    this.searchByLocationService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});\r\n    this.showAutocompleteByLocation = false;\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * CLick on 'Clear all' button  to clear all the inputs\r\n   */\r\n  onClearAllInputs() {\r\n    this.byEmployee.patchValue('');\r\n    this.byDepartment.patchValue('');\r\n    this.byLocation.patchValue('');\r\n\r\n    this.searchByLocationService.setSearch({type: 'byLocation', value: this.byLocation.value || '', deleteClick: true});\r\n    this.searchByDepartmentService.setSearch({\r\n      type: 'byDepartment',\r\n      value: this.byDepartment.value || '',\r\n      deleteClick: true\r\n    });\r\n    this.searchByEmployeeService.setSearch({type: 'byEmployee', value: this.byEmployee.value || '', deleteClick: true});\r\n    this.clearAllService.setSearch({type: 'clearAll', value: '', deleteClick: true});\r\n    this.cdr.detectChanges();\r\n  }\r\n\r\n  /**\r\n   * Click on Enter to select profile\r\n   * @param value: string\r\n   */\r\n  onEnterSelectProfile(value: string) {\r\n    this.searchByEmployeeEnterService.setSearch({\r\n      type: 'onEnter',\r\n      value: value,\r\n      deleteClick: false\r\n    });\r\n    this.profileFromSearch = '';\r\n    this.autocompleteByEmployee_ulHeight = 0;\r\n    this.showAutocompleteByEmployee = false;\r\n    this.cdr.detectChanges();\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/components/search-by/search-by.component.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/components/search-by/search-by.component.ts	(date 1605081097239)
+@@ -232,6 +232,7 @@
+   onSearchByEmployee() {
+     this.profileFromSearch = '';
+     this.showAutocompleteByEmployee = this.byEmployee.value !== '';
++    this.cdr.detectChanges();
+     if (this.byEmployee.value === '') {
+       this.searchByEmployeeService.setSearch({
+         type: 'byEmployee',
+Index: searchPageWP/src/app/services/mock.service.spec.ts
+===================================================================
+--- searchPageWP/src/app/services/mock.service.spec.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/mock.service.spec.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
+@@ -1,12 +0,0 @@
+-import { TestBed } from '@angular/core/testing';
+-
+-import { MockService } from './mock.service';
+-
+-describe('MockService', () => {
+-  beforeEach(() => TestBed.configureTestingModule({}));
+-
+-  it('should be created', () => {
+-    const service: MockService = TestBed.get(MockService);
+-    expect(service).toBeTruthy();
+-  });
+-});
+Index: searchPageWP/src/app/services/mock.service.ts
+===================================================================
+--- searchPageWP/src/app/services/mock.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/mock.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
+@@ -1,21 +0,0 @@
+-import {Injectable} from '@angular/core';
+-import {IEmployee} from '../models/employee';
+-import {employeeList} from '../../assets/mock/employee-list';
+-import {Observable, of} from 'rxjs';
+-
+-@Injectable({
+-  providedIn: 'root'
+-})
+-
+-
+-export class MockService {
+-  employees: Array<IEmployee>;
+-
+-  constructor() {
+-    this.employees = employeeList;
+-  }
+-
+-  getEmployeeList(): Observable<IEmployee[]> {
+-    return of(this.employees);
+-  }
+-}
+Index: searchPageWP-spfx/README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># search-page-wp-spfx\r\n\r\nThis project uses [Angular Elements](https://angular.io/guide/elements).\r\n\r\n> This is where you include your project's documentation.\r\n\r\n## Global dependencies\r\n\r\nRequires Gulp globally installed:\r\n\r\n```shell\r\nnpm install --global gulp\r\n```\r\n\r\n## Building the code\r\n\r\nDownload & install all dependencies, build, bundle & package the project\r\n\r\n```shell\r\n# download & install dependencies\r\nnpm install\r\n\r\n# transpile all TypeScript & SCSS => JavaScript & CSS\r\ngulp build\r\n\r\n# create component bundle & manifest\r\ngulp bundle\r\n\r\n# create SharePoint package\r\ngulp package-solution\r\n```\r\n\r\nThese commands produce the following:\r\n\r\n- **./lib**: intermediate-stage commonjs build artifacts\r\n- **./dist**: bundled script, along with other resources\r\n- **./temp/deploy**: all resources required by component(s) to deploy to a CDN (when `--ship` argument present)\r\n\r\n## Build options\r\n\r\n- `gulp clean`: Deletes all build output (**/dist**, **/lib**, **/temp**, etc.).\r\n- `gulp build`: Transpiles all TypeScript & SCSS to JavaScript & CSS, generates source map files & TypeScript type declaration files\r\n- `gulp bundle [--ship|-p|--production]`: Runs gulp task **build**, then uses webpack to create the JavaScript bundle(s) and component manifest(s) as defined in **./config/config.json**. The `--ship`, `-p` or `--production` argument specifies a production build that will generate minified bundles.\r\n- `gulp serve [--ship|-p|--production]`: Runs gulp tasks **build**, **bundle** & starts the local webserver. Depending on the project type, it opens the browser and navigates to the local workbench or specified URL (in the case of extension components). The `--ship`, `-p` or `--production` argument specifies a production build that modifies the resulting package for production hosting rather than local hosting of assets.\r\n- `gulp package-solution`: Creates the SharePoint Package (**.sppkg**) file.\r\n- `gulp dist`: Creates a production-ready SharePoint Package (**.sppkg**) file. The following gulp task gets executed in this specific order `gulp clean`, `gulp bundle`, `gulp package-solution.`\r\n- `gulp dev`: Creates a development-ready SharePoint Package (**.sppkg**) file. The following gulp task will be executed in this specific order `gulp clean`, `gulp bundle`, `gulp package-solution.`\r\n\r\n> View all available gulp tasks by running `gulp --tasks`\r\n\r\nMore information on [SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview)\r\n\r\nGenerated with [pnp/spfx](https://github.com/pnp/generator-spfx/).\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP-spfx/README.md	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP-spfx/README.md	(date 1605020395204)
+@@ -1,53 +1,80 @@
+-# search-page-wp-spfx
++## external-sharing
+ 
+-This project uses [Angular Elements](https://angular.io/guide/elements).
++## Summary
++This Development shows how to create Search Page using `Angular elements and @pnp/spfx` package.
+ 
+-> This is where you include your project's documentation.
++## Solution
+ 
+-## Global dependencies
++Solution|Author(s)
++--------|---------
++External-Sharing | PzProjects
+ 
+-Requires Gulp globally installed:
++## Version history
+ 
+-```shell
+-npm install --global gulp
+-```
++Version|Date|Comments
++-------|----|--------
++1.0|October 03, 2020|Initial version
+ 
+-## Building the code
++## Technology versions used
++* Angular -
++Angular CLI: 8.2.2;
++Typescript                  3.4.5
++Webpack                      3.6.0
+ 
+-Download & install all dependencies, build, bundle & package the project
++* Node.js- v10.22.0
++* Gulp-
++ CLI version: 2.3.0
++ Local version: 3.9.1
++* Npm- 6.14.8
+ 
+-```shell
+-# download & install dependencies
+-npm install
++## Set your environment
+ 
+-# transpile all TypeScript & SCSS => JavaScript & CSS
+-gulp build
++Please follow this guide in order to set up your SharePoint Framework development environment:
++[SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-development-environment)
+ 
+-# create component bundle & manifest
+-gulp bundle
++## Preparations
+ 
+-# create SharePoint package
+-gulp package-solution
+-```
++* Build you webpart with 'npm run bundle' command in Angular Project (autocompleteWP)
+ 
+-These commands produce the following:
+ 
+-- **./lib**: intermediate-stage commonjs build artifacts
+-- **./dist**: bundled script, along with other resources
+-- **./temp/deploy**: all resources required by component(s) to deploy to a CDN (when `--ship` argument present)
++## Debug
+ 
+-## Build options
++- First you need to set the url of the required document library:
++  Go to "serve.json" under the folder "config" and change "pageUrl" to the required document library url
++  This step is not mandatory when the relevant document library remain the same!
++- Move to folder where this readme exists
++- In the command line run:
++  - `npm install`
++  - `gulp trust-dev-cert`
++  - `gulp serve`
+ 
+-- `gulp clean`: Deletes all build output (**/dist**, **/lib**, **/temp**, etc.).
+-- `gulp build`: Transpiles all TypeScript & SCSS to JavaScript & CSS, generates source map files & TypeScript type declaration files
+-- `gulp bundle [--ship|-p|--production]`: Runs gulp task **build**, then uses webpack to create the JavaScript bundle(s) and component manifest(s) as defined in **./config/config.json**. The `--ship`, `-p` or `--production` argument specifies a production build that will generate minified bundles.
+-- `gulp serve [--ship|-p|--production]`: Runs gulp tasks **build**, **bundle** & starts the local webserver. Depending on the project type, it opens the browser and navigates to the local workbench or specified URL (in the case of extension components). The `--ship`, `-p` or `--production` argument specifies a production build that modifies the resulting package for production hosting rather than local hosting of assets.
+-- `gulp package-solution`: Creates the SharePoint Package (**.sppkg**) file.
+-- `gulp dist`: Creates a production-ready SharePoint Package (**.sppkg**) file. The following gulp task gets executed in this specific order `gulp clean`, `gulp bundle`, `gulp package-solution.`
+-- `gulp dev`: Creates a development-ready SharePoint Package (**.sppkg**) file. The following gulp task will be executed in this specific order `gulp clean`, `gulp bundle`, `gulp package-solution.`
++## Deploy
+ 
+-> View all available gulp tasks by running `gulp --tasks`
++- Move to folder where this readme exists
++- In the command line run:
++  - `gulp serve --nobrowser`
++  - `gulp clean`
++  - `gulp bundle --ship`
++  - `gulp package-solution --ship`
++- Upload .sppkg file from sharepoint\solution to your tenant App Catalog
++  E.g.: https://<tenant>.sharepoint.com/sites/AppCatalog/AppCatalog
++- Only on the first upload: you need to approve Graph API request in the office365 admin center:
++  office365 admin >>> Advanced (right pannel) >>> Api access 
+ 
+-More information on [SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview)
++## Features
+ 
+-Generated with [pnp/spfx](https://github.com/pnp/generator-spfx/).
++This project contains Angular Element the contains these features:
++* Using @pnp/sp
++     [Consume PnP](https://pnp.github.io/pnpjs/)
++     PnPjs is a collection of fluent libraries for consuming SharePoint, Graph, and Office 365 REST APIs in a type-safe way. You can use it within SharePoint Framework, Nodejs, or any JavaScript project. This an open source initiative and we encourage contributions and constructive feedback from the community.
++* Using Microsoft Sharepoint Rest API Browser
++  [Consume Microsoft Sharepoint Rest API](https://docs.microsoft.com/en-us/rest/api/)
++* Angular Elements
++* Using `@angular/material` A collection of UI Components
++     Angular Material is a UI component library for Angular 2+/Angular JS
++     developers. Angular Material components help in constructing
++     attractive, consistent, and functional web pages and web
++     applications while adhering to modern web design principles like
++     browser portability, device independence, and graceful degradation.
++     
++     Main Website: https://material.angular.io/
+Index: searchPageWP/src/app/pipes/search-by-location.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\nimport {IProfile} from '../models/profile.model';\r\nimport {ILocation} from '../search-page-spfx-web-part/search-page-spfx-web-part.component';\r\n\r\n@Pipe({\r\n  name: 'searchByLocation'\r\n})\r\nexport class SearchByLocationPipe implements PipeTransform {\r\n\r\n  transform(locations: ILocation[], searchTerm: string): any {\r\n\r\n    if (!locations || !searchTerm) {\r\n      return locations;\r\n    }\r\n    return locations.filter((location) => {\r\n        return location.Office.toLowerCase().startsWith(searchTerm.toLowerCase());\r\n\r\n    });\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/search-by-location.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/search-by-location.pipe.ts	(date 1605020395298)
+@@ -1,12 +1,15 @@
+ import {Pipe, PipeTransform} from '@angular/core';
+-import {IProfile} from '../models/profile.model';
+ import {ILocation} from '../search-page-spfx-web-part/search-page-spfx-web-part.component';
+ 
+ @Pipe({
+   name: 'searchByLocation'
+ })
+ export class SearchByLocationPipe implements PipeTransform {
+-
++  /**
++   * Search employees by Departments that Department starts with the search term
++   * @param locations: ILocation[]
++   * @param searchTerm: string
++   */
+   transform(locations: ILocation[], searchTerm: string): any {
+ 
+     if (!locations || !searchTerm) {
+Index: searchPageWP/tsconfig.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"compileOnSave\": false,\r\n  \"compilerOptions\": {\r\n    \"baseUrl\": \"./\",\r\n    \"outDir\": \"./dist/out-tsc\",\r\n    \"sourceMap\": true,\r\n    \"declaration\": false,\r\n    \"module\": \"es2015\",\r\n    \"moduleResolution\": \"node\",\r\n    \"emitDecoratorMetadata\": true,\r\n    \"experimentalDecorators\": true,\r\n    \"target\": \"es5\",\r\n    \"typeRoots\": [\r\n      \"node_modules/@types\"\r\n    ],\r\n    \"lib\": [\r\n      \"es2018\",\r\n      \"dom\"\r\n    ]\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/tsconfig.json	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/tsconfig.json	(date 1605016182476)
+@@ -5,11 +5,11 @@
+     "outDir": "./dist/out-tsc",
+     "sourceMap": true,
+     "declaration": false,
+-    "module": "es2015",
++    "module": "esnext",
+     "moduleResolution": "node",
+     "emitDecoratorMetadata": true,
+     "experimentalDecorators": true,
+-    "target": "es5",
++    "target": "es2015",
+     "typeRoots": [
+       "node_modules/@types"
+     ],
+Index: searchPageWP/src/app/services/pass-char.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Injectable} from '@angular/core';\r\n import {BehaviorSubject, Subject} from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class PassCharService {\r\n  private autocompleteStatus: Subject<boolean>;\r\n\r\n  constructor() {\r\n    this.autocompleteStatus = new Subject<boolean>();\r\n  }\r\n\r\n\r\n  setAutocompleteStatus(autocomplete: boolean) {\r\n    this.autocompleteStatus.next(autocomplete);\r\n  }\r\n\r\n  getAutocomplete() {\r\n    return this.autocompleteStatus.asObservable();\r\n  }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/pass-char.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/pass-char.service.ts	(date 1605020395236)
+@@ -1,5 +1,5 @@
+ import {Injectable} from '@angular/core';
+- import {BehaviorSubject, Subject} from 'rxjs';
++ import {Subject} from 'rxjs';
+ 
+ @Injectable({
+   providedIn: 'root'
+@@ -7,15 +7,20 @@
+ export class PassCharService {
+   private autocompleteStatus: Subject<boolean>;
+ 
++
+   constructor() {
+     this.autocompleteStatus = new Subject<boolean>();
+   }
+ 
+-
++  /**
++   * Set autocomplete status to the components
++   */
+   setAutocompleteStatus(autocomplete: boolean) {
+     this.autocompleteStatus.next(autocomplete);
+   }
+-
++  /**
++   * Get autocomplete status
++   */
+   getAutocomplete() {
+     return this.autocompleteStatus.asObservable();
+   }
+Index: searchPageWP/src/app/services/search-by-employee.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Injectable} from '@angular/core';\r\nimport {Subject} from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class SearchByEmployeeService {\r\n  private search: Subject<ISearchTerm>;\r\n\r\n  constructor() {\r\n    this.search = new Subject<ISearchTerm>();\r\n  }\r\n\r\n\r\n  setSearch(searchTerm: ISearchTerm) {\r\n    this.search.next(searchTerm);\r\n  }\r\n\r\n  getSearch() {\r\n    return this.search.asObservable();\r\n  }\r\n}\r\n\r\nexport interface ISearchTerm {\r\n  type: string;\r\n  value: string;\r\n  deleteClick: boolean;\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/search-by-employee.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/search-by-employee.service.ts	(date 1605020395220)
+@@ -5,17 +5,27 @@
+   providedIn: 'root'
+ })
+ export class SearchByEmployeeService {
++  /**
++   * Service for pass Search term into components
++   *
++   */
+   private search: Subject<ISearchTerm>;
+ 
+   constructor() {
+     this.search = new Subject<ISearchTerm>();
+   }
+ 
+-
++  /**
++   * Set search
++   * @param searchTerm: ISearchTerm
++   */
+   setSearch(searchTerm: ISearchTerm) {
+     this.search.next(searchTerm);
+   }
+ 
++  /**
++   * Get search
++   */
+   getSearch() {
+     return this.search.asObservable();
+   }
+Index: searchPageWP/src/app/services/search-by-employee-enter.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { Injectable } from '@angular/core';\r\nimport {SearchByEmployeeService} from './search-by-employee.service';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class SearchByEmployeeEnterService extends SearchByEmployeeService{\r\n\r\n  constructor() {\r\n    super();\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/search-by-employee-enter.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/search-by-employee-enter.service.ts	(date 1605020395267)
+@@ -5,7 +5,9 @@
+   providedIn: 'root'
+ })
+ export class SearchByEmployeeEnterService extends SearchByEmployeeService{
+-
++  /**
++   * Set and Get Search term on Enter Click to the componenetns
++   */
+   constructor() {
+     super();
+   }
+Index: searchPageWP/src/app/components/search-by/search-by.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><div class=\"search__container\">\r\n  <button class=\"clear_all\" (click)=\"onClearAllInputs()\">Clear all</button>\r\n  <div class=\"searchbar_container\">\r\n      <form [formGroup]=\"searchForm\">\r\n        <div class=\"form-group\">\r\n\r\n            <div class=\"form-item by__employee\" #autocompleteEmployeeRef>\r\n              <img [src]=\"searchByEmployeeImgSrc\" alt=\"search\" class=\"byEmployee\">\r\n              <input type=\"text\" id=\"autocompleteInput\" class=\"byEmployee\"  #inputEmployeeRef (input)=\"onSearchByEmployee()\" (keydown.enter)=\"onEnterSelectProfile(this.byEmployee.value)\"   placeholder=\"Type employee's name\" formControlName=\"byEmployee\">\r\n\r\n              <button  class=\"btn_clear\" *ngIf=\"inputEmployeeRef.value !== ''\">\r\n                <svg (click)=\"onClearInputByEmployee()\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"#35435c\" width=\"18px\" height=\"18px\">\r\n                  <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\r\n                  <path\r\n                    d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\r\n                </svg>\r\n              </button>\r\n\r\n              <!--            ================================= Autocomplete -->\r\n\r\n<!--              <div class=\"footer\"  [class.small_autocomplete]=\"smallAutocomplete && (profiles | searchByEmployee: selectedUser).length > 0\"-->\r\n<!--                   [class.mini_autocomplete]=\"miniAutocomplete\"-->\r\n<!--                   [class.only_footer]=\"(profiles | searchByEmployee: selectedUser).length === 0\"-->\r\n<!--                   [class.last_element]=\"lastElement\"-->\r\n\r\n<!--                   *ngIf=\"showAutocompleteByEmployee\">-->\r\n<!--                {{(profiles  | searchByEmployee: selectedUser).length}} matches-->\r\n<!--                for {{selectedUser}}-->\r\n<!--              </div>-->\r\n\r\n              <cdk-virtual-scroll-viewport #virtualScrollRef (scroll)=\"onScroll($event)\" class=\"users\" [ngClass]=\"{'hidden': autocompleteByEmployee_ulHeight === 0}\" [style.height.px]=\"autocompleteByEmployee_ulHeight\" [itemSize]=\"5\" *ngIf=\"showAutocompleteByEmployee\">\r\n                <ul class=\"autocomplete_wrapper\" >\r\n                  <li *cdkVirtualFor=\"let profile of profiles  | searchByEmployee: selectedUser\"\r\n                      class=\"example-item\" (click)=\"onSelectUser(profile)\">\r\n                    <div class=\"user_info__wrapper\">\r\n                      <div class=\"img__wrapper\">\r\n                        <img [src]=\"profile.PictureUrl\" alt=\"profile picture\" *ngIf=\"profile.PictureUrl;else noPicture\">\r\n                        <ng-template #noPicture>\r\n                          <div class=\"user__info-initials\">\r\n                            <span *ngIf=\"profile.FirstName !== ''\">{{profile.FirstName.substring(0, 1)}}</span>\r\n                            <span *ngIf=\"profile.LastName\">{{profile.LastName.substring(0, 1)}}</span>\r\n                          </div>\r\n                        </ng-template>\r\n                      </div>\r\n                      <div class=\"user__info\">\r\n                        <span class=\"user__info-name\" [innerHTML]=\"profile?.FirstName | highlight: selectedUser\"></span>\r\n                        <span class=\"user__info-lastname\" [innerHTML]=\"profile?.LastName | highlight: selectedUser\"></span>\r\n                        <div class=\"form-group\" *ngIf=\"profile?.WorkPhone\">\r\n                          <label for=\"work_phone\">Ext: </label>\r\n                          <a class=\"user__info-email\" id=\"work_phone\" href=\"tel:{{profile?.WorkPhone}}\"\r\n                             [innerHTML]=\"profile?.WorkPhone\"></a>\r\n                        </div>\r\n                        <div class=\"form-group\" *ngIf=\"profile?.MobilePhone\">\r\n                          <label for=\"cell_phone\">Cell: </label>\r\n                          <a class=\"user__info-email\" id=\"cell_phone\" href=\"tel:{{profile?.MobilePhone}}\"\r\n                             [innerHTML]=\"profile?.MobilePhone\"></a>\r\n                        </div>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n                </ul>\r\n              </cdk-virtual-scroll-viewport>\r\n          </div>\r\n\r\n          <div class=\"form-item by__department\" #autocompleteDepartmentsRef>\r\n            <input type=\"text\"  class=\"byDepartment\" #inputDepartmentRef    (click)=\"onSearchByDepartment()\" formControlName=\"byDepartment\" placeholder=\"Department\">\r\n            <img  [src]=\"searchByDepartmentImgSrc\" alt=\"by department\">\r\n\r\n            <button (click)=\"onClearDepartmentInput()\" class=\"btn_clear\" *ngIf=\"inputDepartmentRef.value !== ''\">\r\n              <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"#35435c\" width=\"18px\" height=\"18px\">\r\n                <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\r\n                <path\r\n                  d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\r\n              </svg>\r\n            </button>\r\n<!-- ================       Autocomplete     =============================-->\r\n\r\n            <div class=\"autocomplete__departments\" *ngIf=\"showAutocompleteByDepartment\"  [style.height.px]=\"autocompleteByDepartment_ulHeight\">\r\n              <ul>\r\n                <li *ngFor=\"let department of departments | searchByDepartment: byDepartment.value \" (click)=\"onSelectDepartment(department)\">\r\n                  <span [innerHTML]=\"department | highlight: byDepartment.value\">{{department}}</span>\r\n                </li>\r\n              </ul>\r\n            </div>\r\n          </div>\r\n          <!-- ===========================================================-->\r\n          <div class=\"form-item by__location\" #autocompleteLocationsRef>\r\n            <input type=\"text\"  class=\"byLocation\" #inputLocationRef  (click)=\"onSearchByLocation()\" formControlName=\"byLocation\" placeholder=\"Location\">\r\n            <img class=\"byLocation\" [src]=\"searchByLocationImgSrc\" alt=\"by location\">\r\n\r\n            <button (click)=\"onClearLocationInput()\" class=\"btn_clear\" *ngIf=\"inputLocationRef.value !== ''\">\r\n              <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"#35435c\" width=\"18px\" height=\"18px\">\r\n                <path d=\"M0 0h24v24H0z\" fill=\"none\"/>\r\n                <path\r\n                  d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/>\r\n              </svg>\r\n            </button>\r\n\r\n            <div class=\"autocomplete__locations\" *ngIf=\"showAutocompleteByLocation\" #autocompleteLocations [style.height.px]=\"autocompleteByLocation_ulHeight\">\r\n              <ul>\r\n                <li *ngFor=\"let location of locations | searchByLocation: byLocation.value \" (click)=\"onSelectLocation(location.Office)\">\r\n                  <span [innerHTML]=\"location.Office | highlight: byLocation.value\">{{location.Office}}</span>\r\n                </li>\r\n              </ul>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </form>\r\n  </div>\r\n</div>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/components/search-by/search-by.component.html	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/components/search-by/search-by.component.html	(date 1605079929356)
+@@ -1,5 +1,6 @@
+ <div class="search__container">
+   <button class="clear_all" (click)="onClearAllInputs()">Clear all</button>
++<!--  <a class="clear_all" href="https://sytedev01.mobileye.com/SitePages/Home.aspx">Home</a>-->
+   <div class="searchbar_container">
+       <form [formGroup]="searchForm">
+         <div class="form-group">
+@@ -34,11 +35,11 @@
+                       class="example-item" (click)="onSelectUser(profile)">
+                     <div class="user_info__wrapper">
+                       <div class="img__wrapper">
+-                        <img [src]="profile.PictureUrl" alt="profile picture" *ngIf="profile.PictureUrl;else noPicture">
++                        <img [src]="profile.PictureUrl" alt="profile picture" *ngIf="profile?.PictureUrl;else noPicture">
+                         <ng-template #noPicture>
+                           <div class="user__info-initials">
+-                            <span *ngIf="profile.FirstName !== ''">{{profile.FirstName.substring(0, 1)}}</span>
+-                            <span *ngIf="profile.LastName">{{profile.LastName.substring(0, 1)}}</span>
++                            <span *ngIf="profile.FirstName !== ''">{{profile?.FirstName.substring(0, 1)}}</span>
++                            <span *ngIf="profile.LastName">{{profile?.LastName.substring(0, 1)}}</span>
+                           </div>
+                         </ng-template>
+                       </div>
+Index: searchPageWP/src/main.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { enableProdMode } from '@angular/core';\r\nimport { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\r\n\r\nimport { AppModule } from './app/app.module';\r\nimport { environment } from './environments/environment';\r\n\r\nif (environment.production) {\r\n  // window.console.log = function () { };\r\n  enableProdMode();\r\n}\r\n\r\nplatformBrowserDynamic().bootstrapModule(AppModule)\r\n  .catch(err => console.error(err));\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/main.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/main.ts	(date 1605036228302)
+@@ -3,7 +3,8 @@
+ 
+ import { AppModule } from './app/app.module';
+ import { environment } from './environments/environment';
+-
++import 'core-js/es7/reflect';
++import 'zone.js';
+ if (environment.production) {
+   // window.console.log = function () { };
+   enableProdMode();
+Index: searchPageWP/src/app/components/employees-list/employees-list.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {\r\n  ChangeDetectionStrategy,\r\n  ChangeDetectorRef,\r\n  Component,\r\n  ElementRef,\r\n  Input, OnDestroy,\r\n  OnInit,\r\n  QueryList,\r\n  Renderer2,\r\n  ViewChild\r\n} from '@angular/core';\r\nimport {MockService} from '../../services/mock.service';\r\nimport {ISearchTerm, SearchByEmployeeService} from '../../services/search-by-employee.service';\r\nimport {MatMenuTrigger} from '@angular/material/menu';\r\nimport {SortService} from '../../services/sort.service';\r\nimport {IProfile} from '../../models/profile.model';\r\nimport {environment} from '../../../environments/environment';\r\nimport {PassCharService} from '../../services/pass-char.service';\r\nimport {SearchByDepartmentService} from '../../services/search-by-department.service';\r\nimport {SearchByAzService} from '../../services/search-by-az.service';\r\nimport {SaveSearchCharService} from '../../services/save-search-char.service';\r\nimport {SearchByLocationService} from '../../services/search-by-location.service';\r\nimport {ClearAllService} from '../../services/clear-all.service';\r\nimport {SearchByEmployeeEnterService} from '../../services/search-by-employee-enter.service';\r\nimport {SubSink} from 'subsink';\r\n\r\n@Component({\r\n  selector: 'app-employees-list',\r\n  templateUrl: './employees-list.component.html',\r\n  styleUrls: ['./employees-list.component.scss'],\r\n  changeDetection: ChangeDetectionStrategy.OnPush\r\n})\r\nexport class EmployeesListComponent implements OnInit, OnDestroy {\r\n  @Input() profiles: IProfile[];\r\n  @Input() profileFromAutocompleteSearch: string;\r\n  searchTerm: ISearchTerm = {type: '', value: '', deleteClick: false};\r\n  byEmployeeTerm: string;\r\n  byDepartmentTerm: string;\r\n  byLocation: string;\r\n  byAZ: string = '';\r\n  totalItems: number;\r\n  currentPage: number = 1;\r\n  menuIcon: string = '';\r\n  workPhoneImgSrc: string = '';\r\n  workPhoneHoverImgSrc: string = '';\r\n  mobilePhoneImgSrc: string = '';\r\n  mobilePhoneHoverImgSrc: string = '';\r\n  emailImgSrc: string = '';\r\n  emailHoverImgSrc: string = '';\r\n  jobImgSrc: string = '';\r\n  locationImgSrc: string = '';\r\n  locationHoverImgSrc: string = '';\r\n  managerImgSrc: string = '';\r\n  managerHoverImgSrc: string = '';\r\n  workADayImgSrc: string = '';\r\n  workADayHoverImgSrc: string = '';\r\n  hoverBgColor: string = '#000';\r\n  filterResults: any[] = [];\r\n  managerProfile: IProfile;\r\n  profilesCopyFiltered: IProfile[];\r\n  @ViewChild('workPhonesIconsRef', {static: false}) workPhonesIconsRef: QueryList<ElementRef>;\r\n  @ViewChild('menu', {static: false}) menu: MatMenuTrigger;\r\n  private sink = new SubSink();\r\n\r\n  constructor(private employeeService: MockService,\r\n              private searchByEmployeeService: SearchByEmployeeService,\r\n              private searchByEmployeeEnterService: SearchByEmployeeEnterService,\r\n              private searchByDepartmentService: SearchByDepartmentService,\r\n              private searchByAzService: SearchByAzService,\r\n              private searchByLocationService: SearchByLocationService,\r\n              private saveSearchCharService: SaveSearchCharService,\r\n              private clearAllService: ClearAllService,\r\n              private passCharService: PassCharService,\r\n              private sortService: SortService,\r\n              private renderer: Renderer2,\r\n              private cdr: ChangeDetectorRef) {\r\n  }\r\n\r\n  ngOnInit() {\r\n    this.profiles = this.profiles.filter(profile => profile.Office !== null);\r\n    this.totalItems = this.profiles.length;\r\n    this.menuIcon = environment.menuIcon;\r\n    this.workPhoneImgSrc = environment.workPhoneIcon;\r\n    this.workPhoneHoverImgSrc = environment.workPhoneHoverIcon;\r\n    this.mobilePhoneImgSrc = environment.mobilePhoneIcon;\r\n    this.mobilePhoneHoverImgSrc = environment.mobilePhoneHoverIcon;\r\n    this.emailImgSrc = environment.emailIcon;\r\n    this.emailHoverImgSrc = environment.emailHover;\r\n    this.jobImgSrc = environment.jobIcon;\r\n    this.locationImgSrc = environment.locationIcon;\r\n    this.locationHoverImgSrc = environment.locationHoverIcon;\r\n    this.managerImgSrc = environment.managerIcon;\r\n    this.managerHoverImgSrc = environment.managerHoverIcon;\r\n    this.workADayImgSrc = environment.workaDayIcon;\r\n    this.workADayHoverImgSrc = environment.workaDayHoverIcon;\r\n\r\n    this.onSearchByEmployee();\r\n    this.onSearchByDepartment();\r\n    this.onSearchByAZ();\r\n    this.onSearchByLocation();\r\n    this.onClearAll();\r\n    this.onSearchByEmployeeOnEnter();\r\n    this.cdr.detectChanges();\r\n\r\n  }\r\n\r\n  /**\r\n   * search service by type (byEmployee,byDepartment,byLocation,byAZ)\r\n   */\r\n  onSearchByEmployee() {\r\n    this.sink.add(\r\n      this.searchByEmployeeEnterService.getSearch().subscribe(searchTerm => {\r\n        if (searchTerm.type === 'onEnter') {\r\n          return;\r\n        }\r\n      }, error => {\r\n        console.log('Something went wrong', error);\r\n      })\r\n    );\r\n    if (this.profileFromAutocompleteSearch) {\r\n      this.byEmployeeTerm = this.profileFromAutocompleteSearch;\r\n      this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);\r\n      this.totalItems = this.filterResults.length;\r\n    }\r\n    this.sink.add(\r\n      this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {\r\n        if (searchTerm.value !== '') {\r\n          this.currentPage = 0;\r\n          this.byEmployeeTerm = searchTerm.value;\r\n          this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);\r\n          this.totalItems = this.filterResults.length;\r\n          this.cdr.detectChanges();\r\n        }\r\n\r\n        if (searchTerm.deleteClick) {\r\n          this.currentPage = 0;\r\n          this.byEmployeeTerm = '';\r\n          this.totalItems = this.profiles.length;\r\n          this.cdr.detectChanges();\r\n        }\r\n      }, error => {\r\n        console.log('Something went wrong', error);\r\n      })\r\n    );\r\n\r\n  }\r\n\r\n  /**\r\n   * Search employee (show cards) by pressing on 'Enter'\r\n   */\r\n  onSearchByEmployeeOnEnter() {\r\n    this.sink.add(\r\n      this.searchByEmployeeEnterService.getSearch().subscribe(searchTerm => {\r\n        this.byEmployeeTerm = searchTerm.value;\r\n        this.currentPage = 0;\r\n        this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(searchTerm.value));\r\n        this.totalItems = this.filterResults.length;\r\n        this.cdr.detectChanges();\r\n      }, error => {\r\n        console.log('Something went wrong', error);\r\n      })\r\n    );\r\n\r\n  }\r\n\r\n  /**\r\n   * Search employee (show cards) by department\r\n   */\r\n  onSearchByDepartment() {\r\n    this.sink.add(\r\n      this.searchByDepartmentService.getSearch().subscribe((searchTerm) => {\r\n        if (searchTerm.value !== '') {\r\n          this.currentPage = 0;\r\n          this.byDepartmentTerm = searchTerm.value;\r\n          this.filterResults = this.profiles.filter(profile => profile.Department === searchTerm.value);\r\n          this.totalItems = this.filterResults.length;\r\n          this.cdr.detectChanges();\r\n        }\r\n        if (searchTerm.deleteClick) {\r\n          this.currentPage = 0;\r\n          this.byDepartmentTerm = '';\r\n          this.totalItems = this.profiles.length;\r\n          this.cdr.detectChanges();\r\n        }\r\n      }, error => {\r\n        console.log('Something went wrong', error);\r\n      })\r\n    );\r\n\r\n  }\r\n\r\n  /**\r\n   * Searching employee(show cards) by A-Z\r\n   */\r\n  onSearchByAZ() {\r\n    this.sink.add(\r\n      this.searchByAzService.getSearch().subscribe((searchTerm) => {\r\n        if (searchTerm.value) {\r\n          this.byAZ = searchTerm.value;\r\n          this.currentPage = 0;\r\n          this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(searchTerm.value));\r\n          this.totalItems = this.filterResults.length;\r\n          this.cdr.detectChanges();\r\n        }\r\n      }, error => {\r\n        console.log('Something went wrong', error);\r\n      })\r\n    );\r\n\r\n  }\r\n\r\n  /**\r\n   * Searching employee(show cards) by A-Z\r\n   */\r\n  onSearchByLocation() {\r\n    setTimeout(() => {\r\n      this.sink.add(\r\n        this.searchByLocationService.getSearch().subscribe((searchTerm) => {\r\n          if (searchTerm.value !== '') {\r\n            this.currentPage = 0;\r\n            this.byLocation = searchTerm.value;\r\n            this.filterResults = this.profiles.filter(profile => profile.Office === searchTerm.value);\r\n            this.totalItems = this.filterResults.length;\r\n            this.cdr.detectChanges();\r\n          }\r\n          if (searchTerm.deleteClick) {\r\n            this.currentPage = 0;\r\n            this.byLocation = '';\r\n            this.totalItems = this.profiles.length;\r\n            this.cdr.detectChanges();\r\n          }\r\n        }, error => {\r\n          console.log('Something went wrong', error);\r\n        })\r\n      );\r\n\r\n    }, 0);\r\n\r\n  }\r\n\r\n  /**\r\n   * Show all the cards by pressing on 'Clear all' button\r\n   */\r\n  onClearAll() {\r\n    this.sink.add(\r\n      this.clearAllService.getSearch().subscribe((result) => {\r\n        if (result.deleteClick) {\r\n          this.byAZ = '';\r\n          this.currentPage = 0;\r\n          this.totalItems = this.profiles.length;\r\n          this.cdr.detectChanges();\r\n        }\r\n      }, error => {\r\n        console.log('Something went wrong', error);\r\n      })\r\n    );\r\n\r\n  }\r\n\r\n  /**\r\n   * PAge changed\r\n   * @param event: number\r\n   */\r\n  pageChanged(event: number) {\r\n    this.currentPage = event;\r\n  }\r\n\r\n  /**\r\n   * open menu in card profile\r\n   * @param manager = string\r\n   */\r\n  onOpenMenu(manager: string) {\r\n    const newManager = manager.substring(8);\r\n    this.managerProfile = this.profiles.find(profile => profile.UserName === newManager);\r\n  }\r\n\r\n  /**\r\n   * Navigate to manager profile page\r\n   * @param profile : IProfile\r\n   */\r\n  onNavigateToTheManagerPage(profile: IProfile) {\r\n    window.location.href = `https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5C${profile.UserName}`;\r\n  }\r\n\r\n  /**\r\n   * Click on next page\r\n   * @param page: number\r\n   */\r\n  nextPage(page: number) {\r\n    this.currentPage = page;\r\n    this.saveSearchCharService.saveChar(this.byAZ);\r\n  }\r\n\r\n  ngOnDestroy() {\r\n    this.sink.unsubscribe();\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/components/employees-list/employees-list.component.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/components/employees-list/employees-list.component.ts	(date 1605023639185)
+@@ -9,10 +9,8 @@
+   Renderer2,
+   ViewChild
+ } from '@angular/core';
+-import {MockService} from '../../services/mock.service';
+ import {ISearchTerm, SearchByEmployeeService} from '../../services/search-by-employee.service';
+ import {MatMenuTrigger} from '@angular/material/menu';
+-import {SortService} from '../../services/sort.service';
+ import {IProfile} from '../../models/profile.model';
+ import {environment} from '../../../environments/environment';
+ import {PassCharService} from '../../services/pass-char.service';
+@@ -62,7 +60,7 @@
+   @ViewChild('menu', {static: false}) menu: MatMenuTrigger;
+   private sink = new SubSink();
+ 
+-  constructor(private employeeService: MockService,
++  constructor(
+               private searchByEmployeeService: SearchByEmployeeService,
+               private searchByEmployeeEnterService: SearchByEmployeeEnterService,
+               private searchByDepartmentService: SearchByDepartmentService,
+@@ -71,7 +69,6 @@
+               private saveSearchCharService: SaveSearchCharService,
+               private clearAllService: ClearAllService,
+               private passCharService: PassCharService,
+-              private sortService: SortService,
+               private renderer: Renderer2,
+               private cdr: ChangeDetectorRef) {
+   }
+Index: searchPageWP/src/app/pipes/search-by-employee.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\nimport {IProfile} from '../models/profile.model';\r\n\r\n@Pipe({\r\n  name: 'searchByEmployee'\r\n})\r\nexport class SearchByEmployeePipe implements PipeTransform {\r\n\r\n  transform(profiles: IProfile[], searchTerm: string): any[] {\r\n    if (!profiles || !searchTerm) {\r\n      return profiles;\r\n    }\r\n\r\n    return profiles.filter((profile) => {\r\n      if (profile.FirstName.toLowerCase().startsWith(searchTerm.toLowerCase()) && profile.LastName.toLowerCase().startsWith(searchTerm.toLowerCase()) || profile.FullName.toLowerCase().startsWith(searchTerm.toLowerCase())) {\r\n        profile.FirstNameRankOnStart = profile.FirstName.toLowerCase().indexOf(searchTerm.toLowerCase());\r\n        return profile;\r\n\r\n      } else if (profile.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) || profile.FullName.toLowerCase().includes(searchTerm.toLowerCase())) {\r\n        profile.FirstNameRankNotStart = profile.FirstName.toLowerCase().indexOf(searchTerm.toLowerCase());\r\n\r\n      } else if (profile.LastName.toLowerCase().startsWith(searchTerm.toLowerCase())) {\r\n        profile.LastNameRankOnStart = profile.LastName.toLowerCase().indexOf(searchTerm.toLowerCase()) + 20;\r\n      } else if (profile.LastName.toLowerCase().includes(searchTerm.toLowerCase())) {\r\n        profile.LastNameRankNotOnStart = profile.LastName.toLowerCase().indexOf(searchTerm.toLowerCase()) + 20;\r\n      }\r\n    })\r\n      .sort((a, b) => {\r\n        if (a.FirstNameRankOnStart > b.FirstNameRankOnStart) {\r\n          return 1;\r\n        } else {\r\n          return -1;\r\n        }\r\n\r\n      }).reverse().sort((b, c) => {\r\n        if (b.LastName > c.LastName) {\r\n          return 1;\r\n        } else {\r\n          return -1;\r\n        }\r\n      });\r\n\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/search-by-employee.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/search-by-employee.pipe.ts	(date 1605020395314)
+@@ -5,7 +5,11 @@
+   name: 'searchByEmployee'
+ })
+ export class SearchByEmployeePipe implements PipeTransform {
+-
++  /**
++   * Search employees by First Name or Last Name and sort the autocomplete
++   * @param profiles :IProfile[]
++   * @param searchTerm: string
++   */
+   transform(profiles: IProfile[], searchTerm: string): any[] {
+     if (!profiles || !searchTerm) {
+       return profiles;
+Index: searchPageWP/src/app/services/clear-all.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Injectable} from '@angular/core';\r\nimport {SearchByEmployeeService} from './search-by-employee.service';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class ClearAllService extends SearchByEmployeeService {\r\n\r\n  constructor() {\r\n    super();\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/clear-all.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/clear-all.service.ts	(date 1605020395376)
+@@ -5,7 +5,9 @@
+   providedIn: 'root'
+ })
+ export class ClearAllService extends SearchByEmployeeService {
+-
++  /**
++   * Pass term al click Clear all button
++   */
+   constructor() {
+     super();
+   }
+Index: searchPageWP/src/app/services/sharepoint.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Injectable} from '@angular/core';\r\nimport {HttpClient, HttpParams} from '@angular/common/http';\r\nimport {environment} from '../../environments/environment';\r\nimport {map, shareReplay, tap} from 'rxjs/operators';\r\nimport {IProfile} from '../models/profile.model';\r\nimport {Observable} from 'rxjs';\r\n\r\nconst CACHE_SIZE = 1;\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\n\r\nexport class SharepointService {\r\n  profiles: any[] = [];\r\n  private cache$: Observable<any>;\r\n\r\n  constructor(private http: HttpClient) {\r\n  }\r\n\r\n  getPofilesCached() {\r\n    if (!this.cache$) {\r\n      this.cache$ = this.getProfiles().pipe(\r\n        shareReplay(CACHE_SIZE));\r\n    }\r\n    return this.cache$;\r\n  }\r\n\r\n  private getProfiles() {\r\n    const appweburl = `_api/search/query`;\r\n    // tslint:disable-next-line:max-line-length\r\n    // tslint:disable-next-line:max-line-length\r\n    const properties = 'UserName,EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,Manager,OfficeNumber,Department,Office,JobTitle,WorkdayProfile';\r\n    const httpURL = `${environment.apiUrl}${appweburl}`;\r\n    const httpParams = new HttpParams()\r\n      .set('queryText', `'*'`)\r\n      .set('sourceid', `'${environment.sourceId}'`)\r\n      .set('selectproperties', `'${properties}'`)\r\n      .set('RowLimit', `'10000'`);\r\n    return this.http.get(httpURL, {params: httpParams})\r\n      .pipe(\r\n        map((res: any) => res.PrimaryQueryResult.RelevantResults.Table.Rows),\r\n        map(item => item.map(el => el.Cells)),\r\n        map(profiles => {\r\n            let mappedProfile: IProfile;\r\n            for (const profile of profiles) {\r\n              mappedProfile = this.mapKeyToValue(profile);\r\n              if (mappedProfile.EmployeeID !== null && mappedProfile.FirstName !== '') {\r\n                mappedProfile.FullName = mappedProfile.FirstName + ' ' + mappedProfile.LastName;\r\n\r\n                this.profiles.push(mappedProfile);\r\n                profiles = this.profiles;\r\n              }\r\n            }\r\n            return profiles;\r\n          }\r\n        ));\r\n\r\n  }\r\n\r\n  mapKeyToValue(profile: any) {\r\n    const profileObject: IProfile = {\r\n      UserName: '',\r\n      EmployeeID: '',\r\n      FirstName: '',\r\n      LastName: '',\r\n      PictureUrl: '',\r\n      WorkPhone: '',\r\n      MobilePhone: '',\r\n      WorkEmail: '',\r\n      FullName: '',\r\n      Manager: '',\r\n      ManagerDisplayName: '',\r\n      Department: '',\r\n      OfficeNumber: '',\r\n      Office: '',\r\n      JobTitle: '',\r\n      workPhoneIconUrl: '',\r\n      mobilePhoneIconUrl: '',\r\n      emailIconUrl: '',\r\n      departmentIconUrl: '',\r\n      locationIconUrl: '',\r\n      jobIconUrl: '',\r\n      managerIconUrl: '',\r\n      workADayIconUrl: '',\r\n      menuIconUrl: '',\r\n      WorkdayProfile: ''\r\n    };\r\n    for (const property of profile) {\r\n      profileObject.FullName = '';\r\n      profileObject.workPhoneIconUrl = environment.workPhoneIcon;\r\n      profileObject.mobilePhoneIconUrl = environment.mobilePhoneIcon;\r\n      profileObject.emailIconUrl = environment.emailIcon;\r\n      profileObject.jobIconUrl = environment.jobIcon;\r\n      profileObject.departmentIconUrl = environment.departmentIcon;\r\n      profileObject.locationIconUrl = environment.locationIcon;\r\n      profileObject.managerIconUrl = environment.managerIcon;\r\n      profileObject.workADayIconUrl = environment.workaDayIcon;\r\n      profileObject.menuIconUrl = environment.menuIcon;\r\n      profileObject[property.Key] = property.Value;\r\n      if (profileObject[property.Key] === 'manager.DisplayName') {\r\n        profileObject[property.Key] = 'ManagerDisplayName';\r\n      }\r\n    }\r\n    return profileObject;\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/sharepoint.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/sharepoint.service.ts	(date 1605020395282)
+@@ -1,7 +1,7 @@
+ import {Injectable} from '@angular/core';
+ import {HttpClient, HttpParams} from '@angular/common/http';
+ import {environment} from '../../environments/environment';
+-import {map, shareReplay, tap} from 'rxjs/operators';
++import {map, shareReplay} from 'rxjs/operators';
+ import {IProfile} from '../models/profile.model';
+ import {Observable} from 'rxjs';
+ 
+@@ -18,6 +18,9 @@
+   constructor(private http: HttpClient) {
+   }
+ 
++  /**
++   * Get profiles from cache
++   */
+   getPofilesCached() {
+     if (!this.cache$) {
+       this.cache$ = this.getProfiles().pipe(
+@@ -26,6 +29,10 @@
+     return this.cache$;
+   }
+ 
++  /**
++   * Get profiles from Rest API ;
++   * @private
++   */
+   private getProfiles() {
+     const appweburl = `_api/search/query`;
+     // tslint:disable-next-line:max-line-length
+@@ -58,6 +65,10 @@
+ 
+   }
+ 
++  /**
++   * Transform object to mapped object key,value
++   * @param profile: any
++   */
+   mapKeyToValue(profile: any) {
+     const profileObject: IProfile = {
+       UserName: '',
+Index: searchPageWP/src/app/pipes/search-by-department.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\nimport {IProfile} from '../models/profile.model';\r\n\r\n@Pipe({\r\n  name: 'searchByDepartment'\r\n})\r\nexport class SearchByDepartmentPipe implements PipeTransform {\r\n\r\n  transform(departments: string[], searchTerm: string): any {\r\n    if (!departments || !searchTerm) {\r\n      return departments;\r\n    }\r\n    return departments.filter((department) => {\r\n      return department.toLowerCase().startsWith(searchTerm.toLowerCase());\r\n    });\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/search-by-department.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/search-by-department.pipe.ts	(date 1605020395204)
+@@ -1,11 +1,14 @@
+ import {Pipe, PipeTransform} from '@angular/core';
+-import {IProfile} from '../models/profile.model';
+ 
+ @Pipe({
+   name: 'searchByDepartment'
+ })
+ export class SearchByDepartmentPipe implements PipeTransform {
+-
++  /**
++   * Search employees by Departments that First starts with the search term
++   * @param departments
++   * @param searchTerm
++   */
+   transform(departments: string[], searchTerm: string): any {
+     if (!departments || !searchTerm) {
+       return departments;
+Index: searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';\r\nimport {MockService} from '../services/mock.service';\r\nimport {IEmployee} from '../models/employee';\r\nimport {SharepointService} from '../services/sharepoint.service';\r\nimport {IProfile} from '../models/profile.model';\r\n\r\n@Component({\r\n  selector: 'app-search-page-spfx-web-part',\r\n  templateUrl: './search-page-spfx-web-part.component.html',\r\n  styleUrls: ['./search-page-spfx-web-part.component.scss'],\r\n  changeDetection: ChangeDetectionStrategy.OnPush\r\n})\r\nexport class SearchPageSpfxWebPartComponent implements OnInit {\r\n  @Input() description: string;\r\n  profiles: IProfile[] = [];\r\n  employeeList: IEmployee[] = [];\r\n  AZ_characters: Array<string> = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];\r\n  departments: string[] = [];\r\n  locations: string[] = [];\r\n  profileFromSearch: string = '';\r\n  locationByOffice: ILocation[] = [];\r\n  orderedLocations: any = [];\r\n\r\n  constructor(private employeeService: MockService,\r\n              private cdr: ChangeDetectorRef,\r\n              private sharepointService: SharepointService) {\r\n  }\r\n\r\n  ngOnInit() {\r\n\r\n    const queryString = window.location.search;\r\n    const urlParams = new URLSearchParams(queryString);\r\n    this.profileFromSearch = urlParams.get('profile');\r\n\r\n    this.sharepointService.getPofilesCached().subscribe(profiles => {\r\n      this.profiles = profiles;\r\n      console.log('---', this.profiles);\r\n      this.departments = [];\r\n      this.locations = [];\r\n      this.departments = this.profiles.map(el => el.Department);\r\n      this.profiles.forEach(item => {\r\n        item.FirstNameRankOnStart = null;\r\n        item.FirstNameRankNotStart = null;\r\n        item.LastNameRankOnStart = null;\r\n        item.LastNameRankNotOnStart = null;\r\n        if (this.locationByOffice.findIndex(el => el.Office === item.Office) === -1) {\r\n          this.locationByOffice.push({\r\n            Office: item.Office,\r\n            count: 1\r\n          });\r\n        } else {\r\n          const index = this.locationByOffice.findIndex(el => el.Office === item.Office);\r\n          this.locationByOffice[index].count++;\r\n        }\r\n      });\r\n      this.locationByOffice = this.locationByOffice.filter(location => location.Office !== null).sort((a, b) => {\r\n        if (a.count < b.count) {\r\n          return 1;\r\n        } else {\r\n          return -1;\r\n        }\r\n      });\r\n\r\n      this.departments = Array.from(new Set(this.departments)).sort();\r\n      this.locations = Array.from(new Set(this.locations)).sort();\r\n      this.cdr.detectChanges();\r\n    }, error => {\r\n      console.log('Something went wrong', error);\r\n    });\r\n  }\r\n\r\n}\r\n\r\nexport interface ILocation {\r\n  Office: string;\r\n  count: number;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts	(date 1605020395282)
+@@ -1,5 +1,4 @@
+ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+-import {MockService} from '../services/mock.service';
+ import {IEmployee} from '../models/employee';
+ import {SharepointService} from '../services/sharepoint.service';
+ import {IProfile} from '../models/profile.model';
+@@ -21,9 +20,9 @@
+   locationByOffice: ILocation[] = [];
+   orderedLocations: any = [];
+ 
+-  constructor(private employeeService: MockService,
+-              private cdr: ChangeDetectorRef,
+-              private sharepointService: SharepointService) {
++  constructor(
++    private cdr: ChangeDetectorRef,
++    private sharepointService: SharepointService) {
+   }
+ 
+   ngOnInit() {
+@@ -31,10 +30,11 @@
+     const queryString = window.location.search;
+     const urlParams = new URLSearchParams(queryString);
+     this.profileFromSearch = urlParams.get('profile');
+-
++    /**
++     * Get profiles from cache
++     */
+     this.sharepointService.getPofilesCached().subscribe(profiles => {
+       this.profiles = profiles;
+-      console.log('---', this.profiles);
+       this.departments = [];
+       this.locations = [];
+       this.departments = this.profiles.map(el => el.Department);
+Index: searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><div class=\"components__wrapper\">\r\n  <app-a-z [azCharacters]=\"AZ_characters\"></app-a-z>\r\n  <app-search-by [departments]=\"departments\"\r\n                 [locations]=\"locationByOffice\"\r\n                 [profiles]=\"profiles\"\r\n                 [profileFromSearch]=\"profileFromSearch\">\r\n\r\n  </app-search-by>\r\n  <app-employees-list [profiles]=\"profiles\"\r\n                      [profileFromAutocompleteSearch]=\"profileFromSearch\">\r\n\r\n  </app-employees-list>\r\n</div>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.html	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.html	(date 1605077728597)
+@@ -1,5 +1,9 @@
+ <div class="components__wrapper">
+-  <app-a-z [azCharacters]="AZ_characters"></app-a-z>
++  <app-a-z [azCharacters]="AZ_characters">
++    <div class="search__container" #azRef >
++      <button #charRef  *ngFor="let char of AZ_characters;let i=index" class="character" [ngClass]="{'selected': selectedChar === i || selectedCharOnPaging === char || selectedChars[0] === char }" (click)="onSelectedCharacter(char)">{{char}}</button>
++    </div>
++  </app-a-z>
+   <app-search-by [departments]="departments"
+                  [locations]="locationByOffice"
+                  [profiles]="profiles"
+Index: searchPageWP/src/app/pipes/search-by-az.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\nimport {IProfile} from '../models/profile.model';\r\n\r\n@Pipe({\r\n  name: 'searchByAZ'\r\n})\r\nexport class SearchByAZPipe implements PipeTransform {\r\n\r\n  transform(employees: IProfile[], searchTerm): any {\r\n    if (!employees || !searchTerm) {\r\n      return employees;\r\n    }\r\n    return employees.filter((user) => {\r\n      return user.FirstName.startsWith(searchTerm);\r\n    });\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/search-by-az.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/search-by-az.pipe.ts	(date 1605020395361)
+@@ -5,7 +5,11 @@
+   name: 'searchByAZ'
+ })
+ export class SearchByAZPipe implements PipeTransform {
+-
++  /**
++   * Search employees by A-Z that First starts with the search term
++   * @param employees
++   * @param searchTerm
++   */
+   transform(employees: IProfile[], searchTerm): any {
+     if (!employees || !searchTerm) {
+       return employees;
+Index: searchPageWP/src/app/services/search-by-location.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { Injectable } from '@angular/core';\r\nimport {SearchByEmployeeService} from './search-by-employee.service';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class SearchByLocationService extends SearchByEmployeeService{\r\n\r\n  constructor() {\r\n    super();\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/search-by-location.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/search-by-location.service.ts	(date 1605020395345)
+@@ -5,7 +5,9 @@
+   providedIn: 'root'
+ })
+ export class SearchByLocationService extends SearchByEmployeeService{
+-
++  /**
++   * Set and Get search by location
++   */
+   constructor() {
+     super();
+   }
+Index: searchPageWP/src/app/pipes/cards-by-location.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\nimport {IProfile} from '../models/profile.model';\r\n\r\n@Pipe({\r\n  name: 'cardsByLocation'\r\n})\r\nexport class CardsByLocationPipe implements PipeTransform {\r\n\r\n  transform(profiles: IProfile[], searchTerm: string): any[] {\r\n    let newProfiles = profiles.filter(profile=> profile.Office !== null)\r\n    if (!profiles || !searchTerm) {\r\n      return profiles;\r\n    }\r\n\r\n    return newProfiles.filter((profile) => {\r\n      return profile.Office.toLowerCase().startsWith(searchTerm.toLowerCase());\r\n    });\r\n\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/cards-by-location.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/cards-by-location.pipe.ts	(date 1605020395345)
+@@ -5,9 +5,11 @@
+   name: 'cardsByLocation'
+ })
+ export class CardsByLocationPipe implements PipeTransform {
+-
++  /**
++   * Filter cards(profiles) by Location that starts with the search term
++   */
+   transform(profiles: IProfile[], searchTerm: string): any[] {
+-    let newProfiles = profiles.filter(profile=> profile.Office !== null)
++    const newProfiles = profiles.filter(profile => profile.Office !== null);
+     if (!profiles || !searchTerm) {
+       return profiles;
+     }
+Index: searchPageWP/src/app/pipes/highlight.pipe.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Pipe, PipeTransform} from '@angular/core';\r\n\r\n@Pipe({\r\n  name: 'highlight'\r\n})\r\nexport class HighlightPipe implements PipeTransform {\r\n  transform(employee: string, searchTerm?: any): any {\r\n    if (!employee || !searchTerm) {\r\n      return employee;\r\n    }\r\n    const pattern = searchTerm\r\n      .replace(/[\\-\\[\\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\\\^\\$\\|]/g, '\\\\$&')\r\n      .split(' ')\r\n      .filter(t => t.length > 0)\r\n      .join('|');\r\n    const regex = new RegExp(pattern, 'gi');\r\n\r\n\r\n    return (searchTerm) ? employee.replace(regex, match => `<b class=\"highlight\" >${match}</b>`) : employee;\r\n  }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/pipes/highlight.pipe.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/pipes/highlight.pipe.ts	(date 1605020395189)
+@@ -4,7 +4,12 @@
+   name: 'highlight'
+ })
+ export class HighlightPipe implements PipeTransform {
+-  transform(employee: string, searchTerm?: any): any {
++  /**
++   * Hight light the search character in autocomplete
++   * @param employee: string
++   * @param searchTerm: string
++   */
++  transform(employee: string, searchTerm?: string): any {
+     if (!employee || !searchTerm) {
+       return employee;
+     }
+Index: searchPageWP/src/app/services/save-search-char.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Injectable} from '@angular/core';\r\nimport {Subject} from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class SaveSearchCharService {\r\n  private char: Subject<string>;\r\n\r\n  constructor() {\r\n    this.char = new Subject<string>();\r\n  }\r\n\r\n  getSavedChar() {\r\n    return this.char.asObservable();\r\n  }\r\n\r\n  saveChar(char: string) {\r\n    this.char.next(char);\r\n  }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/save-search-char.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/save-search-char.service.ts	(date 1605020395329)
+@@ -7,14 +7,19 @@
+ export class SaveSearchCharService {
+   private char: Subject<string>;
+ 
++
+   constructor() {
+     this.char = new Subject<string>();
+   }
+-
++  /**
++   * Get selected char(A-Z) as state
++   */
+   getSavedChar() {
+     return this.char.asObservable();
+   }
+-
++  /**
++   * Save selected char(A-Z) as state
++   */
+   saveChar(char: string) {
+     this.char.next(char);
+   }
+Index: searchPageWP/src/app/services/search-by-az.service.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { Injectable } from '@angular/core';\r\nimport {SearchByEmployeeService} from './search-by-employee.service';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class SearchByAzService extends SearchByEmployeeService{\r\n\r\n  constructor() {\r\n    super();\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/services/search-by-az.service.ts	(revision c43b99ef60a98448616294737a7c5649f5610afc)
++++ searchPageWP/src/app/services/search-by-az.service.ts	(date 1605020395251)
+@@ -5,7 +5,10 @@
+   providedIn: 'root'
+ })
+ export class SearchByAzService extends SearchByEmployeeService{
+-
++  /**
++   * Service for pass search term (A-Z) into components
++   *
++   */
+   constructor() {
+     super();
+   }

@@ -6,7 +6,7 @@
 <div class="cards__container" *ngIf="profiles.length> 0;else noProfiles">
 
   <!--paginate: {id: 'custom', itemsPerPage: 5, currentPage: currentPage, totalItems: totalItems  } | searchByDepartment: byDepartmentTerm | searchByLocation: byLocation |searchByEmployee: byEmployeeTerm "  >-->
-  <div class="card" *ngFor="let profile of profiles |searchByEmployee: byEmployeeTerm
+  <div class="card" *ngFor="let profile of profiles| sortCards: 'asc' |searchByEmployee: byEmployeeTerm
    | cardsByDepartment: byDepartmentTerm
    | searchByAZ: byAZ
    | cardsByLocation: byLocation|

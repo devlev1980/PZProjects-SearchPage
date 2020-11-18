@@ -24,13 +24,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/models/profile.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/models/profile.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +88,7 @@
       <recent name="$PROJECT_DIR$/searchPageWP/src/assets/icons" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.serve">
+  <component name="RunManager" selected="npm.bundle">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/searchPageWP-spfx/package.json" />
       <command value="run" />
@@ -133,8 +131,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.serve" />
         <item itemvalue="npm.bundle" />
+        <item itemvalue="npm.serve" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
       </list>
@@ -276,38 +274,38 @@
     </state>
     <state x="383" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1602420686842" />
     <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1603892423557" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599548996748">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1605689583397">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599548996748" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605689583397" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1599631200912">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599631200912" />
-    <state width="1899" height="305" key="GridCell.Tab.0.bottom" timestamp="1603961645208">
+    <state width="1899" height="339" key="GridCell.Tab.0.bottom" timestamp="1605689313262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603961645208" />
-    <state width="1899" height="305" key="GridCell.Tab.0.center" timestamp="1603961645208">
+    <state width="1899" height="339" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605689313262" />
+    <state width="1899" height="339" key="GridCell.Tab.0.center" timestamp="1605689313262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="305" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603961645208" />
-    <state width="1899" height="305" key="GridCell.Tab.0.left" timestamp="1603961645208">
+    <state width="1899" height="339" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605689313262" />
+    <state width="1899" height="339" key="GridCell.Tab.0.left" timestamp="1605689313262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="305" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603961645208" />
-    <state width="1899" height="305" key="GridCell.Tab.0.right" timestamp="1603961645208">
+    <state width="1899" height="339" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605689313262" />
+    <state width="1899" height="339" key="GridCell.Tab.0.right" timestamp="1605689313262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="305" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603961645208" />
-    <state x="745" y="222" key="RollbackChangesDialog" timestamp="1603727481085">
+    <state width="1899" height="339" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605689313262" />
+    <state x="745" y="222" key="RollbackChangesDialog" timestamp="1605689588178">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="745" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1603727481085" />
+    <state x="745" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605689588178" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1603613441268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -326,10 +324,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="760" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598965993197" />
-    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate" timestamp="1603870748702">
+    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate" timestamp="1605689104554">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate/0.0.1920.1040@0.0.1920.1040" timestamp="1603870748702" />
+    <state x="822" y="409" width="348" height="298" key="org.angular.cli.generate/0.0.1920.1040@0.0.1920.1040" timestamp="1605689104554" />
     <state x="601" y="246" width="700" height="530" key="recent.locations.popup" timestamp="1603199374318">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
