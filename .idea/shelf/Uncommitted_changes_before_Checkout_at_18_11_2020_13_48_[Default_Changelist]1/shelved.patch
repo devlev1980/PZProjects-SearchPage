@@ -1,0 +1,116 @@
+Index: searchPageWP/extra-webpack.config.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module.exports = {\r\n  output: {\r\n    jsonpFunction: 'webpackJsonpsearchPageWP',\r\n    library: 'searchPageWP'\r\n  }\r\n}\r\n
+===================================================================
+--- searchPageWP/extra-webpack.config.js	(revision 5133df44f727d25655d524bd5efd25630ce4fbcb)
++++ searchPageWP/extra-webpack.config.js	(date 1605696198246)
+@@ -3,4 +3,4 @@
+     jsonpFunction: 'webpackJsonpsearchPageWP',
+     library: 'searchPageWP'
+   }
+-}
++};
+Index: searchPageWP/src/app/app.module.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { BrowserModule } from '@angular/platform-browser';\r\nimport { NgModule, Injector } from '@angular/core';\r\nimport { createCustomElement } from '@angular/elements';\r\n\r\nimport { SearchPageSpfxWebPartComponent } from './search-page-spfx-web-part/search-page-spfx-web-part.component';\r\nimport { SearchByComponent } from './components/search-by/search-by.component';\r\nimport { EmployeesListComponent } from './components/employees-list/employees-list.component';\r\nimport { BorderDirective } from './directives/border.directive';\r\nimport { SearchByEmployeePipe } from './pipes/search-by-employee.pipe';\r\nimport { SearchByDepartmentPipe } from './pipes/search-by-department.pipe';\r\nimport {ReactiveFormsModule} from '@angular/forms';\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\nimport {MatMenuModule} from '@angular/material/menu';\r\nimport {MatIconModule} from '@angular/material/icon';\r\nimport {MatButtonModule} from '@angular/material/button';\r\nimport { AZComponent } from './components/a-z/a-z.component';\r\nimport { SearchByAZPipe } from './pipes/search-by-az.pipe';\r\nimport {NgxPaginationModule} from 'ngx-pagination';\r\nimport {HttpClientModule} from '@angular/common/http';\r\nimport { SearchByLocationPipe } from './pipes/search-by-location.pipe';\r\nimport { HoverDirective } from './directives/hover.directive';\r\nimport {ScrollingModule} from '@angular/cdk/scrolling';\r\nimport {HighlightPipe} from './pipes/highlight.pipe';\r\nimport { CardsByDepartmentPipe } from './pipes/cards-by-department.pipe';\r\nimport { CardsByLocationPipe } from './pipes/cards-by-location.pipe';\r\nimport { SortCardsPipe } from './pipes/sort-cards.pipe';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    SearchPageSpfxWebPartComponent,\r\n    SearchByComponent,\r\n    EmployeesListComponent,\r\n    BorderDirective,\r\n    SearchByEmployeePipe,\r\n    SearchByDepartmentPipe,\r\n    AZComponent,\r\n    SearchByAZPipe,\r\n    SearchByLocationPipe,\r\n    HoverDirective,\r\n    HighlightPipe,\r\n    CardsByDepartmentPipe,\r\n    CardsByLocationPipe,\r\n    SortCardsPipe\r\n  ],\r\n    imports: [\r\n        BrowserModule,\r\n        ReactiveFormsModule,\r\n        BrowserAnimationsModule,\r\n        MatMenuModule,\r\n        MatIconModule,\r\n        MatButtonModule,\r\n        NgxPaginationModule,\r\n        HttpClientModule,\r\n        ScrollingModule\r\n\r\n    ],\r\n  providers: [],\r\n  entryComponents: [SearchPageSpfxWebPartComponent]\r\n})\r\nexport class AppModule {\r\n  constructor(private injector: Injector) {}\r\n\r\n  ngDoBootstrap() {\r\n    const el = createCustomElement(SearchPageSpfxWebPartComponent, { injector: this.injector });\r\n    customElements.define('app-search-page-spfx-web-part', el);\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- searchPageWP/src/app/app.module.ts	(revision 5133df44f727d25655d524bd5efd25630ce4fbcb)
++++ searchPageWP/src/app/app.module.ts	(date 1605695797549)
+@@ -1,29 +1,29 @@
+-import { BrowserModule } from '@angular/platform-browser';
+-import { NgModule, Injector } from '@angular/core';
+-import { createCustomElement } from '@angular/elements';
++import {BrowserModule} from '@angular/platform-browser';
++import {NgModule, Injector} from '@angular/core';
++import {createCustomElement} from '@angular/elements';
+ 
+-import { SearchPageSpfxWebPartComponent } from './search-page-spfx-web-part/search-page-spfx-web-part.component';
+-import { SearchByComponent } from './components/search-by/search-by.component';
+-import { EmployeesListComponent } from './components/employees-list/employees-list.component';
+-import { BorderDirective } from './directives/border.directive';
+-import { SearchByEmployeePipe } from './pipes/search-by-employee.pipe';
+-import { SearchByDepartmentPipe } from './pipes/search-by-department.pipe';
++import {SearchPageSpfxWebPartComponent} from './search-page-spfx-web-part/search-page-spfx-web-part.component';
++import {SearchByComponent} from './components/search-by/search-by.component';
++import {EmployeesListComponent} from './components/employees-list/employees-list.component';
++import {BorderDirective} from './directives/border.directive';
++import {SearchByEmployeePipe} from './pipes/search-by-employee.pipe';
++import {SearchByDepartmentPipe} from './pipes/search-by-department.pipe';
+ import {ReactiveFormsModule} from '@angular/forms';
+-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
++import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+ import {MatMenuModule} from '@angular/material/menu';
+ import {MatIconModule} from '@angular/material/icon';
+ import {MatButtonModule} from '@angular/material/button';
+-import { AZComponent } from './components/a-z/a-z.component';
+-import { SearchByAZPipe } from './pipes/search-by-az.pipe';
++import {AZComponent} from './components/a-z/a-z.component';
++import {SearchByAZPipe} from './pipes/search-by-az.pipe';
+ import {NgxPaginationModule} from 'ngx-pagination';
+ import {HttpClientModule} from '@angular/common/http';
+-import { SearchByLocationPipe } from './pipes/search-by-location.pipe';
+-import { HoverDirective } from './directives/hover.directive';
++import {SearchByLocationPipe} from './pipes/search-by-location.pipe';
++import {HoverDirective} from './directives/hover.directive';
+ import {ScrollingModule} from '@angular/cdk/scrolling';
+ import {HighlightPipe} from './pipes/highlight.pipe';
+-import { CardsByDepartmentPipe } from './pipes/cards-by-department.pipe';
+-import { CardsByLocationPipe } from './pipes/cards-by-location.pipe';
+-import { SortCardsPipe } from './pipes/sort-cards.pipe';
++import {CardsByDepartmentPipe} from './pipes/cards-by-department.pipe';
++import {CardsByLocationPipe} from './pipes/cards-by-location.pipe';
++import {SortCardsPipe} from './pipes/sort-cards.pipe';
+ 
+ @NgModule({
+   declarations: [
+@@ -42,26 +42,30 @@
+     CardsByLocationPipe,
+     SortCardsPipe
+   ],
+-    imports: [
+-        BrowserModule,
+-        ReactiveFormsModule,
+-        BrowserAnimationsModule,
+-        MatMenuModule,
+-        MatIconModule,
+-        MatButtonModule,
+-        NgxPaginationModule,
+-        HttpClientModule,
+-        ScrollingModule
++  imports: [
++    BrowserModule,
++    ReactiveFormsModule,
++    BrowserAnimationsModule,
++    MatMenuModule,
++    MatIconModule,
++    MatButtonModule,
++    NgxPaginationModule,
++    HttpClientModule,
++    ScrollingModule
+ 
+-    ],
++  ],
+   providers: [],
+   entryComponents: [SearchPageSpfxWebPartComponent]
+ })
+ export class AppModule {
+-  constructor(private injector: Injector) {}
++  constructor(private injector: Injector) {
++  }
+ 
+   ngDoBootstrap() {
+-    const el = createCustomElement(SearchPageSpfxWebPartComponent, { injector: this.injector });
+-    customElements.define('app-search-page-spfx-web-part', el);
++    if (!customElements.get('app-search-page-spfx-web-part')) {
++      const el = createCustomElement(SearchPageSpfxWebPartComponent, {injector: this.injector});
++      customElements.define('app-search-page-spfx-web-part', el);
++    }
++
+   }
+ }
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_.xml
