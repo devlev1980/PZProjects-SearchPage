@@ -52,13 +52,13 @@
               <span>Email N/A</span>
             </ng-template>
           </div>
-          <div class="job" *ngIf="profile.JobTitle">
-            <img [src]="profile.jobIconUrl">
-            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>
-            <ng-template #noJobTitle>
-              <span>Job N/A</span>
-            </ng-template>
-          </div>
+<!--          <div class="job" *ngIf="profile.JobTitle">-->
+<!--            <img [src]="profile.jobIconUrl">-->
+<!--            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>-->
+<!--            <ng-template #noJobTitle>-->
+<!--              <span>Job N/A</span>-->
+<!--            </ng-template>-->
+<!--          </div>-->
           <div class="department" >
             <img [src]="profile.departmentIconUrl" alt="department">
             <span>{{profile.Department}}</span>

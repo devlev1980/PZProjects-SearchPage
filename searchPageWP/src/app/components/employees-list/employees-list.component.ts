@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Input, OnDestroy,
+  Input,
   OnInit,
   QueryList,
   Renderer2,
@@ -22,7 +22,6 @@ import {SaveSearchCharService} from '../../services/save-search-char.service';
 import {SearchByLocationService} from '../../services/search-by-location.service';
 import {ClearAllService} from '../../services/clear-all.service';
 import {SearchByEmployeeEnterService} from '../../services/search-by-employee-enter.service';
-import {SubSink} from 'subsink';
 
 @Component({
   selector: 'app-employees-list',
@@ -30,7 +29,7 @@ import {SubSink} from 'subsink';
   styleUrls: ['./employees-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmployeesListComponent implements OnInit, OnDestroy {
+export class EmployeesListComponent implements OnInit {
   @Input() profiles: IProfile[];
   @Input() profileFromAutocompleteSearch: string;
   searchTerm: ISearchTerm = {type: '', value: '', deleteClick: false};
@@ -60,7 +59,6 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   profilesCopyFiltered: IProfile[];
   @ViewChild('workPhonesIconsRef', {static: false}) workPhonesIconsRef: QueryList<ElementRef>;
   @ViewChild('menu', {static: false}) menu: MatMenuTrigger;
-  private sink = new SubSink();
 
   constructor(private employeeService: MockService,
               private searchByEmployeeService: SearchByEmployeeService,
@@ -108,7 +106,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    * search service by type (byEmployee,byDepartment,byLocation,byAZ)
    */
   onSearchByEmployee() {
-    this.sink.add(
+
       this.searchByEmployeeEnterService.getSearch().subscribe(searchTerm => {
         if (searchTerm.type === 'onEnter') {
           return;
@@ -116,13 +114,13 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       }, error => {
         console.log('Something went wrong', error);
       })
-    );
+
     if (this.profileFromAutocompleteSearch) {
       this.byEmployeeTerm = this.profileFromAutocompleteSearch;
       this.filterResults = this.profiles.filter(profile => profile.FullName === this.profileFromAutocompleteSearch);
       this.totalItems = this.filterResults.length;
     }
-    this.sink.add(
+
       this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
         if (searchTerm.value !== '') {
           this.currentPage = 0;
@@ -141,7 +139,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       }, error => {
         console.log('Something went wrong', error);
       })
-    );
+
 
   }
 
@@ -149,7 +147,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    * Search employee (show cards) by pressing on 'Enter'
    */
   onSearchByEmployeeOnEnter() {
-    this.sink.add(
+
       this.searchByEmployeeEnterService.getSearch().subscribe(searchTerm => {
         this.byEmployeeTerm = searchTerm.value;
         this.currentPage = 0;
@@ -159,7 +157,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       }, error => {
         console.log('Something went wrong', error);
       })
-    );
+
 
   }
 
@@ -167,7 +165,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    * Search employee (show cards) by department
    */
   onSearchByDepartment() {
-    this.sink.add(
+
       this.searchByDepartmentService.getSearch().subscribe((searchTerm) => {
         if (searchTerm.value !== '') {
           this.currentPage = 0;
@@ -185,7 +183,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       }, error => {
         console.log('Something went wrong', error);
       })
-    );
+
 
   }
 
@@ -193,7 +191,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    * Searching employee(show cards) by A-Z
    */
   onSearchByAZ() {
-    this.sink.add(
+
       this.searchByAzService.getSearch().subscribe((searchTerm) => {
         if (searchTerm.value) {
           this.byAZ = searchTerm.value;
@@ -205,7 +203,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       }, error => {
         console.log('Something went wrong', error);
       })
-    );
+
 
   }
 
@@ -214,7 +212,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    */
   onSearchByLocation() {
     setTimeout(() => {
-      this.sink.add(
+
         this.searchByLocationService.getSearch().subscribe((searchTerm) => {
           if (searchTerm.value !== '') {
             this.currentPage = 0;
@@ -232,7 +230,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
         }, error => {
           console.log('Something went wrong', error);
         })
-      );
+
 
     }, 0);
 
@@ -242,7 +240,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
    * Show all the cards by pressing on 'Clear all' button
    */
   onClearAll() {
-    this.sink.add(
+
       this.clearAllService.getSearch().subscribe((result) => {
         if (result.deleteClick) {
           this.byAZ = '';
@@ -253,7 +251,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       }, error => {
         console.log('Something went wrong', error);
       })
-    );
+
 
   }
 
@@ -291,8 +289,6 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
     this.saveSearchCharService.saveChar(this.byAZ);
   }
 
-  ngOnDestroy() {
-    this.sink.unsubscribe();
-  }
+
 
 }

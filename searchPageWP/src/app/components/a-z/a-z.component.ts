@@ -4,14 +4,13 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input, OnDestroy,
+  Input,
   OnInit,
   ViewChild
 } from '@angular/core';
 import {SearchByAzService} from '../../services/search-by-az.service';
 import {SaveSearchCharService} from '../../services/save-search-char.service';
 import {ClearAllService} from '../../services/clear-all.service';
-import {SubSink} from 'subsink';
 
 @Component({
   selector: 'app-a-z',
@@ -19,13 +18,12 @@ import {SubSink} from 'subsink';
   styleUrls: ['./a-z.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AZComponent implements OnInit, OnDestroy {
+export class AZComponent implements OnInit {
   @Input() azCharacters: Array<string> = [];
   selectedChar: number;
   @ViewChild('azRef', {static: false}) azRef: ElementRef;
   selectedCharOnPaging: string = '';
   selectedChars: string[] = [];
-  private sink = new SubSink();
 
   constructor(private searchByAzService: SearchByAzService,
               private cdr: ChangeDetectorRef,
@@ -50,7 +48,7 @@ export class AZComponent implements OnInit, OnDestroy {
    */
 
   ngOnInit() {
-    this.sink.add(
+
       this.clearAllService.getSearch().subscribe((char) => {
         if (char.deleteClick) {
           this.selectedChar = null;
@@ -59,13 +57,13 @@ export class AZComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
         }
       })
-    );
-    this.sink.add(
+
+
       this.saveSearchCharService.getSavedChar().subscribe(char => {
         this.selectedChars = [];
         this.selectedChars.push(char);
       })
-    );
+
 
   }
 
@@ -81,7 +79,5 @@ export class AZComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  ngOnDestroy() {
-    this.sink.unsubscribe();
-  }
+
 }
