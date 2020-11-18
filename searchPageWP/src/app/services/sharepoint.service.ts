@@ -30,7 +30,7 @@ export class SharepointService {
     const appweburl = `_api/search/query`;
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:max-line-length
-    const properties = 'UserName,EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,Manager,OfficeNumber,Department,Office,JobTitle';
+    const properties = 'UserName,EmployeeID,FirstName,WorkEmail,PictureUrl,LastName,WorkPhone,MobilePhone,Manager,OfficeNumber,Department,Office,JobTitle,WorkdayProfile';
     const httpURL = `${environment.apiUrl}${appweburl}`;
     const httpParams = new HttpParams()
       .set('queryText', `'*'`)
@@ -83,7 +83,8 @@ export class SharepointService {
       jobIconUrl: '',
       managerIconUrl: '',
       workADayIconUrl: '',
-      menuIconUrl: ''
+      menuIconUrl: '',
+      WorkdayProfile: ''
     };
     for (const property of profile) {
       profileObject.FullName = '';
