@@ -23,7 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_11_2020_09_52__Default_Changelist_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchPageWP/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,26 +291,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599631200912" />
-    <state width="1899" height="339" key="GridCell.Tab.0.bottom" timestamp="1605690229884">
+    <state width="1899" height="339" key="GridCell.Tab.0.bottom" timestamp="1605691064715">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="339" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605690229884" />
-    <state width="1899" height="339" key="GridCell.Tab.0.center" timestamp="1605690229884">
+    <state width="1899" height="339" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605691064715" />
+    <state width="1899" height="339" key="GridCell.Tab.0.center" timestamp="1605691064715">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="339" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605690229884" />
-    <state width="1899" height="339" key="GridCell.Tab.0.left" timestamp="1605690229884">
+    <state width="1899" height="339" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605691064715" />
+    <state width="1899" height="339" key="GridCell.Tab.0.left" timestamp="1605691064715">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="339" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605690229884" />
-    <state width="1899" height="339" key="GridCell.Tab.0.right" timestamp="1605690229884">
+    <state width="1899" height="339" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605691064715" />
+    <state width="1899" height="339" key="GridCell.Tab.0.right" timestamp="1605691064715">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1259" height="156" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1602582679051" />
-    <state width="1899" height="339" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605690229884" />
+    <state width="1899" height="339" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605691064715" />
     <state x="745" y="222" key="RollbackChangesDialog" timestamp="1605689588178">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

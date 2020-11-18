@@ -23,7 +23,7 @@ import {ClearAllService} from '../../services/clear-all.service';
 export class AZComponent implements OnInit {
   @Input() azCharacters: Array<string> = [];
   selectedChar: number;
-  @ViewChild('azRef') azRef: ElementRef;
+  @ViewChild('azRef',{static: false}) azRef: ElementRef;
   selectedCharOnPaging: string = '';
   selectedChars: string[] = [];
 

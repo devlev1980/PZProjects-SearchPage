@@ -36,7 +36,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   @Input() locations: ILocation[];
   @Input() profiles: IProfile[];
   searchForm: FormGroup;
-  @ViewChild('sortBtn') sortBtn: ElementRef;
+  @ViewChild('sortBtn',{static: false}) sortBtn: ElementRef;
   click$: Subscription;
   count: number = 1;
   imgSrc: string = '';
@@ -44,10 +44,10 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   showAutocompleteByDepartment: boolean = false;
   showAutocompleteByLocation: boolean = false;
   showAutocompleteByEmployee: boolean = false;
-  @ViewChild('autocompleteDepartmentsRef') autocompleteDepartmentsRef: ElementRef;
-  @ViewChild('autocompleteLocationsRef') autocompleteLocationsRef: ElementRef;
-  @ViewChild('autocompleteEmployeeRef') autocompleteEmployeeRef: ElementRef;
-  @ViewChild('virtualScrollRef') virtualScrollRef: ElementRef;
+  @ViewChild('autocompleteDepartmentsRef',{static: false}) autocompleteDepartmentsRef: ElementRef;
+  @ViewChild('autocompleteLocationsRef',{static: false}) autocompleteLocationsRef: ElementRef;
+  @ViewChild('autocompleteEmployeeRef',{static: false}) autocompleteEmployeeRef: ElementRef;
+  @ViewChild('virtualScrollRef',{static: false}) virtualScrollRef: ElementRef;
   isShow: boolean = true;
   selectedUser: string = '';
   autocompleteByEmployee_ulHeight: number = 0;

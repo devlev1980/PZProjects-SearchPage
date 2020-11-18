@@ -38,7 +38,7 @@ export class EmployeesListComponent implements OnInit {
   byDepartmentTerm: string;
   byLocation: string;
   byAZ: string = '';
-  @ViewChild('menu') menu: MatMenuTrigger;
+  @ViewChild('menu',{static: false}) menu: MatMenuTrigger;
   totalItems: number;
   iconSources: any[] = [];
   currentPage: number = 1;
@@ -63,7 +63,7 @@ export class EmployeesListComponent implements OnInit {
   isShowDepartmentIcon: boolean = false;
   isShowLocationHoverIcon: boolean = false;
   filterResults: any[] = [];
-  @ViewChild('workPhonesIconsRef') workPhonesIconsRef: QueryList<ElementRef>;
+  @ViewChild('workPhonesIconsRef',{static: false}) workPhonesIconsRef: QueryList<ElementRef>;
   profileIndex: number;
   @Input() profileFromAutocompleteSearch: string;
 
