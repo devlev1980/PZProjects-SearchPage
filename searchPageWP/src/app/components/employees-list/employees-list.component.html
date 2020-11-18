@@ -57,13 +57,13 @@
               <span>Email N/A</span>
             </ng-template>
           </div>
-          <div class="job">
-            <img [src]="profile.jobIconUrl">
-            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>
-            <ng-template #noJobTitle>
-              <span>Job N/A</span>
-            </ng-template>
-          </div>
+<!--          <div class="job">-->
+<!--            <img [src]="profile.jobIconUrl">-->
+<!--            <span *ngIf="profile.JobTitle;else noJobTitle">{{profile.JobTitle}}</span>-->
+<!--            <ng-template #noJobTitle>-->
+<!--              <span>Job N/A</span>-->
+<!--            </ng-template>-->
+<!--          </div>-->
           <div class="department" (mouseover)="onHoverOnDepartmentIcon()" (mouseout)="onLeaveOnDepartmentIcon()">
             <img [src]="profile.departmentIconUrl" alt="department">
             <!--            <img [hidden]="!isShowDepartmentIcon" src="https://sytedev01.mobileye.com/sites/apps/SiteAssets/icons/department_hover.png?csf=1&e=ZzKqbU" alt="">-->
