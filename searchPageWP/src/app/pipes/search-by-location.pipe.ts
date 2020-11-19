@@ -6,7 +6,11 @@ import {ILocation} from '../search-page-spfx-web-part/search-page-spfx-web-part.
   name: 'searchByLocation'
 })
 export class SearchByLocationPipe implements PipeTransform {
-
+  /**
+   * Filter autocomplete by Lcation
+   * @param locations:  ILocation[]
+   * @param searchTerm: string
+   */
   transform(locations: ILocation[], searchTerm: string): any {
 
     if (!locations || !searchTerm) {

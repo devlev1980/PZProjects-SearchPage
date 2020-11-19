@@ -8,7 +8,6 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {SearchByEmployeeService} from '../../services/search-by-employee.service';
 import {PassCharService} from '../../services/pass-char.service';
 import {SearchByAzService} from '../../services/search-by-az.service';
 import {SaveSearchCharService} from '../../services/save-search-char.service';
@@ -30,8 +29,7 @@ export class AZComponent implements OnInit {
   constructor(private searchByAzService: SearchByAzService,
               private cdr: ChangeDetectorRef,
               private saveSearchCharService: SaveSearchCharService,
-              private clearAllService: ClearAllService,
-              private passCharService: PassCharService) {
+              private clearAllService: ClearAllService) {
   }
 
   @HostListener('click', ['$event.path'])
@@ -46,7 +44,6 @@ export class AZComponent implements OnInit {
 
   ngOnInit() {
     this.clearAllService.getSearch().subscribe((char) => {
-      console.log(char);
       if (char.deleteClick) {
         this.selectedChar = null;
         this.selectedCharOnPaging = null;

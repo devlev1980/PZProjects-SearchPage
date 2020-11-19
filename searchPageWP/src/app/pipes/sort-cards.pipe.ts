@@ -5,7 +5,11 @@ import {IProfile} from '../models/profile.model';
   name: 'sortCards'
 })
 export class SortCardsPipe implements PipeTransform {
-
+  /**
+   * Sorting cards by 'ascending'
+   * @param profiles: IProfile[]
+   * @param property: string
+   */
   transform(profiles: IProfile[], property: string): any[] {
     if (!profiles || !property) {
       return;

@@ -5,10 +5,13 @@ import {IProfile} from '../models/profile.model';
   name: 'cardsByLocation'
 })
 export class CardsByLocationPipe implements PipeTransform {
-
+  /**
+   * Filter cards by location
+   * @param profiles: IProfile[]
+   * @param searchTerm: string
+   */
   transform(profiles: IProfile[], searchTerm: string): any[] {
-    let newProfiles = profiles.filter(profile=> profile.Office !== null)
-    console.log('profiles in pip', newProfiles);
+    const newProfiles = profiles.filter(profile => profile.Office !== null);
     if (!profiles || !searchTerm) {
       return profiles;
     }

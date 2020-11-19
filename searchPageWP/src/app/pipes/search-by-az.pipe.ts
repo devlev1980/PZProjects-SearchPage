@@ -5,7 +5,11 @@ import {IProfile} from '../models/profile.model';
   name: 'searchByAZ'
 })
 export class SearchByAZPipe implements PipeTransform {
-
+  /**
+   * Filter by A-Z
+   * @param employees:  IProfile[]
+   * @param searchTerm: string
+   */
   transform(employees: IProfile[], searchTerm): any {
     if (!employees || !searchTerm) {
       return employees;

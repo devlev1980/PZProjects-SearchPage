@@ -101,17 +101,17 @@ export class SearchByComponent implements OnInit, AfterViewInit {
       this.showAutocompleteByDepartment = false;
     }
     if (!this.autocompleteEmployeeRef.nativeElement.contains(event.target)) {
-      console.log('a');
       this.showAutocompleteByEmployee = false;
-      // this.selectedUser = this.byEmployee.value;
-      // this.byEmployee.patchValue(this.selectedUser);
       this.cdr.detectChanges();
 
     }
   }
 
+  /**
+   * Find last element in autocomplete
+   * @param event:any
+   */
   onScroll(event: any) {
-    // visible height + pixel scrolled >= total height
     if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
       this.lastElement = true;
     } else {
@@ -154,7 +154,7 @@ export class SearchByComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Change height of searchbar(autocomplete) dynamically
+   * Change height of autocomplete by employee dynamically
    */
   changeHeightOfAutocompleteByEmployeeDynamically() {
 
@@ -179,7 +179,9 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }
 
   }
-
+  /**
+   * Change height of autocomplete by department dynamically
+   */
   changeHeightOfAutoCompleteByDepartment() {
 
     setTimeout(() => {
@@ -197,7 +199,9 @@ export class SearchByComponent implements OnInit, AfterViewInit {
     }, 500);
 
   }
-
+  /**
+   * Change height of autocomplete by location dynamically
+   */
   changeHeightOfAutoCompleteByLocation() {
     if (this.showAutocompleteByLocation) {
       setTimeout(() => {
@@ -205,7 +209,6 @@ export class SearchByComponent implements OnInit, AfterViewInit {
         const autocomplete = document.querySelector('.autocomplete__locations');
         const vsChildren = autocomplete.children;
         if (vsChildren) {
-          console.log('auto', vsChildren);
           const children = vsChildren[0].children;
           for (let i = 0; i < children.length; i++) {
             if (i <= 4) {

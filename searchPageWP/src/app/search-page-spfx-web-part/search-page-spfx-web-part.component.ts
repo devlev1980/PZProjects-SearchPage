@@ -26,6 +26,12 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
               private sharepointService: SharepointService) {
   }
 
+  /**
+   * get params from url
+   * get all profiles from cache
+   * set locations
+   * set departments
+   */
   ngOnInit() {
 
     const queryString = window.location.search;
@@ -36,7 +42,6 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
       this.profiles = profiles;
       this.departments = [];
       this.locations = [];
-      // let locationByOffice = [];
 
       this.departments = this.profiles.map(el => el.Department);
 
@@ -51,7 +56,7 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
             count: 1
           });
         } else {
-          let index = this.locationByOffice.findIndex(el => el.Office === item.Office);
+          const index = this.locationByOffice.findIndex(el => el.Office === item.Office);
           this.locationByOffice[index].count++;
         }
       });
@@ -62,67 +67,10 @@ export class SearchPageSpfxWebPartComponent implements OnInit {
           return -1;
         }
       });
-      console.log('loc', this.locationByOffice);
 
-      // this.locations = this.profiles.map(el => el.Office);
-      // let a = [];
-      // this.profiles.forEach(item => {
-      //
-      //   if (item.Office) {
-      //
-      //     a.push(item);
-      //   }
-      //
-      // });
-      // let count = 0;
-      // this.profiles.forEach((item, index) => {
-      //   if (item.Office === this.locations[index]) {
-      //     console.log('jjj');
-      //     // count++;
-      //     this.orderedLocations.push({
-      //       location: item.Office,
-      //       count: this.locations.filter(el => item.Office === el).length
-      //     });
-      //   }
-      //
-      //   this.orderedLocations =  Array.from(new Set(this.orderedLocations))
-      //
-      // });
-      // console.log('---', a);
 
-      // console.log('...',this.orderedLocations);
-      // if (item.Office) {
-      //   this.locations.push(item.Office);
-      // this.locations.push({
-      //   location: item.Office,
-      //   profilesInRoom: this.locations.filter(el => item.Office.includes(el.location)).length
-      // });
-      // }
-      // if (item.Office) {
-      //   //   this.locations.push(item.Office);
-      // this.profiles.forEach(el => {
-      //
-      //   // item.Rank = null;
-      //
-      // });
-
-      // this.profiles.forEach(item => {
-      // item.Rank = null;
-      // this.departments.push(item.Department);
-      // if (item.Office) {
-      //   this.locations.push(item.Office);
-      // this.locations.push({
-      //   location: item.Office,
-      //   profilesInRoom: this.locations.filter(el => item.Office.includes(el.location)).length
-      // });
-      // }
-      // });
       this.departments = Array.from(new Set(this.departments)).sort();
       this.locations = Array.from(new Set(this.locations)).sort();
-
-      // Todo: sort locations by count of people in rooms
-
-      // this.profiles.filter(profile => profile.Office === this.byLocation);
       this.cdr.detectChanges();
     });
   }

@@ -5,7 +5,11 @@ import {IProfile} from '../models/profile.model';
   name: 'cardsByDepartment'
 })
 export class CardsByDepartmentPipe implements PipeTransform {
-
+  /**
+   * Filter cards by department
+   * @param profiles:  IProfile[]
+   * @param searchTerm: searchTerm
+   */
   transform(profiles: IProfile[], searchTerm: string): any[] {
     if (!profiles || !searchTerm) {
       return profiles;

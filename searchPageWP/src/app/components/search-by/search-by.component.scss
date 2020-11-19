@@ -1,5 +1,4 @@
 @import "src/styles";
-// Color
 
 
 .search__container {
@@ -13,12 +12,9 @@
     border: 1px solid transparent;
     background: #00bca9;
     color: #fff;
-    //top: 51px;
-    //position: absolute;
     cursor: pointer;
     box-shadow: 1px 1px 3px rgba(0,0,0,.5);
     margin-bottom: 2rem;
-    //right: 3px;
 
   }
 
@@ -280,19 +276,6 @@
       width: calc(100% - 116px);
     }
 
-    //&.small_autocomplete{
-    //  top: 107%;
-    //}
-    //&.mini_autocomplete{
-    //  top: 117%;
-    //}
-    //&.only_footer{
-    //  bottom: -84%;
-    //  width: 94%;
-    //}
-    //&.last_element{
-    //  bottom: -410px;
-    //}
   }
 }
 

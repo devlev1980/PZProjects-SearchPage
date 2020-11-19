@@ -1,3 +1,7 @@
+/**
+ * Profile model
+ */
+
 export interface IProfile {
   UserName: string;
   EmployeeID: string;

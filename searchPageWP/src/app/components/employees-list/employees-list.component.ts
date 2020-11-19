@@ -113,7 +113,7 @@ export class EmployeesListComponent implements OnInit {
   }
 
   /**
-   * search service by type (byEmployee,byDepartment,byLocation,byAZ)
+   * get search results from  searchByEmployeeService
    */
   onSearchByEmployee() {
     if (this.profileFromAutocompleteSearch) {
@@ -138,38 +138,12 @@ export class EmployeesListComponent implements OnInit {
       }
     });
 
-    // this.searchByEmployeeService.getSearch().subscribe((searchTerm) => {
-    //   switch (searchTerm.type) {
-    //     // case 'byEmployee':
-    //     //   this.byEmployeeTerm = searchTerm.value;
-    //     //   this.filterResults = this.profiles.filter(profile => profile.FullName === searchTerm.value);
-    //     //   console.log('by employee result', this.filterResults);
-    //     //   this.totalItems = this.filterResults.length;
-    //     //   this.cdr.detectChanges();
-    //     //   break;
-    //     case 'byDepartment':
-    //       // this.byDepartmentTerm = searchTerm.value;
-    //       // this.filterResults = this.profiles.filter(profile => profile.Department === this.byDepartmentTerm);
-    //       // this.totalItems = this.filterResults.length;
-    //       // this.cdr.detectChanges();
-    //       break;
-    //     case 'byLocation':
-    //       // this.byLocation = searchTerm.value;
-    //       // this.filterResults = this.profiles.filter(profile => profile.Office === this.byLocation);
-    //       // this.totalItems = this.filterResults.length;
-    //       // this.cdr.detectChanges();
-    //       break;
-    //     case 'byAZ':
-    //       console.log('az');
-    //       // this.byAZ = searchTerm.value;
-    //       // this.filterResults = this.profiles.filter(profile => profile.FirstName.startsWith(this.byAZ));
-    //       // this.totalItems = this.filterResults.length;
-    //       // this.cdr.detectChanges();
-    //       break;
-    //   }
-    // });
+
   }
 
+  /**
+   * get search results from  searchByDepartmentService
+   */
   onSearchByDepartment() {
     this.searchByDepartmentService.getSearch().subscribe((searchTerm) => {
       if (searchTerm.value !== '') {
@@ -188,7 +162,9 @@ export class EmployeesListComponent implements OnInit {
     });
 
   }
-
+  /**
+   * get search results from  searchByAzService
+   */
   onSearchByAZ() {
     this.searchByAzService.getSearch().subscribe((searchTerm) => {
       if (searchTerm.value) {
@@ -200,7 +176,9 @@ export class EmployeesListComponent implements OnInit {
       }
     });
   }
-
+  /**
+   * get search results from  searchByLocationService
+   */
   onSearchByLocation() {
     setTimeout(() => {
       this.searchByLocationService.getSearch().subscribe((searchTerm) => {
@@ -222,6 +200,9 @@ export class EmployeesListComponent implements OnInit {
 
   }
 
+  /**
+   * reset filters on click 'Clear All' button
+   */
   onClearAll() {
     this.clearAllService.getSearch().subscribe((result) => {
       if (result.deleteClick) {
@@ -333,7 +314,6 @@ export class EmployeesListComponent implements OnInit {
    */
   onNavigateToTheManagerPage(profile: IProfile) {
     window.location.href = `https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5C${profile.UserName}`;
-    // https://mysytedev01.mobileye.com/_layouts/15/start.aspx#/Person.aspx?AccountName=ME-CORP%5Cjeremya
   }
 
   nextPage(page: number, byAZ: string) {
