@@ -23,24 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e738f26-38e4-4343-a326-2f625af0b645" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/a-z/a-z.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/employees-list/employees-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/components/search-by/search-by.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/models/profile.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/models/profile.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/cards-by-department.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/cards-by-department.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/cards-by-location.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/cards-by-location.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/highlight.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/highlight.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-az.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-az.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-department.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-department.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-employee.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-location.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/search-by-location.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/pipes/sort-cards.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/pipes/sort-cards.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/app/search-page-spfx-web-part/search-page-spfx-web-part.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchPageWP/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchPageWP-spfx/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/searchPageWP-spfx/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +248,13 @@
       <option name="presentableId" value="LOCAL‎00015" />
       <updated>1605704608681</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL‎00016" summary="cleaning + add comments">
+      <created>1605769901287</created>
+      <option name="number" value="LOCAL‎00016" />
+      <option name="presentableId" value="LOCAL‎00016" />
+      <updated>1605769901287</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,7 +288,8 @@
     <MESSAGE value="adding sort-cards pipe" />
     <MESSAGE value="remove 'Job' in cards" />
     <MESSAGE value="adding 'Workaday Profile'" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding 'Workaday Profile'" />
+    <MESSAGE value="cleaning + add comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaning + add comments" />
   </component>
   <component name="WindowStateProjectService">
     <state x="506" y="239" width="774" height="441" key="#TSLint" timestamp="1602480197020">
@@ -310,11 +300,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598960924240" />
-    <state x="574" y="94" key="CommitChangelistDialog2" timestamp="1605704606055">
+    <state x="574" y="94" key="CommitChangelistDialog2" timestamp="1605769898442">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="383" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1602420686842" />
-    <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605704606055" />
+    <state x="574" y="94" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605769898442" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599548996748">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -356,11 +346,11 @@
     </state>
     <state width="498" height="398" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1602488956865" />
     <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1603279332324" />
-    <state x="551" y="252" key="Vcs.Push.Dialog.v2" timestamp="1605767842364">
+    <state x="551" y="252" key="Vcs.Push.Dialog.v2" timestamp="1605769905492">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="367" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1602420692472" />
-    <state x="551" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605767842364" />
+    <state x="551" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605769905492" />
     <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1605769375257">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
